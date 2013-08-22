@@ -1,8 +1,8 @@
 #################
 ## YiiFramework
 #################
-assets/
-protected/runtime/
+assets/*
+protected/runtime/*
 tmp/*
 
 #################
