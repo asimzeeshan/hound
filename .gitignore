@@ -3,6 +3,7 @@
 #################
 assets/
 protected/runtime/
+tmp/*
 
 #################
 ## PHP Storm
