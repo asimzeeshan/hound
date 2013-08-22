@@ -35,12 +35,13 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('first_name, last_name, username, password, email, last_login, created_by, modified, modified_by', 'required'),
+			array('first_name, last_name, username, password, email', 'required'),
 			array('status', 'numerical', 'integerOnly'=>true),
 			array('first_name, last_name, username, email', 'length', 'max'=>75),
 			array('password', 'length', 'max'=>255),
 			array('created_by, modified_by', 'length', 'max'=>11),
 			array('created', 'safe'),
+			array('last_login','date','format'=>Yii::app()->locale->getDateFormat('short')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, first_name, last_name, username, password, email, status, last_login, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
@@ -124,5 +125,40 @@ class Users extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public static function updateLastLogin($primary_key) {
+		return $this->updateByPk(array($primary_key), array( "last_login" => new CDbExpression('NOW()')));
+	}
+
+	protected function afterFind()
+	{
+		// Format dates based on the locale
+		foreach($this->metadata->tableSchema->columns as $columnName => $column)
+		{           
+			if (!strlen($this->$columnName)) continue;
+	 
+			if ($column->dbType == 'date')
+			{ 
+				$this->$columnName = Yii::app()->dateFormatter->formatDateTime(
+						CDateTimeParser::parse(
+							$this->$columnName, 
+							'yyyy-MM-dd'
+						),
+						'medium',null
+					);
+			}
+			elseif ($column->dbType == 'datetime' || $column->dbType == 'timestamp')
+			{
+				$this->$columnName = Yii::app()->dateFormatter->formatDateTime(
+						CDateTimeParser::parse(
+							$this->$columnName, 
+							'yyyy-MM-dd hh:mm:ss'
+						),
+						'medium','short'
+					);
+			}
+		}
+		return parent::afterFind();
 	}
 }
