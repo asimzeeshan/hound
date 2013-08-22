@@ -15,10 +15,9 @@ class UserIdentity extends CUserIdentity
 	 * against some persistent user identity storage (e.g. database).
 	 * @return boolean whether authentication succeeds.
 	 */
-	public $_id;
 
 	public function authenticate() {
-		$user = Users::model()->findByAttributes(array('username'=>$this->username), 'status=1');
+		$user = Users::model()->findByAttributes(array('username'=>$this->username, 'status'=>1));
 
 		if ($user===null) { // No user found!
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
@@ -29,9 +28,5 @@ class UserIdentity extends CUserIdentity
 		}
 
 		return !$this->errorCode;
-	}
-		 
-	public function getId() {
-		return $this->_id;
 	}
 }
