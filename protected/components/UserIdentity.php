@@ -24,6 +24,8 @@ class UserIdentity extends CUserIdentity
 		} else if ($user->password !== md5($this->password)) { // Invalid password!
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		} else { // Okay!
+			$user->last_login = new CDbExpression('NOW()');
+			$user->save();
 			$this->errorCode=self::ERROR_NONE;
 		}
 
