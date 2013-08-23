@@ -41,11 +41,28 @@ class Users extends CActiveRecord
 			array('password', 'length', 'max'=>255),
 			array('created_by, modified_by', 'length', 'max'=>11),
 			array('created', 'safe'),
-			array('last_login','date','format'=>Yii::app()->locale->getDateFormat('short')),
+			//array('last_login,created,modified','date','format'=>Yii::app()->locale->getDateFormat('short')),
+			array('modified','default','value'=>new CDbExpression('NOW()'), 'setOnEmpty'=>false,'on'=>'update'),
+			array('created,modified','default', 'value'=>new CDbExpression('NOW()'), 'setOnEmpty'=>false,'on'=>'insert'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, first_name, last_name, username, password, email, status, last_login, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
+			array('id, first_name, last_name, username, password, email, status', 'safe', 'on'=>'search'),
 		);
+	}
+	
+	/**
+	 * @return array beforeSave
+	 */	
+	public function beforeSave() {
+		if ($this->isNewRecord) {
+			$this->created 		= new CDbExpression('NOW()');
+			$this->created_by 	= Yii::app()->user->name;
+		}
+		
+		$this->modified 	= new CDbExpression('NOW()');
+		$this->modified_by 	= Yii::app()->user->name;
+
+		return parent::beforeSave();
 	}
 
 	/**
@@ -105,11 +122,6 @@ class Users extends CActiveRecord
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('status',$this->status);
-		$criteria->compare('last_login',$this->last_login,true);
-		$criteria->compare('created',$this->created,true);
-		$criteria->compare('created_by',$this->created_by,true);
-		$criteria->compare('modified',$this->modified,true);
-		$criteria->compare('modified_by',$this->modified_by,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

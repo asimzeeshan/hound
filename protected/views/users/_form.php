@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="form wide">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'users-form',
@@ -51,39 +51,38 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
+		<?php echo $form->checkBox($model,'status'); ?>
 		<?php echo $form->error($model,'status'); ?>
 	</div>
+    
+    <?php if (!$model->isNewRecord) { ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'last_login'); ?>
-		<?php echo $form->textField($model,'last_login'); ?>
-		<?php echo $form->error($model,'last_login'); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'last_login'); ?>
+        <?php echo $model->last_login; ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'created'); ?>
-		<?php echo $form->textField($model,'created'); ?>
-		<?php echo $form->error($model,'created'); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'created'); ?>
+        <?php echo $model->created; ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'created_by'); ?>
-		<?php echo $form->textField($model,'created_by',array('size'=>11,'maxlength'=>11)); ?>
-		<?php echo $form->error($model,'created_by'); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'created_by'); ?>
+        <?php echo $model->created_by; ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'modified'); ?>
-		<?php echo $form->textField($model,'modified'); ?>
-		<?php echo $form->error($model,'modified'); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'modified'); ?>
+        <?php echo $model->modified; ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'modified_by'); ?>
-		<?php echo $form->textField($model,'modified_by',array('size'=>11,'maxlength'=>11)); ?>
-		<?php echo $form->error($model,'modified_by'); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'modified_by'); ?>
+        <?php echo $model->modified_by; ?>
+    </div>
+
+	<?php } ?>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
