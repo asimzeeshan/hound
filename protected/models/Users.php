@@ -17,7 +17,7 @@
  * @property string $modified
  * @property string $modified_by
  */
-class Users extends CActiveRecord
+class Users extends AZActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -35,34 +35,16 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('first_name, last_name, username, password, email', 'required'),
+			array('first_name, last_name, username, password, email, last_login, created_by, modified, modified_by', 'required'),
 			array('status', 'numerical', 'integerOnly'=>true),
 			array('first_name, last_name, username, email', 'length', 'max'=>75),
 			array('password', 'length', 'max'=>255),
 			array('created_by, modified_by', 'length', 'max'=>11),
 			array('created', 'safe'),
-			//array('last_login,created,modified','date','format'=>Yii::app()->locale->getDateFormat('short')),
-			array('modified','default','value'=>new CDbExpression('NOW()'), 'setOnEmpty'=>false,'on'=>'update'),
-			array('created,modified','default', 'value'=>new CDbExpression('NOW()'), 'setOnEmpty'=>false,'on'=>'insert'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, first_name, last_name, username, password, email, status', 'safe', 'on'=>'search'),
+			array('id, first_name, last_name, username, password, email, status, last_login, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
 		);
-	}
-	
-	/**
-	 * @return array beforeSave
-	 */	
-	public function beforeSave() {
-		if ($this->isNewRecord) {
-			$this->created 		= new CDbExpression('NOW()');
-			$this->created_by 	= Yii::app()->user->name;
-		}
-		
-		$this->modified 	= new CDbExpression('NOW()');
-		$this->modified_by 	= Yii::app()->user->name;
-
-		return parent::beforeSave();
 	}
 
 	/**
@@ -122,6 +104,11 @@ class Users extends CActiveRecord
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('last_login',$this->last_login,true);
+		$criteria->compare('created',$this->created,true);
+		$criteria->compare('created_by',$this->created_by,true);
+		$criteria->compare('modified',$this->modified,true);
+		$criteria->compare('modified_by',$this->modified_by,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -139,38 +126,9 @@ class Users extends CActiveRecord
 		return parent::model($className);
 	}
 	
+	// update Last Login when requested
+	// DOES NOT WORK
 	public static function updateLastLogin($primary_key) {
 		return $this->updateByPk(array($primary_key), array( "last_login" => new CDbExpression('NOW()')));
-	}
-
-	protected function afterFind()
-	{
-		// Format dates based on the locale
-		foreach($this->metadata->tableSchema->columns as $columnName => $column)
-		{           
-			if (!strlen($this->$columnName)) continue;
-	 
-			if ($column->dbType == 'date')
-			{ 
-				$this->$columnName = Yii::app()->dateFormatter->formatDateTime(
-						CDateTimeParser::parse(
-							$this->$columnName, 
-							'yyyy-MM-dd'
-						),
-						'medium',null
-					);
-			}
-			elseif ($column->dbType == 'datetime' || $column->dbType == 'timestamp')
-			{
-				$this->$columnName = Yii::app()->dateFormatter->formatDateTime(
-						CDateTimeParser::parse(
-							$this->$columnName, 
-							'yyyy-MM-dd hh:mm:ss'
-						),
-						'medium','short'
-					);
-			}
-		}
-		return parent::afterFind();
 	}
 }

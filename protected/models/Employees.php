@@ -20,7 +20,7 @@
  * @property string $modified
  * @property string $modified_by
  */
-class Employees extends CActiveRecord
+class Employees extends AZActiveRecord
 {
 	/**
 	 * @return string the associated database table name
