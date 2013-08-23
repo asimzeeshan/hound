@@ -69,7 +69,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model,'created_by'); ?>
-        <?php echo $model->created_by; ?>
+        <?php echo $model->CreatedBy->name(); ?>
     </div>
 
     <div class="row">
@@ -79,7 +79,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model,'modified_by'); ?>
-        <?php echo $model->modified_by; ?>
+        <?php echo $model->ModifiedBy->name(); ?>
     </div>
 
 	<?php } ?>
