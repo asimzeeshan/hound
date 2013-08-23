@@ -68,7 +68,7 @@ class ImportdataCommand extends CConsoleCommand {
 					$employee->description	= $data['descr'];
 				$employee->modified_by	= 1;
 				if ($employee->save()) {
-					echo "Done \n";
+					echo "Saved ".$data['emp_id']." successfull! \n";
 				} else {
 					echo "Failed adding ".$data['emp_id']."\n";
 					foreach ($employee->getErrors() as $error) {
@@ -94,7 +94,7 @@ class ImportdataCommand extends CConsoleCommand {
 					$employee->description	= $data['descr'];
 				$employee->modified_by	= 1;
 				if ($employee->save()) {
-					echo "Done \n";
+					echo "Saved ".$data['emp_id']." successfull! \n";
 				} else {
 					echo "Failed adding ".$data['emp_id']."\n";
 					foreach ($employee->getErrors() as $error) {
