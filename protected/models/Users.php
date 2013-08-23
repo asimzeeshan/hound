@@ -54,8 +54,8 @@ class Users extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-		);
+		$relations = parent::relations();
+		return $relations;
 	}
 
 	/**
@@ -126,9 +126,13 @@ class Users extends AZActiveRecord
 		return parent::model($className);
 	}
 	
-	// update Last Login when requested
-	// DOES NOT WORK
-	public static function updateLastLogin($primary_key) {
+	// update the last login time
+	public function updateLastLogin($primary_key) {
 		return $this->updateByPk(array($primary_key), array( "last_login" => new CDbExpression('NOW()')));
+	}
+	
+	// return the full name (first_name & last_name)
+	public function name() {
+		return $this->first_name." ".$this->last_name; 	
 	}
 }

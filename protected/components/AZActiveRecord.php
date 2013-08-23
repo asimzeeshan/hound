@@ -1,6 +1,18 @@
 <?php
-
 class AZActiveRecord extends CActiveRecord {
+	
+	/**
+	 * @return array relational rules.
+	 */
+	public function relations()
+	{
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
+		return array(
+			'CreatedBy' => array(self::BELONGS_TO, 'Users', 'created_by'),
+			'ModifiedBy' => array(self::BELONGS_TO, 'Users', 'modified_by'),
+		);
+	}
 
 	/**
 	 * @return array beforeValidate
@@ -32,6 +44,9 @@ class AZActiveRecord extends CActiveRecord {
 		return parent::beforeSave();
 	}
 	
+	/**
+	 * @return array afterFind
+	 */
 	protected function afterFind() {
 		foreach($this->metadata->tableSchema->columns as $columnName => $column) {           
 			if (!strlen($this->$columnName)) continue;
@@ -57,7 +72,5 @@ class AZActiveRecord extends CActiveRecord {
 		
 		return parent::afterFind();
 	}
-
 }
-
 ?>
