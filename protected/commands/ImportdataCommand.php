@@ -48,7 +48,6 @@ class ImportdataCommand extends CConsoleCommand {
 		// echo "Found ".$obj->ipaddr." having MAC ".$obj->mac." and the hostname is ".$obj->hostname."\n";
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
-		print_r($data);
 
 		$records 					= Employees::model()->searchByHostName($data['hostname']);
 		if ($records==0) {
@@ -68,7 +67,6 @@ class ImportdataCommand extends CConsoleCommand {
 				if ($data['descr']!="")
 					$employee->description	= $data['descr'];
 				$employee->modified_by	= 1;
-				print_r($employee->attributes);
 				if ($employee->save()) {
 					echo "Done";
 				} else {
@@ -95,10 +93,6 @@ class ImportdataCommand extends CConsoleCommand {
 				if ($data['descr']!="")
 					$employee->description	= $data['descr'];
 				$employee->modified_by	= 1;
-				$employee->opt			= $opt;
-				$employee->hall			= "N/A";
-				$employee->line_manager	= "N/A";
-				$employee->location		= "N/A";
 				if ($employee->save()) {
 					echo "Done";
 				} else {
