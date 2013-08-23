@@ -16,6 +16,8 @@ class NexthrmCommand extends CConsoleCommand {
 			} else {
 				echo "Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status;
 			}
+		// sleep for 1 second
+		sleep(1);
 		}
 
 	}
