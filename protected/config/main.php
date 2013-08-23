@@ -49,8 +49,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => 'xpert',
+			'username' => 'abusereportr',
+			'password' => 'T9wHWVGSeYBuMrSX',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
