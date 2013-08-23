@@ -20,11 +20,11 @@ class AZActiveRecord extends CActiveRecord {
     protected function beforeValidate() {
 		if ($this->isNewRecord) {
 			$this->created 		= new CDbExpression('NOW()');
-			$this->created_by 	= Yii::app()->user->name;
+			$this->created_by 	= (!isset($this->created_by)) ? Yii::app()->user->id : 1 ;
 		}
 		
 		$this->modified 	= new CDbExpression('NOW()');
-		$this->modified_by 	= Yii::app()->user->name;
+		$this->modified_by 	= (!isset($this->modified_by)) ? Yii::app()->user->id : 1 ;
 
 		return parent::beforeValidate();
     }
@@ -35,11 +35,11 @@ class AZActiveRecord extends CActiveRecord {
 	public function beforeSave() {
 		if ($this->isNewRecord) {
 			$this->created 		= new CDbExpression('NOW()');
-			$this->created_by 	= Yii::app()->user->name;
+			$this->created_by 	= (!isset($this->created_by)) ? Yii::app()->user->id : 1 ;
 		}
 		
 		$this->modified 	= new CDbExpression('NOW()');
-		$this->modified_by 	= Yii::app()->user->name;
+		$this->modified_by 	= (!isset($this->modified_by)) ? Yii::app()->user->id : 1 ;
 
 		return parent::beforeSave();
 	}
