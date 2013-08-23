@@ -133,4 +133,20 @@ class Employees extends AZActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+    /**
+     * Enabling Search option based on hostname
+     *
+     */
+    public function searchByEmpID($emp_id){
+        return $this->count('emp_id=:emp_id', array(':emp_id' => $emp_id));
+    }
+	
+    public function searchByHostName($hostname){
+        return $this->count('hostname=:hostname', array(':hostname' => $hostname));
+    }
+	
+    public function searchByHostNameEmpID($emp_id, $hostname){
+        return $this->count('emp_id=:emp_id AND hostname=:hostname', array(':emp_id'=>$emp_id, ':hostname'=>$hostname));
+    }
 }
