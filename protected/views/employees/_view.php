@@ -33,7 +33,6 @@
 	<?php echo CHtml::encode($data->description); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('line_manager')); ?>:</b>
 	<?php echo CHtml::encode($data->line_manager); ?>
 	<br />
@@ -55,7 +54,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created_by')); ?>:</b>
-	<?php echo CHtml::encode($data->created_by); ?>
+	<?php echo CHtml::encode($data->CreatedBy->name()); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('modified')); ?>:</b>
@@ -63,9 +62,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('modified_by')); ?>:</b>
-	<?php echo CHtml::encode($data->modified_by); ?>
+	<?php echo CHtml::encode($data->ModifiedBy->name()); ?>
 	<br />
-
-	*/ ?>
 
 </div>
