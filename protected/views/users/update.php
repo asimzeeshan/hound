@@ -3,19 +3,18 @@
 /* @var $model Users */
 
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
+	'System Users'=>array('admin'),
 	$model->id=>array('view','id'=>$model->id),
 	'Update',
 );
 
 $this->menu=array(
-	array('label'=>'List Users', 'url'=>array('index')),
-	array('label'=>'Create Users', 'url'=>array('create')),
+	array('label'=>'Manage System Users', 'url'=>array('admin')),
+	array('label'=>'Create System User', 'url'=>array('create')),
 	array('label'=>'View Users', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Users', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Users <?php echo $model->id; ?></h1>
+<h1>Update System User <?php echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -3,13 +3,13 @@
 /* @var $model Users */
 
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
+	'System Users'=>array('admin'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'List Users', 'url'=>array('index')),
-	array('label'=>'Create Users', 'url'=>array('create')),
+	array('label'=>'Manage System Users', 'url'=>array('admin')),
+	array('label'=>'Create System User', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -26,7 +26,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Users</h1>
+<h1>Manage System Users</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -39,7 +39,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'users-grid',
 	'dataProvider'=>$model->search(),
@@ -50,7 +49,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'last_name',
 		'username',
 		'email',
-		'status',
+		array(
+			'name'=>'status',
+			'value'=>'$data->status==1 ? "Active" : "Inactive"'
+		),
 		'last_login',
 		/*
 		'created',

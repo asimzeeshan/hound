@@ -3,16 +3,15 @@
 /* @var $model Users */
 
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
-	'Create',
+	'Manage System Users'=>array('admin'),
+	'Create System User',
 );
 
 $this->menu=array(
-	array('label'=>'List Users', 'url'=>array('index')),
-	array('label'=>'Manage Users', 'url'=>array('admin')),
+	array('label'=>'Manage System Users', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create Users</h1>
+<h1>Create System User</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
