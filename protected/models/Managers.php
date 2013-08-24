@@ -94,6 +94,7 @@ class Managers extends AZActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array('pageSize'=>25,),
 		));
 	}
 
