@@ -139,15 +139,58 @@ class Employees extends AZActiveRecord
      * Enabling Search option based on hostname
      *
      */
-    public function searchByEmpID($emp_id){
+    public function countByEmpID($emp_id){
         return $this->count('emp_id=:emp_id', array(':emp_id' => $emp_id));
     }
 	
-    public function searchByHostName($hostname){
+    public function countByHostName($hostname){
         return $this->count('hostname=:hostname', array(':hostname' => $hostname));
     }
 	
-    public function searchByHostNameEmpID($emp_id, $hostname){
+    public function countByHostNameEmpID($emp_id, $hostname){
         return $this->count('emp_id=:emp_id AND hostname=:hostname', array(':emp_id'=>$emp_id, ':hostname'=>$hostname));
+    }
+	
+    public function searchByIp($ipaddress){
+        $match = addcslashes($ipaddress, '%_'); // escape LIKE's special characters
+
+            // directly into findAll()
+        $ipaddresses = $this->findAll(
+            'ip_address LIKE :ip_address',
+            array(':ip_address' => "%$match%")
+        );
+        return $ipaddresses;
+    }
+	
+	public function searchByEmpID($emp_id){
+          $emp_id  = addcslashes($emp_id, '%_'); // escape LIKE's special characters
+
+            // directly into findAll()
+        $users_details = $this->findAll(
+            'emp_id LIKE :emp_id',
+            array( ':emp_id' => "%$emp_id%" )
+        );
+        return $users_details;
+    }
+	
+	public function searchByEmpMac( $mac, $opt ){
+        // $match = $EmpID; //addcslashes($ipaddress, '%_'); // escape LIKE's special characters
+
+            // directly into findAll()
+			if($opt == NULL)
+			{
+				$users_details = $this->findAll(
+					'mac_address = :mac_address AND opt IS NULL',
+					array( ':mac_address' => $mac )
+				);
+			}
+			else
+			{
+				$users_details = $this->findAll(
+					'mac_address = :mac_address AND opt = :opt',
+					array( ':mac_address' => $mac, ':opt' => $opt )
+				);
+			}
+        return $users_details;
     }
 }

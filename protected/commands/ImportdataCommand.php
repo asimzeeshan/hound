@@ -49,11 +49,11 @@ class ImportdataCommand extends CConsoleCommand {
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		$records 					= Employees::model()->searchByHostName($data['hostname']);
+		$records 					= Employees::model()->countByHostName($data['hostname']);
 		if ($records==0) {
 			$this->_addRecord($data);
 		} elseif ($records==1) {
-			$employee					= Employees::model()->searchByEmpID($data['emp_id']);
+			$employee					= Employees::model()->countByEmpID($data['emp_id']);
 			if ($employee==0) {
 				echo "This HOSTNAME does not have correct EmpID \n";
 				$this->_addRecord($data);
@@ -79,7 +79,7 @@ class ImportdataCommand extends CConsoleCommand {
 			// free memory
 			unset($employee);
 		} elseif ($records > 1) {
-			$employee					= Employees::model()->searchByHostNameEmpID($data['emp_id'], $data['hostname']);
+			$employee					= Employees::model()->countByHostNameEmpID($data['emp_id'], $data['hostname']);
 			if ($employee==0) {
 				echo "This HOSTNAME does not have correct EmpID \n";
 				$this->_addRecord($data);
@@ -103,7 +103,7 @@ class ImportdataCommand extends CConsoleCommand {
 				}				
 			}
 		} else {
-			//$employee_records 		= Employees::model()->searchByHostName($data['emp_id']);
+			//$employee_records 		= Employees::model()->countByHostName($data['emp_id']);
 			echo "WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! ";
 			print_r($data);
 		}
