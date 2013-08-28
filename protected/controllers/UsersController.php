@@ -70,8 +70,27 @@ class UsersController extends Controller
 		if(isset($_POST['Users']))
 		{
 			$model->attributes=$_POST['Users'];
-			if($model->save())
+			if($model->save()) {
+				// send welcome email as well
+				$et = new EmailTemplates;
+				$data = $et->getData(7);
+				
+				// parse Body
+				$search = array('{name}', '{username}', '{password}');
+				$replace = array($model->name(), $model->username, $model->password);
+				$body = str_ireplace($search, $replace, $data->body);
+				// ends parse Body
+				
+				$this->sendMail(array(
+					'body'=> $body,
+					'address'=> $model->email,
+					'ccaddress'=> '',
+					'bccaddress'=> '',
+					'subject' => $data->subject
+				));
+				
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
