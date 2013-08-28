@@ -71,7 +71,6 @@ class UsersController extends Controller
 		{
 			$unencryted_pass = $_POST['Users']['password'];
 			$_POST['Users']['password'] = md5($_POST['Users']['password']);
-			$_POST['Users']['username'] = $_POST['Users']['username'].rand();
 
 			$model->attributes=$_POST['Users'];
 			if($model->save()) {
