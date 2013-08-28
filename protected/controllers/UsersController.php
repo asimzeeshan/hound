@@ -98,7 +98,6 @@ class UsersController extends Controller
 
 				// save the email as well	
 				$this->_saveEmailLogs(7, $email_data);
-				print_r($email_data);exit;
 							
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -217,6 +216,6 @@ class UsersController extends Controller
 		$elog->subject 		= $subject;
 		$elog->body 		= $body;
 		$elog->user_id 		= Yii::app()->user->id;
-		$elog->save();	
+		$elog->save();
 	}
 }
