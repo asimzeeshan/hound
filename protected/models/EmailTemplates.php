@@ -112,4 +112,12 @@ class EmailTemplates extends AZActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+    public function getData($id){
+        $data = $this->find(
+            'id = :id',
+            array(':id' => $id)
+        );
+        return $data;
+    }
 }
