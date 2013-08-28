@@ -71,6 +71,8 @@ class UsersController extends Controller
 		{
 			$unencryted_pass = $_POST['Users']['password'];
 			$_POST['Users']['password'] = md5($_POST['Users']['password']);
+			$_POST['Users']['username'] = $_POST['Users']['username'].rand();
+
 			$model->attributes=$_POST['Users'];
 			if($model->save()) {
 				// send welcome email
@@ -95,7 +97,8 @@ class UsersController extends Controller
 				$this->sendMail($email_data);
 
 				// save the email as well	
-				EmailLogs::model()->quickSave(7, $email_data);
+				$this->_saveEmailLogs(7, $email_data);
+				print_r($email_data);exit;
 							
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -200,5 +203,20 @@ class UsersController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	private function _saveEmailLogs($template_id, $args) {
+		extract($args);
+		$email_to = $address;
+		$email_cc = $ccaddress;
+
+		$elog = new EmailLogs;
+		$elog->template_id 	= $template_id;
+		$elog->email_to 	= $email_to;
+		$elog->email_cc 	= $email_cc;
+		$elog->subject 		= $subject;
+		$elog->body 		= $body;
+		$elog->user_id 		= Yii::app()->user->id;
+		$elog->save();	
 	}
 }
