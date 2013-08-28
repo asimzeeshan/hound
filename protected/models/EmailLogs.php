@@ -125,4 +125,18 @@ class EmailLogs extends AZActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+	public function quickSave($template_id, $args) {
+		extract($args);
+		$email_to = $address;
+		$email_cc = $ccaddress;
+
+		$this->template_id 	= $template_id;
+		$this->email_to 	= $email_to;
+		$this->email_cc 	= $email_cc;
+		$this->subject 		= $subject;
+		$this->body 		= $body;
+		$this->user_id 		= Yii::app()->user->id;
+		$this->save();
+	}
 }
