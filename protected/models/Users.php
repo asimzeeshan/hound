@@ -57,6 +57,17 @@ class Users extends AZActiveRecord
 		$relations = parent::relations();
 		return $relations;
 	}
+	
+	/**
+	 * @return array beforeValidate
+	 */	
+    protected function beforeValidate() {
+		if ($this->isNewRecord) {
+			$this->last_login 		= '0000-00-00 00:00:00';
+		}
+
+		return parent::beforeValidate();
+    }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
