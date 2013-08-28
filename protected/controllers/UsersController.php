@@ -69,6 +69,7 @@ class UsersController extends Controller
 
 		if(isset($_POST['Users']))
 		{
+			$_POST['Users']['password'] = md5($_POST['Users']['password']);
 			$model->attributes=$_POST['Users'];
 			if($model->save()) {
 				// send welcome email as well
