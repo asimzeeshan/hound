@@ -83,14 +83,20 @@ class UsersController extends Controller
 				$body = str_ireplace($search, $replace, $data->body);
 				// ends parse Body
 				
-				$this->sendMail(array(
+				$email_data = array(
 					'body'=> $body,
 					'address'=> $model->email,
 					'ccaddress'=> '',
 					'bccaddress'=> '',
 					'subject' => $data->subject
-				));
-				
+				);
+
+				// send the email
+				$this->sendMail($email_data);
+
+				// save the email as well	
+				EmailLogs::model()->quickSave(7, $email_data);
+							
 				$this->redirect(array('view','id'=>$model->id));
 			}
 		}
@@ -131,7 +137,11 @@ class UsersController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		if ($id > 3) {
+			$this->loadModel($id)->delete();
+		} else {
+			Yii::app()->user->setFlash('failed','Cannot delete the administrators');
+		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
