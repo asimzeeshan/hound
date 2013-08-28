@@ -20,4 +20,41 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+	
+	/**
+	 *
+	 * Adding ability to send email using phpMailer
+	 */
+	public function sendMail($args){
+		extract($args);
+			$mail             = new PHPMailer();
+			$body             = $body;
+			$body             = str_replace("[\]",'',$body);
+
+			$mail->AddReplyTo('noc@nxvt.com', 'NOC Team');
+			$mail->SetFrom('noc@nxvt.com', 'NOC Team');
+			
+			foreach((array) $address as $k=>$v){
+				$mail->AddAddress($v, $v);
+			}
+			
+			foreach((array) $ccaddress as $k=>$v){
+				$mail->AddCC($v, $v);
+			}
+
+			foreach((array) $bccaddress as $k=>$v){
+				$mail->AddBCC($v, $v);
+			}
+			
+			$mail->Subject    = $subject;
+			$mail->MsgHTML($body);
+
+			//$mail->AddAttachment("images/phpmailer.gif");      // attachment
+
+			if(!$mail->Send()) {
+				die("Mailer Error: " . $mail->ErrorInfo);
+			} else {
+				echo "Message sent!";
+			}
+	}
 }
