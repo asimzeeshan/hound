@@ -96,7 +96,7 @@ class UsersController extends Controller
 				$this->sendMail($email_data);
 
 				// save the email as well	
-				$this->_saveEmailLogs(7, $email_data);
+				$this->saveEmailLog(7, $email_data);
 							
 				$this->redirect(array('view','id'=>$model->id));
 			}

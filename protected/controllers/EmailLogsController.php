@@ -104,7 +104,7 @@ class EmailLogsController extends Controller
 		
 		if(isset($_POST['EmailTemplates']))
 		{
-			$_POST['EmailTemplates']['title'] = '';
+			$_POST['EmailTemplates']['title'] = 'n/a';
 			$model->attributes=$_POST['EmailTemplates'];
 
 			if($model->validate()){
@@ -129,9 +129,9 @@ class EmailLogsController extends Controller
 	
 				// save the mail contents
 				$template_id = (int)$model->id;
-				$this->_saveEmailLogs($template_id, array(
-					'email_to'	=> $to,
-					'email_cc'	=> $cc,
+				$this->saveEmailLog($template_id, array(
+					'address'	=> $to,
+					'ccaddress'	=> $cc,
 					'subject'	=> $parsed_subject,
 					'body'		=> $parsed_body,
 					'user_id'	=> Yii::app()->user->id,

@@ -58,7 +58,7 @@ class Controller extends CController
 			}
 	}
 	
-	private function _saveEmailLogs($template_id, $args) {
+	public function saveEmailLog($template_id, $args) {
 		extract($args);
 		$email_to = $address;
 		$email_cc = $ccaddress;
