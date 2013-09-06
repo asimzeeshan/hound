@@ -90,20 +90,18 @@ class EmailLogsController extends Controller
 	public function actionSendemail($emp_id){
 		$model=new EmailTemplates;
 		$model_nxb_managers =new Managers;
-		//exit;
+
 		$employeeData = array();
 		$manager_email = '';
 
 		$employeeDataAPIresponse = simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=7eedf192b67b0b15dee3491b286babc9&method=getSitting&userName=noc@nexthrm.com&empId='.$emp_id.'&empName=');
 		
 		$employeeDataArray = json_decode($employeeDataAPIresponse->getSitting->response);
-		/*echo '<pre>';
-		print_r($employeeDataArray);
-		echo '</pre>';
-		exit;*/
+
 		if(count($employeeDataArray) != 0){
-            $employeeData = $employeeDataArray[0];
+			$employeeData = $employeeDataArray[0];
 		}
+		
 		if(isset($_POST['EmailTemplates']))
 		{
 			$model->attributes=$_POST['EmailTemplates'];
@@ -124,19 +122,26 @@ class EmailLogsController extends Controller
 			$to = explode(",",$_POST['EmailTemplates']['to']);
 			$cc = explode(",",$_POST['EmailTemplates']['cc']);
 			$bcc = explode(",",$_POST['EmailTemplates']['bcc']);
+
+			// save thee mail
+			$template_id = (int)$model->id;
+			$this->_saveEmailLogs($template_id, array(
+				'email_to'	=> $to,
+				'email_cc'	=> $cc,
+				'subject'	=> $parsed_subject,
+				'body'		=> $parsed_body,
+				'user_id'	=> Yii::app()->user->id,
+			));
+			// save the email as well
 			
-			$model->subject = $parsed_subject;
-			$model->body = $parsed_body;
-			
-			if($model->save()){
-				$this->sendMail(array(
-					'body'=>$parsed_body,
-					'address'=>$to,
-					'ccaddress'=>$cc,
-					'bccaddress'=>$bcc,
-					"subject" => $parsed_subject
-				));
-			}
+			$this->sendMail(array(
+				'body'=>$parsed_body,
+				'address'=>$to,
+				'ccaddress'=>$cc,
+				'bccaddress'=>$bcc,
+				"subject" => $parsed_subject
+			));
+
 			Yii::app()->user->setFlash('success', "Your email has been sent to the conerned Line-Manager.");	
             $this->refresh();
 			}
