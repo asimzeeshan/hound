@@ -66,6 +66,14 @@ class Controller extends CController
 		extract($args);
 		$email_to = $address;
 		$email_cc = $ccaddress;
+		
+		if (is_array($email_to)) {
+			$email_to = implode(", ", $email_to);	
+		}
+		
+		if (is_array($email_cc)) {
+			$email_cc = implode(", ", $email_cc);	
+		}
 
 		$elog = new EmailLogs;
 		$elog->template_id 	= $template_id;
