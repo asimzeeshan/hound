@@ -28,12 +28,8 @@ class EmailLogsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('asim'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('asim'),
+				'actions'=>array('sendemail','showmailtemplates', 'emaillogs','index','view','create','update'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -43,6 +39,18 @@ class EmailLogsController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+	
+	/**
+	 * Showmailtemplates
+	 * 
+	 */
+	public function actionShowmailtemplates()
+	{
+		$model=new EmailTemplates;
+		$template_id = Yii::app()->request->getPost('template_id');
+		$template = $model->getTemplateBody($template_id);
+		echo json_encode(array("value1" => $template['subject'],"value2" => $template['body']));
 	}
 
 	/**
@@ -76,6 +84,69 @@ class EmailLogsController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+		));
+	}
+	
+	public function actionSendemail($emp_id){
+		$model=new EmailTemplates;
+		$model_nxb_managers =new Managers;
+		//exit;
+		$employeeData = array();
+		$manager_email = '';
+
+		$employeeDataAPIresponse = simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=7eedf192b67b0b15dee3491b286babc9&method=getSitting&userName=noc@nexthrm.com&empId='.$emp_id.'&empName=');
+		
+		$employeeDataArray = json_decode($employeeDataAPIresponse->getSitting->response);
+		/*echo '<pre>';
+		print_r($employeeDataArray);
+		echo '</pre>';
+		exit;*/
+		if(count($employeeDataArray) != 0){
+            $employeeData = $employeeDataArray[0];
+		}
+		if(isset($_POST['EmailTemplates']))
+		{
+			$model->attributes=$_POST['EmailTemplates'];
+			if($model->validate()){
+			$body = $model->attributes['body'];
+			$employeeData = array();
+			$manager_email = '';
+			$employeeDataAPIresponse = simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=7eedf192b67b0b15dee3491b286babc9&method=getSitting&userName=noc@nexthrm.com&empId='.$emp_id.'&empName=');
+			$employeeDataArray = json_decode($employeeDataAPIresponse->getSitting->response);
+			if(count($employeeDataArray) != 0){
+				$employeeData = $employeeDataArray[0];
+			}
+			$arraytoreplace = array('{Manager_Name}','{Employee_Name}','{Employee_Id}','{Employee_Location}','{Employee_Sitting_Hall}');
+			$replacedarray = array($employeeData->emp_manager_name,$employeeData->emp_name,$emp_id,$employeeData->emp_location,$employeeData->emp_hall);
+			$parsed_body = str_replace($arraytoreplace,$replacedarray,$body);
+			$parsed_subject = str_replace($arraytoreplace,$replacedarray,$_POST['EmailTemplates']['subject']);
+			
+			$to = explode(",",$_POST['EmailTemplates']['to']);
+			$cc = explode(",",$_POST['EmailTemplates']['cc']);
+			$bcc = explode(",",$_POST['EmailTemplates']['bcc']);
+			
+			$model->subject = $parsed_subject;
+			$model->body = $parsed_body;
+			
+			if($model->save()){
+				$this->sendMail(array(
+					'body'=>$parsed_body,
+					'address'=>$to,
+					'ccaddress'=>$cc,
+					'bccaddress'=>$bcc,
+					"subject" => $parsed_subject
+				));
+			}
+			Yii::app()->user->setFlash('success', "Your email has been sent to the conerned Line-Manager.");	
+            $this->refresh();
+			}
+		}
+		
+		$this->render('sendemail',array(
+			'model'=>$model,
+			'manager_email'=>$manager_email,
+			'employee_data'=>$employeeData,
+			'emp_id'=>$emp_id,
 		));
 	}
 

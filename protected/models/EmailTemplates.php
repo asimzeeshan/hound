@@ -120,4 +120,9 @@ class EmailTemplates extends AZActiveRecord
         );
         return $data;
     }
+	
+	public function getTemplateBody($template_id){
+		$template=$this->find('id=:id', array(':id'=>$template_id));
+        return $template;
+    }
 }
