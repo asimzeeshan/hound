@@ -11,6 +11,12 @@ $this->breadcrumbs=array(
 
 <h1>Login</h1>
 
+<?php if(Yii::app()->user->hasFlash('error')):?>
+    <div class="flash-error">
+        <?php echo Yii::app()->user->getFlash('error'); ?>
+    </div>
+<?php endif; ?>
+
 <p>Please fill out the following form with your login credentials:</p>
 
 <div class="form">

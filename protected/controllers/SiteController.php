@@ -29,12 +29,11 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		if(!Yii::app()->user->isGuest) {
-			Yii::app()->user->setFlash('whois_welcome','Since you are logged in, you can begin your search by using the form below!');
-			$this->redirect(array('whois/index'));
-		} else {
-			$this->render('index');			
+		if(Yii::app()->user->isGuest) {
+			Yii::app()->user->setFlash('error','Please login first before using the application!<br />Contact <a href="http://www.asim.pk/" target="_blank"><b>Asim Zeeshan</b></a>, should you encounter an issue.');
+			$this->redirect(array('login'));
 		}
+		$this->render('index');
 	}
 
 	/**
