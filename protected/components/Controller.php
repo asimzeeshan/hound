@@ -58,6 +58,10 @@ class Controller extends CController
 			}
 	}
 	
+	/**
+	 *
+	 * Adding ability to save the email being sent
+	 */
 	public function saveEmailLog($template_id, $args) {
 		extract($args);
 		$email_to = $address;
@@ -69,7 +73,7 @@ class Controller extends CController
 		$elog->email_cc 	= $email_cc;
 		$elog->subject 		= $subject;
 		$elog->body 		= $body;
-		$elog->user_id 		= Yii::app()->user->id;
+		$elog->user_id 		= $user_id;
 		$elog->save();
 	}
 }
