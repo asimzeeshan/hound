@@ -57,4 +57,19 @@ class Controller extends CController
 				echo "Message sent!";
 			}
 	}
+	
+	private function _saveEmailLogs($template_id, $args) {
+		extract($args);
+		$email_to = $address;
+		$email_cc = $ccaddress;
+
+		$elog = new EmailLogs;
+		$elog->template_id 	= $template_id;
+		$elog->email_to 	= $email_to;
+		$elog->email_cc 	= $email_cc;
+		$elog->subject 		= $subject;
+		$elog->body 		= $body;
+		$elog->user_id 		= Yii::app()->user->id;
+		$elog->save();
+	}
 }
