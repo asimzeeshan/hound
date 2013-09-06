@@ -128,23 +128,21 @@ class EmailLogsController extends Controller
 				$bcc = explode(",",$_POST['EmailTemplates']['bcc']);
 	
 				// save the mail contents
-				$template_id = (int)$model->id;
-				$this->saveEmailLog($template_id, array(
+				$email_data = array(
 					'address'	=> $to,
 					'ccaddress'	=> $cc,
+					'bccaddress'=> $bcc,
 					'subject'	=> $parsed_subject,
 					'body'		=> $parsed_body,
 					'user_id'	=> Yii::app()->user->id,
-				));
-				// save the email as well
+				);
 				
-				$this->sendMail(array(
-					'body'=>$parsed_body,
-					'address'=>$to,
-					'ccaddress'=>$cc,
-					'bccaddress'=>$bcc,
-					"subject" => $parsed_subject
-				));
+				// save the email
+				$template_id = (int)$model->id;
+				$this->saveEmailLog($template_id, $email_data);
+				
+				// now send the email
+				$this->sendMail($email_data);
 	
 				Yii::app()->user->setFlash('success', "Your email has been sent to the conerned Line-Manager.");	
 				$this->refresh();
