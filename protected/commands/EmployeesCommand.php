@@ -117,7 +117,7 @@ class EmployeesCommand extends CConsoleCommand {
 		unset($chk);
 		unset($manager);
 		} else { // email is empty
-			echo " Manager ID is NULL, no email received";
+			echo " Manager ID is NULL, no email received \n\n";
 			return false;
 		}
 	}
