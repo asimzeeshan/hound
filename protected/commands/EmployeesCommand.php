@@ -28,7 +28,7 @@ class EmployeesCommand extends CConsoleCommand {
 		echo " EmpID: ".$data['emp_id']." \n";
 		$chk = new Employees;
 		if ($chk->countByEmpID((int)$data['emp_id'])==0) { 
-			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so ADDING NEW RECORD \n";
+			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so ADDING NEW RECORD \n\n";
 
 			$employee = new Employees;
 			$employee->name 		= $data['emp_name'];
@@ -50,7 +50,7 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->modified_by	= 1; // added by SysAdmin
 			$employee->save();
 		} else {
-			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so UPDATING RECORD \n";
+			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so UPDATING RECORD \n\n";
 
 			$employee = Employees::model()->find('emp_id=:emp_id', array(':emp_id' => (int)$data['emp_id']));
 			$employee->name 		= $data['emp_name'];
