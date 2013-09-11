@@ -58,12 +58,12 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->joining_date = $data['emp_joining_date'];
 			$employee->location		= $data['emp_location'];
 			$employee->hall			= $data['emp_hall'];
-			$manager1_id = $this->_getManagerID((string)$data['emp_manager_name'], (string)$data['emp_manager_email']);
+			$manager1_id = $this->_getManagerID(trim($data['emp_manager_name']), trim($data['emp_manager_email']));
 			echo " Received Manager1 ID= ".$manager1_id;
 			if (!empty($manager1_id))
 				$employee->manager1_id	= $manager1_id;
 				
-			$manager2_id = $this->_getManagerID((string)$data['emp_manager2_name'], (string)$data['emp_manager2_email']);
+			$manager2_id = $this->_getManagerID(trim($data['emp_manager2_name']), trim($data['emp_manager2_email']));
 			echo " Received Manager2 ID= ".$manager2_id;
 			if (!empty($manager2_id))
 				$employee->manager2_id	= $manager2_id;
@@ -81,7 +81,7 @@ class EmployeesCommand extends CConsoleCommand {
 		echo "This is _getManagerID(); \n";
 		echo " - Received Name = ".$name."\n";
 		echo " - Received Email = ".$email."\n";
-		if (!empty(trim($email))) {
+		if (!empty($email)) {
 			$chk = new Managers;
 			if ($chk->countByEmail((string)$email)==0) { 
 				echo " Manager found with email $email = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD \n";
