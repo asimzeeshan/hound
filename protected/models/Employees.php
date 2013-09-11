@@ -134,4 +134,8 @@ class Employees extends AZActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+    public function countByEmpID($emp_id){
+        return $this->count('emp_id=:emp_id', array(':emp_id' => $emp_id));
+    }
 }

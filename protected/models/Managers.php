@@ -114,4 +114,8 @@ class Managers extends AZActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function countByEmail($email){
+        return $this->count('email=:email', array(':email' => $email));
+    }
 }
