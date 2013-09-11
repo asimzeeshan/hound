@@ -4,13 +4,17 @@
  * This is the model class for table "managers".
  *
  * The followings are the available columns in table 'managers':
- * @property integer $id
+ * @property string $id
  * @property string $name
  * @property string $email
  * @property string $created
  * @property string $created_by
  * @property string $modified
  * @property string $modified_by
+ *
+ * The followings are the available model relations:
+ * @property Employees[] $employees
+ * @property Employees[] $employees1
  */
 class Managers extends AZActiveRecord
 {
@@ -46,8 +50,10 @@ class Managers extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		$relations = parent::relations();
-		return $relations;
+		return array(
+			'employees' => array(self::HAS_MANY, 'Employees', 'manager2_id'),
+			'employees1' => array(self::HAS_MANY, 'Employees', 'manager1_id'),
+		);
 	}
 
 	/**
@@ -84,7 +90,7 @@ class Managers extends AZActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('id',$this->id,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('created',$this->created,true);
