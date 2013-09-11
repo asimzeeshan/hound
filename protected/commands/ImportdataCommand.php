@@ -75,7 +75,7 @@ class ImportdataCommand extends CConsoleCommand {
 				} else {
 					echo "   - WARNING: Failed adding ".$data['emp_id']." \n";
 					foreach ($device->getErrors() as $error) {
-						echo "    => ".$error[0]."\n";
+						echo "     => ".$error[0]."\n";
 					}
 					echo "\n";
 				}
@@ -103,7 +103,7 @@ class ImportdataCommand extends CConsoleCommand {
 				} else {
 					echo "   - WARNING: Failed adding ".$data['emp_id']." \n";
 					foreach ($device->getErrors() as $error) {
-						echo "    => ".$error[0]."\n";
+						echo "     => ".$error[0]."\n";
 					}
 					echo "\n";
 				}				
@@ -176,7 +176,7 @@ class ImportdataCommand extends CConsoleCommand {
 		} else {
 			echo "   - WARNING: Failed adding ".$data['hostname']."\n";
 			foreach ($device->getErrors() as $error) {
-				echo "    => ".$error[0]."\n";	
+				echo "     => ".$error[0]."\n";	
 			}
 			echo "\n";
 			return false;
