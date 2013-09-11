@@ -31,16 +31,19 @@ class EmployeesCommand extends CConsoleCommand {
 			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so ADDING NEW RECORD \n\n";
 
 			$employee = new Employees;
+			$employee->emp_id 		= $data['emp_id'];
 			$employee->name 		= $data['emp_name'];
 			$employee->email 		= $data['emp_company_email'];
 			$employee->joining_date = $data['emp_joining_date'];
 			$employee->location		= $data['emp_location'];
 			$employee->hall			= $data['emp_hall'];
 			$manager1_id = $this->_getManagerID((string)$data['emp_manager_name'], (string)$data['emp_manager_email']);
+			echo " Received Manager1 ID= ".$manager1_id."\n";
 			if (!empty($manager1_id))
 				$employee->manager1_id	= $manager1_id;
 				
 			$manager2_id = $this->_getManagerID((string)$data['emp_manager2_name'], (string)$data['emp_manager2_email']);
+			echo " Received Manager2 ID= ".$manager2_id."\n";
 			if (!empty($manager2_id))
 				$employee->manager2_id	= $manager2_id;
 	
@@ -48,7 +51,9 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified		= new CDbExpression('NOW()');
 			$employee->modified_by	= 1; // added by SysAdmin
+			print_r($employee->attributes);
 			$employee->save();
+			echo "  ********** SAVED!! **********\n\n\n";
 		} else {
 			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so UPDATING RECORD \n\n";
 
@@ -59,22 +64,23 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->location		= $data['emp_location'];
 			$employee->hall			= $data['emp_hall'];
 			$manager1_id = $this->_getManagerID(trim($data['emp_manager_name']), trim($data['emp_manager_email']));
-			echo " Received Manager1 ID= ".$manager1_id;
+			echo " Received Manager1 ID= ".$manager1_id."\n";
 			if (!empty($manager1_id))
 				$employee->manager1_id	= $manager1_id;
 				
 			$manager2_id = $this->_getManagerID(trim($data['emp_manager2_name']), trim($data['emp_manager2_email']));
-			echo " Received Manager2 ID= ".$manager2_id;
+			echo " Received Manager2 ID= ".$manager2_id."\n";
 			if (!empty($manager2_id))
 				$employee->manager2_id	= $manager2_id;
 	
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified_by	= 1; // added by SysAdmin
+			print_r($employee->attributes);
 			$employee->save();
+			echo "  ********** UPDATED!! **********\n\n\n";
 		}
 		unset($chk);
 		unset($employee);
-		exit;
 	}
 	
 	private function _getManagerID($name, $email) {
@@ -92,10 +98,10 @@ class EmployeesCommand extends CConsoleCommand {
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					echo "  New Manager Added with id=".$manager->id."\n";
+					echo " - New Manager Added with id=".$manager->id."\n";
 					return $manager->id;
 				} else {
-					echo "  Manager ID = ".$manager->id;
+					echo " - Manager ID = ".$manager->id;
 					return $manager->id;
 				}				
 			} else {
@@ -107,17 +113,17 @@ class EmployeesCommand extends CConsoleCommand {
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					echo "  Manager Updated with id=".$manager->id."\n";
+					echo " - Manager Updated with id=".$manager->id."\n";
 					return $manager->id;
 				} else {
-					echo "  Manager ID = ".$manager->id;
+					echo " - Manager ID = ".$manager->id;
 					return $manager->id;
 				}
 			}
 		unset($chk);
 		unset($manager);
 		} else { // email is empty
-			echo " Manager ID is NULL, no email received \n\n";
+			echo " WARNING: Manager ID is NULL because no email received \n\n";
 			return false;
 		}
 	}
