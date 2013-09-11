@@ -7,18 +7,20 @@
  * @property string $id
  * @property string $emp_id
  * @property string $name
- * @property string $ip_address
- * @property string $mac_address
- * @property string $hostname
- * @property string $description
- * @property string $line_manager
+ * @property string $email
+ * @property string $joining_date
  * @property string $location
  * @property string $hall
- * @property string $opt
+ * @property string $manager1_id
+ * @property string $manager2_id
  * @property string $created
  * @property string $created_by
  * @property string $modified
  * @property string $modified_by
+ *
+ * The followings are the available model relations:
+ * @property Managers $manager2
+ * @property Managers $manager1
  */
 class Employees extends AZActiveRecord
 {
@@ -38,14 +40,14 @@ class Employees extends AZActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created_by, modified, modified_by', 'required'),
-			array('emp_id, name, ip_address, mac_address, hostname, description, line_manager, location, hall', 'length', 'max'=>255),
-			array('opt', 'length', 'max'=>256),
+			array('emp_id, name, email, joining_date, location, hall, created, created_by, modified, modified_by', 'required'),
+			array('emp_id, manager1_id, manager2_id', 'length', 'max'=>5),
+			array('name, location, hall', 'length', 'max'=>255),
+			array('email', 'length', 'max'=>75),
 			array('created_by, modified_by', 'length', 'max'=>11),
-			array('created', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, emp_id, name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
+			array('id, emp_id, name, email, joining_date, location, hall, manager1_id, manager2_id, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,8 +58,10 @@ class Employees extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		$relations = parent::relations();
-		return $relations;
+		return array(
+			'manager2' => array(self::BELONGS_TO, 'Managers', 'manager2_id'),
+			'manager1' => array(self::BELONGS_TO, 'Managers', 'manager1_id'),
+		);
 	}
 
 	/**
@@ -67,16 +71,14 @@ class Employees extends AZActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'emp_id' => 'EmpID',
+			'emp_id' => 'Emp',
 			'name' => 'Name',
-			'ip_address' => 'IP',
-			'mac_address' => 'MAC',
-			'hostname' => 'Hostname',
-			'description' => 'Description',
-			'line_manager' => 'Line Manager',
+			'email' => 'Email',
+			'joining_date' => 'Joining Date',
 			'location' => 'Location',
 			'hall' => 'Hall',
-			'opt' => 'Seg Opt',
+			'manager1_id' => 'Manager1',
+			'manager2_id' => 'Manager2',
 			'created' => 'Created',
 			'created_by' => 'Created By',
 			'modified' => 'Modified',
@@ -105,14 +107,12 @@ class Employees extends AZActiveRecord
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('emp_id',$this->emp_id,true);
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('ip_address',$this->ip_address,true);
-		$criteria->compare('mac_address',$this->mac_address,true);
-		$criteria->compare('hostname',$this->hostname,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('line_manager',$this->line_manager,true);
+		$criteria->compare('email',$this->email,true);
+		$criteria->compare('joining_date',$this->joining_date,true);
 		$criteria->compare('location',$this->location,true);
 		$criteria->compare('hall',$this->hall,true);
-		$criteria->compare('opt',$this->opt,true);
+		$criteria->compare('manager1_id',$this->manager1_id,true);
+		$criteria->compare('manager2_id',$this->manager2_id,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('created_by',$this->created_by,true);
 		$criteria->compare('modified',$this->modified,true);
@@ -120,7 +120,6 @@ class Employees extends AZActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>25,),
 		));
 	}
 
@@ -134,5 +133,4 @@ class Employees extends AZActiveRecord
 	{
 		return parent::model($className);
 	}
-	
 }

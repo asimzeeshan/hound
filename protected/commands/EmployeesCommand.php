@@ -9,8 +9,7 @@ class EmployeesCommand extends CConsoleCommand {
 		if ((string)$NextHRM->getSittingDetail->status == "success") {
 			$data = json_decode($NextHRM->getSittingDetail->response);
 			foreach ($data as $record) {
-				//$this->_replaceRecord($record);
-				print_r($record);exit;
+				$this->_replaceRecord($record);
 			}
 		} else {
 			echo "Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status;
@@ -24,6 +23,7 @@ class EmployeesCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
+		echo "_replaceRecord()"; print_r($data);exit;
 		Devices::model()->updateAll(array(
 											'modified_by'	=> 1, 
 											'hall'			=> (string)$data->emp_hall, 

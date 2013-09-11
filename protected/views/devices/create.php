@@ -3,14 +3,10 @@
 /* @var $model Devices */
 
 $this->breadcrumbs=array(
-	'Devices'=>array('index'),
+	'Devices'=>array('admin'),
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'List Devices', 'url'=>array('index')),
-	array('label'=>'Manage Devices', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Create Devices</h1>
