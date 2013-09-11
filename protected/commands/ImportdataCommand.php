@@ -56,60 +56,60 @@ class ImportdataCommand extends CConsoleCommand {
 			$this->_addRecord($data);
 		} elseif ($records==1) {
 			echo "  - $records matched for hostname = ".$data['hostname']." found ... UPDATING 1 RECORD \n";
-			$employee					= Devices::model()->countByEmpID($data['emp_id']);
-			if ($employee==0) {
+			$device					= Devices::model()->countByEmpID($data['emp_id']);
+			if ($device==0) {
 				echo "   - This Hostname does not have correct EmpID \n";
 				$this->_addRecord($data);
 			} else {
-				$employee				= Devices::model()->find('hostname=:hostname', array(':hostname' => $data['hostname']));
+				$device				= Devices::model()->find('hostname=:hostname', array(':hostname' => $data['hostname']));
 				if ($data['name']!="")
-					$employee->name		= $data['name'];
-				$employee->mac_address	= $data['mac'];
-				$employee->ip_address	= $data['ipaddr'];
-				$employee->hostname		= $data['hostname'];
+					$device->name		= $data['name'];
+				$device->mac_address	= $data['mac'];
+				$device->ip_address	= $data['ipaddr'];
+				$device->hostname		= $data['hostname'];
 				if ($data['descr']!="")
-					$employee->description	= $data['descr'];
-				$employee->modified_by	= 1;
-				if ($employee->save()) {
+					$device->description	= $data['descr'];
+				$device->modified_by	= 1;
+				if ($device->save()) {
 					echo "   - Saved EmpID='".$data['emp_id']."' / HOSTNAME='".$data['hostname']."' successfully! \n\n";
 				} else {
 					echo "   - WARNING: Failed adding ".$data['emp_id']." \n";
-					foreach ($employee->getErrors() as $error) {
+					foreach ($device->getErrors() as $error) {
 						echo "    => ".$error[0]."\n";
 					}
 					echo "\n";
 				}
 			}
 			// free memory
-			unset($employee);
+			unset($device);
 		} elseif ($records > 1) {
 			echo "  - $records matched for hostname = ".$data['hostname']." found ... UPDATING $records RECORD \n";
-			$employee					= Devices::model()->countByHostNameEmpID($data['emp_id'], $data['hostname']);
-			if ($employee==0) {
+			$device					= Devices::model()->countByHostNameEmpID($data['emp_id'], $data['hostname']);
+			if ($device==0) {
 				echo "   - This Hostname does not have correct EmpID \n";
 				$this->_addRecord($data);
 			} else {
-				$employee				= Devices::model()->find('emp_id=:emp_id AND hostname=:hostname',
+				$device				= Devices::model()->find('emp_id=:emp_id AND hostname=:hostname',
 														array(':emp_id'=>$data['emp_id'], ':hostname'=>$data['hostname']));
 				if ($data['name']!="")
-					$employee->name		= $data['name'];
-				$employee->mac_address	= $data['mac'];
-				$employee->ip_address	= $data['ipaddr'];
+					$device->name		= $data['name'];
+				$device->mac_address	= $data['mac'];
+				$device->ip_address	= $data['ipaddr'];
 				if ($data['descr']!="")
-					$employee->description	= $data['descr'];
-				$employee->modified_by	= 1;
-				if ($employee->save()) {
+					$device->description	= $data['descr'];
+				$device->modified_by	= 1;
+				if ($device->save()) {
 					echo "   - Saved EmpID='".$data['emp_id']."' / HOSTNAME='".$data['hostname']."' successfully! \n\n";
 				} else {
 					echo "   - WARNING: Failed adding ".$data['emp_id']." \n";
-					foreach ($employee->getErrors() as $error) {
+					foreach ($device->getErrors() as $error) {
 						echo "    => ".$error[0]."\n";
 					}
 					echo "\n";
 				}				
 			}
 		} else {
-			//$employee_records 		= Devices::model()->countByHostName($data['emp_id']);
+			//$device_records 		= Devices::model()->countByHostName($data['emp_id']);
 			echo " WARNING! WARNING! WARNING! WARNING! WARNING! ";
 			echo "  - RECORDS FOUND ARE '$records', loggically incorrect!! \n";
 			print_r($data);
@@ -129,8 +129,8 @@ class ImportdataCommand extends CConsoleCommand {
 			$emp_id = '';
 		} else {
 			$emp_id	= str_pad(trim(substr($descr,0,$first_dash)), 5, "0", STR_PAD_LEFT);
-			//$employeeDataAPIresponse = $this->_callNextHRM($emp_id);
-			//$employeeDataArray = json_decode($employeeDataAPIresponse->getSitting->response);
+			//$deviceDataAPIresponse = $this->_callNextHRM($emp_id);
+			//$deviceDataArray = json_decode($deviceDataAPIresponse->getSitting->response);
 		}
 		
 		// PATCH1: if we dont have a "-" in the string, then dont truncate
@@ -155,27 +155,27 @@ class ImportdataCommand extends CConsoleCommand {
 	private function _addRecord($data) {
 		echo "   This is _addRecord(); \n";
 
-		$employee 				= new Devices;
-		$employee->emp_id		= $data['emp_id'];
-		$employee->name			= ($data['name'] != "") ? $data['name'] : "";
-		$employee->mac_address	= $data['mac'];
-		$employee->ip_address	= $data['ipaddr'];
-		$employee->hostname		= $data['hostname'];
-		$employee->description	= ($data['descr'] != "") ? $data['descr'] : "";
-		$employee->created		= new CDbExpression('NOW()');
-		$employee->created_by	= 1;
-		$employee->modified_by	= 1;
-		$employee->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
-		$employee->hall			= "N/A";
-		$employee->line_manager	= "N/A";
-		$employee->location		= "N/A";
+		$device 				= new Devices;
+		$device->emp_id		= $data['emp_id'];
+		$device->name			= ($data['name'] != "") ? $data['name'] : "";
+		$device->mac_address	= $data['mac'];
+		$device->ip_address	= $data['ipaddr'];
+		$device->hostname		= $data['hostname'];
+		$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
+		$device->created		= new CDbExpression('NOW()');
+		$device->created_by	= 1;
+		$device->modified_by	= 1;
+		$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
+		$device->hall			= "N/A";
+		$device->line_manager	= "N/A";
+		$device->location		= "N/A";
 
-		if ($employee->save()) {
+		if ($device->save()) {
 			echo "   - Record ".$data['hostname']." added! \n";
 			return true;
 		} else {
 			echo "   - WARNING: Failed adding ".$data['hostname']."\n";
-			foreach ($employee->getErrors() as $error) {
+			foreach ($device->getErrors() as $error) {
 				echo "    => ".$error[0]."\n";	
 			}
 			echo "\n";
