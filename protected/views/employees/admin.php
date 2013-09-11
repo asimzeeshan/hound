@@ -3,12 +3,12 @@
 /* @var $model Employees */
 
 $this->breadcrumbs=array(
-	'Employees'=>array('admin'),
+	'Employees'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'Manage Employees', 'url'=>array('admin')),
+	array('label'=>'List Employees', 'url'=>array('index')),
 	array('label'=>'Create Employees', 'url'=>array('create')),
 );
 
@@ -48,15 +48,13 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'emp_id',
 		'name',
-		'ip_address',
-		'mac_address',
-		'hostname',
-		/*
-		'description',
-		'line_manager',
+		'email',
+		'joining_date',
 		'location',
+		/*
 		'hall',
-		'opt',
+		'manager1_id',
+		'manager2_id',
 		'created',
 		'created_by',
 		'modified',

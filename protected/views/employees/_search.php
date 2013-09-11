@@ -18,7 +18,7 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'emp_id'); ?>
-		<?php echo $form->textField($model,'emp_id',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'emp_id',array('size'=>5,'maxlength'=>5)); ?>
 	</div>
 
 	<div class="row">
@@ -27,28 +27,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'ip_address'); ?>
-		<?php echo $form->textField($model,'ip_address',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->label($model,'email'); ?>
+		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>75)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'mac_address'); ?>
-		<?php echo $form->textField($model,'mac_address',array('size'=>60,'maxlength'=>255)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'hostname'); ?>
-		<?php echo $form->textField($model,'hostname',array('size'=>60,'maxlength'=>255)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'description'); ?>
-		<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>255)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'line_manager'); ?>
-		<?php echo $form->textField($model,'line_manager',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->label($model,'joining_date'); ?>
+		<?php echo $form->textField($model,'joining_date'); ?>
 	</div>
 
 	<div class="row">
@@ -62,8 +47,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'opt'); ?>
-		<?php echo $form->textField($model,'opt',array('size'=>60,'maxlength'=>256)); ?>
+		<?php echo $form->label($model,'manager1_id'); ?>
+		<?php echo $form->textField($model,'manager1_id',array('size'=>5,'maxlength'=>5)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'manager2_id'); ?>
+		<?php echo $form->textField($model,'manager2_id',array('size'=>5,'maxlength'=>5)); ?>
 	</div>
 
 	<div class="row">

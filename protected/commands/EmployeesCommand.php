@@ -5,21 +5,17 @@ class EmployeesCommand extends CConsoleCommand {
 	}
 	
 	public function run($args) {
-		print_r($this->_getNextHRMData());exit;
-		$employees = Employees::model()->findAll(array('condition'=>'emp_id!=""'));
-		foreach ($employees as $employee) {
-			$NextHRM = $this->_callNextHRM($employee->emp_id);
-			if ((string)$NextHRM->getSitting->status == "success") {
-				$data = json_decode($NextHRM->getSitting->response);
-				foreach ($data as $record) {
-					$this->_updateRecord($employee->emp_id, $record);
-				}
-			} else {
-				echo "Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status;
+		$NextHRM = $this->_getNextHRMData();
+		if ((string)$NextHRM->getSittingDetail->status == "success") {
+			$data = json_decode($NextHRM->getSittingDetail->response);
+			foreach ($data as $record) {
+				//$this->_replaceRecord($record);
+				print_r($record);exit;
 			}
-		// sleep for 1 second
-		sleep(1);
+		} else {
+			echo "Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status;
 		}
+		exit;
 
 	}
 	
@@ -27,7 +23,7 @@ class EmployeesCommand extends CConsoleCommand {
 		return simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=ace0081960cdefbd537ae5689f63a3bd&method=getSittingDetail&userName=noc@nexthrm.com');
 	}
 	
-	private function _updateRecord($emp_id, $data) {
+	private function _replaceRecord($data) {
 		Devices::model()->updateAll(array(
 											'modified_by'	=> 1, 
 											'hall'			=> (string)$data->emp_hall, 

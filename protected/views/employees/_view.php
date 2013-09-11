@@ -17,24 +17,12 @@
 	<?php echo CHtml::encode($data->name); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('ip_address')); ?>:</b>
-	<?php echo CHtml::encode($data->ip_address); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
+	<?php echo CHtml::encode($data->email); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('mac_address')); ?>:</b>
-	<?php echo CHtml::encode($data->mac_address); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('hostname')); ?>:</b>
-	<?php echo CHtml::encode($data->hostname); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-	<?php echo CHtml::encode($data->description); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('line_manager')); ?>:</b>
-	<?php echo CHtml::encode($data->line_manager); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('joining_date')); ?>:</b>
+	<?php echo CHtml::encode($data->joining_date); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('location')); ?>:</b>
@@ -45,8 +33,13 @@
 	<?php echo CHtml::encode($data->hall); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('opt')); ?>:</b>
-	<?php echo CHtml::encode($data->opt); ?>
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('manager1_id')); ?>:</b>
+	<?php echo CHtml::encode($data->manager1_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('manager2_id')); ?>:</b>
+	<?php echo CHtml::encode($data->manager2_id); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created')); ?>:</b>
@@ -54,7 +47,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('created_by')); ?>:</b>
-	<?php echo CHtml::encode($data->CreatedBy->name()); ?>
+	<?php echo CHtml::encode($data->created_by); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('modified')); ?>:</b>
@@ -62,7 +55,9 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('modified_by')); ?>:</b>
-	<?php echo CHtml::encode($data->ModifiedBy->name()); ?>
+	<?php echo CHtml::encode($data->modified_by); ?>
 	<br />
+
+	*/ ?>
 
 </div>

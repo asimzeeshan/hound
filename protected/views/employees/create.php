@@ -3,11 +3,12 @@
 /* @var $model Employees */
 
 $this->breadcrumbs=array(
-	'Employees'=>array('admin'),
+	'Employees'=>array('index'),
 	'Create',
 );
 
 $this->menu=array(
+	array('label'=>'List Employees', 'url'=>array('index')),
 	array('label'=>'Manage Employees', 'url'=>array('admin')),
 );
 ?>
