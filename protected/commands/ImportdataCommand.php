@@ -77,6 +77,7 @@ class ImportdataCommand extends CConsoleCommand {
 					foreach ($employee->getErrors() as $error) {
 						echo "    => ".$error[0]."\n";
 					}
+					echo "\n";
 				}
 			}
 			// free memory
@@ -104,6 +105,7 @@ class ImportdataCommand extends CConsoleCommand {
 					foreach ($employee->getErrors() as $error) {
 						echo "    => ".$error[0]."\n";
 					}
+					echo "\n";
 				}				
 			}
 		} else {
@@ -176,6 +178,7 @@ class ImportdataCommand extends CConsoleCommand {
 			foreach ($employee->getErrors() as $error) {
 				echo "    => ".$error[0]."\n";	
 			}
+			echo "\n";
 			return false;
 		}
 	}
