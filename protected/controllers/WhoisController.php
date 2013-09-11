@@ -51,14 +51,14 @@ class WhoisController extends Controller
 		if( isset($_REQUEST['yt0']) ) { // if form is submitted (button id)
 			if($_REQUEST['search'] != '') { // if the search has some value
 				if($_REQUEST['type'] == 'emp_id') {
-					$model = new Employees;
+					$model = new Devices;
 					$users_details = $model->searchByEmpID( $_REQUEST['search'] );
 					$arraynew = array();
 					foreach( $users_details as $details ) {
 						$arraynew[] = $details->attributes;
 					}
 				} elseif ($_REQUEST['type'] == 'ip_addr') {
-					$model = new Employees;
+					$model = new Devices;
 					$users_details = $model->searchByIP( $_REQUEST['search'] );
 					$arraynew = array();
 					foreach( $users_details as $details ) {

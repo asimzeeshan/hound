@@ -5,7 +5,7 @@ class NexthrmCommand extends CConsoleCommand {
 	}
 	
 	public function run($args) {
-		$employees = Employees::model()->findAll(array('condition'=>'emp_id!=""'));
+		$employees = Devices::model()->findAll(array('condition'=>'emp_id!=""'));
 		foreach ($employees as $employee) {
 			$NextHRM = $this->_callNextHRM($employee->emp_id);
 			if ((string)$NextHRM->getSitting->status == "success") {
@@ -27,7 +27,7 @@ class NexthrmCommand extends CConsoleCommand {
 	}
 	
 	private function _updateRecord($emp_id, $data) {
-		Employees::model()->updateAll(array(
+		Devices::model()->updateAll(array(
 											'modified_by'	=> 1, 
 											'hall'			=> (string)$data->emp_hall, 
 											'line_manager'	=> (string)$data->emp_manager_name, 

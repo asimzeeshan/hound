@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "employees".
+ * This is the model class for table "devices".
  *
- * The followings are the available columns in table 'employees':
+ * The followings are the available columns in table 'devices':
  * @property string $id
  * @property string $emp_id
  * @property string $name
@@ -20,14 +20,14 @@
  * @property string $modified
  * @property string $modified_by
  */
-class Employees extends AZActiveRecord
+class Devices extends AZActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'employees';
+		return 'devices';
 	}
 
 	/**
@@ -38,11 +38,11 @@ class Employees extends AZActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created_by, modified, modified_by', 'required'),
+			array('name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'required'),
+			array('id', 'length', 'max'=>20),
 			array('emp_id, name, ip_address, mac_address, hostname, description, line_manager, location, hall', 'length', 'max'=>255),
 			array('opt', 'length', 'max'=>256),
 			array('created_by, modified_by', 'length', 'max'=>11),
-			array('created', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, emp_id, name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
@@ -56,8 +56,8 @@ class Employees extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		$relations = parent::relations();
-		return $relations;
+		return array(
+		);
 	}
 
 	/**
@@ -67,16 +67,16 @@ class Employees extends AZActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'emp_id' => 'EmpID',
+			'emp_id' => 'Emp',
 			'name' => 'Name',
-			'ip_address' => 'IP',
-			'mac_address' => 'MAC',
+			'ip_address' => 'Ip Address',
+			'mac_address' => 'Mac Address',
 			'hostname' => 'Hostname',
 			'description' => 'Description',
 			'line_manager' => 'Line Manager',
 			'location' => 'Location',
 			'hall' => 'Hall',
-			'opt' => 'Seg Opt',
+			'opt' => 'Opt',
 			'created' => 'Created',
 			'created_by' => 'Created By',
 			'modified' => 'Modified',
@@ -120,7 +120,6 @@ class Employees extends AZActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>25,),
 		));
 	}
 
@@ -128,11 +127,69 @@ class Employees extends AZActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Employees the static model class
+	 * @return Devices the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * Enabling Search option based on hostname
+     *
+     */
+    public function countByEmpID($emp_id){
+        return $this->count('emp_id=:emp_id', array(':emp_id' => $emp_id));
+    }
 	
+    public function countByHostName($hostname){
+        return $this->count('hostname=:hostname', array(':hostname' => $hostname));
+    }
+	
+    public function countByHostNameEmpID($emp_id, $hostname){
+        return $this->count('emp_id=:emp_id AND hostname=:hostname', array(':emp_id'=>$emp_id, ':hostname'=>$hostname));
+    }
+	
+    public function searchByIp($ipaddress){
+        $match = addcslashes($ipaddress, '%_'); // escape LIKE's special characters
+
+            // directly into findAll()
+        $ipaddresses = $this->findAll(
+            'ip_address LIKE :ip_address',
+            array(':ip_address' => "%$match%")
+        );
+        return $ipaddresses;
+    }
+	
+	public function searchByEmpID($emp_id){
+          $emp_id  = addcslashes($emp_id, '%_'); // escape LIKE's special characters
+
+            // directly into findAll()
+        $users_details = $this->findAll(
+            'emp_id LIKE :emp_id',
+            array( ':emp_id' => "%$emp_id%" )
+        );
+        return $users_details;
+    }
+	
+	public function searchByEmpMac( $mac, $opt ){
+        // $match = $EmpID; //addcslashes($ipaddress, '%_'); // escape LIKE's special characters
+
+            // directly into findAll()
+			if($opt == NULL)
+			{
+				$users_details = $this->findAll(
+					'mac_address = :mac_address AND opt IS NULL',
+					array( ':mac_address' => $mac )
+				);
+			}
+			else
+			{
+				$users_details = $this->findAll(
+					'mac_address = :mac_address AND opt = :opt',
+					array( ':mac_address' => $mac, ':opt' => $opt )
+				);
+			}
+        return $users_details;
+    }
 }

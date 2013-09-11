@@ -49,16 +49,16 @@ class ImportdataCommand extends CConsoleCommand {
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		$records 					= Employees::model()->countByHostName($data['hostname']);
+		$records 					= Devices::model()->countByHostName($data['hostname']);
 		if ($records==0) {
 			$this->_addRecord($data);
 		} elseif ($records==1) {
-			$employee					= Employees::model()->countByEmpID($data['emp_id']);
+			$employee					= Devices::model()->countByEmpID($data['emp_id']);
 			if ($employee==0) {
 				echo "This HOSTNAME does not have correct EmpID \n";
 				$this->_addRecord($data);
 			} else {
-				$employee				= Employees::model()->find('hostname=:hostname', array(':hostname' => $data['hostname']));
+				$employee				= Devices::model()->find('hostname=:hostname', array(':hostname' => $data['hostname']));
 				if ($data['name']!="")
 					$employee->name		= $data['name'];
 				$employee->mac_address	= $data['mac'];
@@ -79,12 +79,12 @@ class ImportdataCommand extends CConsoleCommand {
 			// free memory
 			unset($employee);
 		} elseif ($records > 1) {
-			$employee					= Employees::model()->countByHostNameEmpID($data['emp_id'], $data['hostname']);
+			$employee					= Devices::model()->countByHostNameEmpID($data['emp_id'], $data['hostname']);
 			if ($employee==0) {
 				echo "This HOSTNAME does not have correct EmpID \n";
 				$this->_addRecord($data);
 			} else {
-				$employee				= Employees::model()->find('emp_id=:emp_id AND hostname=:hostname',
+				$employee				= Devices::model()->find('emp_id=:emp_id AND hostname=:hostname',
 														array(':emp_id'=>$data['emp_id'], ':hostname'=>$data['hostname']));
 				if ($data['name']!="")
 					$employee->name		= $data['name'];
@@ -103,7 +103,7 @@ class ImportdataCommand extends CConsoleCommand {
 				}				
 			}
 		} else {
-			//$employee_records 		= Employees::model()->countByHostName($data['emp_id']);
+			//$employee_records 		= Devices::model()->countByHostName($data['emp_id']);
 			echo "WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! ";
 			print_r($data);
 		}
@@ -146,7 +146,7 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _addRecord($data) {
-		$employee 				= new Employees;
+		$employee 				= new Devices;
 		$employee->emp_id		= $data['emp_id'];
 		$employee->name			= ($data['name'] != "") ? $data['name'] : "";
 		$employee->mac_address	= $data['mac'];
