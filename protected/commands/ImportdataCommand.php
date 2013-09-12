@@ -45,7 +45,7 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _processNode($obj, $opt) {
-		echo " * Found ".$obj->ipaddr." having MAC ".$obj->mac." and the hostname is ".$obj->hostname." \n";
+		echo "- Found ".$obj->ipaddr." having MAC ".$obj->mac." and the hostname is ".$obj->hostname." \n";
 		
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
@@ -147,6 +147,7 @@ class ImportdataCommand extends CConsoleCommand {
 				return false;
 			}	
 		}
+		echo "\n\n";
 
 
 	}
