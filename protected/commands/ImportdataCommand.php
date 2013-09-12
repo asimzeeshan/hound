@@ -90,7 +90,7 @@ class ImportdataCommand extends CConsoleCommand {
 	
 	private function _replaceRecord($data) {
 		echo "   This is _replaceRecord(); \n";
-		echo " EmpID: ".$data['emp_id']." \n";
+		echo "   - Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 
