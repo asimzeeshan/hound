@@ -37,15 +37,21 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->joining_date = $data['emp_joining_date'];
 			$employee->location		= $data['emp_location'];
 			$employee->hall			= $data['emp_hall'];
-			$manager1_id = $this->_getManagerID((string)$data['emp_manager_name'], (string)$data['emp_manager_email']);
-			echo " Received Manager1 ID= ".$manager1_id."\n";
-			if (!empty($manager1_id))
+			$manager1_id = $this->_getManagerID(trim($data['emp_manager_name']), trim($data['emp_manager_email']));
+			if (!empty($manager1_id)) {
+				echo " - Received Manager1 ID=".$manager1_id."\n";
 				$employee->manager1_id	= $manager1_id;
+			} else {
+				echo " - WARNING: No Manager1 ID received!\n";
+			}
 				
-			$manager2_id = $this->_getManagerID((string)$data['emp_manager2_name'], (string)$data['emp_manager2_email']);
-			echo " Received Manager2 ID= ".$manager2_id."\n";
-			if (!empty($manager2_id))
+			$manager2_id = $this->_getManagerID(trim($data['emp_manager2_name']), trim($data['emp_manager2_email']));
+			if (!empty($manager2_id)) {
+				echo " - Received Manager2 ID=".$manager2_id."\n";
 				$employee->manager2_id	= $manager2_id;
+			} else {
+				echo " - WARNING: No Manager2 ID received!\n";
+			}
 	
 			$employee->created		= new CDbExpression('NOW()');
 			$employee->created_by	= 1; // added by SysAdmin
@@ -72,14 +78,20 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->location		= $data['emp_location'];
 			$employee->hall			= $data['emp_hall'];
 			$manager1_id = $this->_getManagerID(trim($data['emp_manager_name']), trim($data['emp_manager_email']));
-			echo " Received Manager1 ID= ".$manager1_id."\n";
-			if (!empty($manager1_id))
+			if (!empty($manager1_id)) {
+				echo " - Received Manager1 ID=".$manager1_id."\n";
 				$employee->manager1_id	= $manager1_id;
+			} else {
+				echo " - WARNING: No Manager1 ID received!\n";
+			}
 				
 			$manager2_id = $this->_getManagerID(trim($data['emp_manager2_name']), trim($data['emp_manager2_email']));
-			echo " Received Manager2 ID= ".$manager2_id."\n";
-			if (!empty($manager2_id))
+			if (!empty($manager2_id)) {
+				echo " - Received Manager2 ID=".$manager2_id."\n";
 				$employee->manager2_id	= $manager2_id;
+			} else {
+				echo " - WARNING: No Manager2 ID received!\n";
+			}
 	
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified_by	= 1; // added by SysAdmin
@@ -96,6 +108,8 @@ class EmployeesCommand extends CConsoleCommand {
 			}
 		}
 		unset($chk);
+		unset($manager1_id);
+		unset($manager2_id);
 		unset($employee);
 	}
 	
@@ -122,7 +136,6 @@ class EmployeesCommand extends CConsoleCommand {
 				}				
 			} else {
 				echo " Manager found with email $email = ".$chk->countByEmail((string)$email)." UPDATING RECORD \n";
-			
 				$manager = Managers::model()->find('name=:name', array(':name' => $name));
 				$manager->name			= $name;
 				$manager->email			= $email;
@@ -137,6 +150,8 @@ class EmployeesCommand extends CConsoleCommand {
 				}
 			}
 		unset($chk);
+		unset($manager1_id);
+		unset($manager2_id);
 		unset($manager);
 		} else { // email is empty
 			echo " WARNING: Manager ID is NULL because no email received \n\n";
