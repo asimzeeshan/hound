@@ -147,14 +147,22 @@ class Devices extends AZActiveRecord
         return $this->count('hostname=:hostname', array(':hostname' => $hostname));
     }
 	
+    public function countByMAC($mac_address){
+        return $this->count('mac_address=:mac_address', array(':mac_address' => $mac_address));
+    }
+	
+    public function countBySegMAC($mac, $opt){
+        return $this->count('mac_address=:mac_address AND opt=:opt', array(':mac_address'=>$mac, ':opt'=>$opt));
+    }
+	
     public function countByHostNameEmpID($emp_id, $hostname){
         return $this->count('emp_id=:emp_id AND hostname=:hostname', array(':emp_id'=>$emp_id, ':hostname'=>$hostname));
     }
 	
     public function searchByIp($ipaddress){
-        $match = addcslashes($ipaddress, '%_'); // escape LIKE's special characters
+		$match = addcslashes($ipaddress, '%_'); // escape LIKE's special characters
 
-            // directly into findAll()
+		// directly into findAll()
         $ipaddresses = $this->findAll(
             'ip_address LIKE :ip_address',
             array(':ip_address' => "%$match%")
@@ -163,34 +171,28 @@ class Devices extends AZActiveRecord
     }
 	
 	public function searchByEmpID($emp_id){
-          $emp_id  = addcslashes($emp_id, '%_'); // escape LIKE's special characters
+		$emp_id  = addcslashes($emp_id, '%_'); // escape LIKE's special characters
 
-            // directly into findAll()
-        $users_details = $this->findAll(
+		// directly into findAll()
+		$users_details = $this->findAll(
             'emp_id LIKE :emp_id',
             array( ':emp_id' => "%$emp_id%" )
         );
         return $users_details;
     }
 	
-	public function searchByEmpMac( $mac, $opt ){
-        // $match = $EmpID; //addcslashes($ipaddress, '%_'); // escape LIKE's special characters
-
-            // directly into findAll()
-			if($opt == NULL)
-			{
+	public function searchBySegMAC($mac, $opt){ // search by MAC in Segment
+		if($opt == NULL) {
 				$users_details = $this->findAll(
 					'mac_address = :mac_address AND opt IS NULL',
 					array( ':mac_address' => $mac )
 				);
-			}
-			else
-			{
+		} else {
 				$users_details = $this->findAll(
 					'mac_address = :mac_address AND opt = :opt',
 					array( ':mac_address' => $mac, ':opt' => $opt )
 				);
-			}
+		}
         return $users_details;
     }
 }
