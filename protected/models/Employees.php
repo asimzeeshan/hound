@@ -71,7 +71,7 @@ class Employees extends AZActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'emp_id' => 'Emp',
+			'emp_id' => 'Emp ID',
 			'name' => 'Name',
 			'email' => 'Email',
 			'joining_date' => 'Joining Date',
