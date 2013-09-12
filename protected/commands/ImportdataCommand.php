@@ -12,31 +12,31 @@ class ImportdataCommand extends CConsoleCommand {
 			$this->_processNode($node, "lan");
 		}
 		
-		echo "==================== Start OPT1 ====================";
+		echo "==================== Start OPT1 ====================\n\n";
 		
 		foreach ($xml->dhcpd->opt1->staticmap as $node) {
 			$this->_processNode($node, "opt1");
 		}
 		
-		echo "==================== Start OPT2 ====================";
+		echo "==================== Start OPT2 ====================\n\n";
 		
 		foreach ($xml->dhcpd->opt2->staticmap as $node) {
 			$this->_processNode($node, "opt2");
 		}
 		
-		echo "==================== Start OPT3 ====================";
+		echo "==================== Start OPT3 ====================\n\n";
 		
 		foreach ($xml->dhcpd->opt3->staticmap as $node) {
 			$this->_processNode($node, "opt3");
 		}
 		
-		echo "==================== Start OPT4 ====================";
+		echo "==================== Start OPT4 ====================\n\n";
 		
 		foreach ($xml->dhcpd->opt4->staticmap as $node) {
 			$this->_processNode($node, "opt4");
 		}
 		
-		echo "==================== Start OPTXXXX ====================";
+		echo "==================== Start OPTXXXX ====================\n\n";
 		
 		foreach ($xml->dhcpd->optxxxx->staticmap as $node) {
 			$this->_processNode($node, "optxxxx");
@@ -50,10 +50,10 @@ class ImportdataCommand extends CConsoleCommand {
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		$records 					= Devices::model()->countByHostName($data['hostname']);
-		if ($records==0) {
+		$records = Devices::model()->countBySegMAC($data['mac'], $data['opt']);
+		if ($records==0) { // no record fouund
 			echo "  - No match for hostname = ".$data['hostname']." found ... ADDING NEW RECORD \n";
-			$this->_addRecord($data);
+			$this->_replaceRecord($data);
 		} elseif ($records==1) {
 			echo "  - $records matched for hostname = ".$data['hostname']." found ... UPDATING 1 RECORD \n";
 			$device					= Devices::model()->countByEmpID($data['emp_id']);
@@ -152,18 +152,81 @@ class ImportdataCommand extends CConsoleCommand {
 					);
 	}
 	
+	private function _replaceRecord($data) {
+		echo "   This is _replaceRecord(); \n";
+		echo " EmpID: ".$data['emp_id']." \n";
+		$chk = new Devices;
+		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
+		if ($checkResult==0) { 
+			echo " ".$checkResult." device found so ADDING NEW RECORD \n\n";
+			
+			$device 				= new Devices;
+			$device->emp_id			= $data['emp_id'];
+			$device->name			= ($data['name'] != "") ? $data['name'] : "";
+			$device->mac_address	= $data['mac'];
+			$device->ip_address		= $data['ipaddr'];
+			$device->hostname		= $data['hostname'];
+			$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
+			$device->created		= new CDbExpression('NOW()');
+			$device->created_by		= 1;
+			$device->modified_by	= 1;
+			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
+			$device->hall			= "N/A";
+			$device->line_manager	= "N/A";
+			$device->location		= "N/A";
+	
+			if ($device->save()) {
+				echo "   - ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
+				return true;
+			} else {
+				echo "   - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
+				foreach ($device->getErrors() as $error) {
+					echo "     => ".$error[0]."\n";	
+				}
+				echo "\n";
+				return false;
+			}
+		} else {
+			echo " ".$checkResult." device(s) found so UPDATING RECORD \n\n";
+
+			$device 				= Devices::model()->find('mac_address=:mac AND opt=:opt', array(':mac'=>$data['mac'], ':opt'=>$data['opt']));
+			$device->emp_id			= $data['emp_id'];
+			$device->name			= ($data['name'] != "") ? $data['name'] : "";
+			$device->mac_address	= $data['mac'];
+			$device->ip_address		= $data['ipaddr'];
+			$device->hostname		= $data['hostname'];
+			$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
+			$device->modified_by	= 1;
+			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
+	
+			if ($device->save()) {
+				echo "   - UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
+				return true;
+			} else {
+				echo "   - WARNING: Failed UPDATING: MAC=".$data['mac']." / SEGMENT=".$data['opt']." \n";
+				foreach ($device->getErrors() as $error) {
+					echo "     => ".$error[0]."\n";	
+				}
+				echo "\n";
+				return false;
+			}	
+		}
+
+
+	}
+	
 	private function _addRecord($data) {
 		echo "   This is _addRecord(); \n";
 
 		$device 				= new Devices;
-		$device->emp_id		= $data['emp_id'];
+		$device->emp_id			= $data['emp_id'];
 		$device->name			= ($data['name'] != "") ? $data['name'] : "";
 		$device->mac_address	= $data['mac'];
-		$device->ip_address	= $data['ipaddr'];
+		$device->ip_address		= $data['ipaddr'];
 		$device->hostname		= $data['hostname'];
 		$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
 		$device->created		= new CDbExpression('NOW()');
-		$device->created_by	= 1;
+		$device->created_by		= 1;
 		$device->modified_by	= 1;
 		$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
 		$device->hall			= "N/A";
