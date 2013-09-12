@@ -45,12 +45,12 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _processNode($obj, $opt) {
-		echo "- Found ".$obj->ipaddr." having MAC ".$obj->mac." and the hostname is ".$obj->hostname." \n";
+		echo "Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname." \n";
 		
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		echo "  NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
+		echo " NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
 		$this->_replaceRecord($data);
 	}
 	
@@ -89,12 +89,12 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
-		echo "   This is _replaceRecord(); \n";
-		echo "   - Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
+		echo "  This is _replaceRecord(); \n";
+		echo "  - Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 
-			echo " ".$checkResult." device found so ADDING NEW RECORD \n\n";
+			echo "  - ".$checkResult." device found so ADDING NEW RECORD \n\n";
 			
 			$device 				= new Devices;
 			$device->emp_id			= $data['emp_id'];
@@ -123,7 +123,7 @@ class ImportdataCommand extends CConsoleCommand {
 				return false;
 			}
 		} else {
-			echo " ".$checkResult." device(s) found so UPDATING RECORD \n\n";
+			echo "  - ".$checkResult." device(s) found so UPDATING RECORD \n\n";
 
 			$device 				= Devices::model()->find('mac_address=:mac AND opt=:opt', array(':mac'=>$data['mac'], ':opt'=>$data['opt']));
 			$device->emp_id			= $data['emp_id'];
