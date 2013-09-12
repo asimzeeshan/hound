@@ -118,7 +118,7 @@ class EmployeesCommand extends CConsoleCommand {
 		if (!empty($email)) {
 			$chk = new Managers;
 			if ($chk->countByEmail((string)$email)==0) { 
-				echo " Manager found with email $email = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD \n";
+				echo " Manager found with email '$email' = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD \n";
 				$manager = new Managers;
 				$manager->name			= $name;
 				$manager->email			= $email;
@@ -133,7 +133,7 @@ class EmployeesCommand extends CConsoleCommand {
 					return $manager->id;
 				}				
 			} else {
-				echo " Manager found with email $email = ".$chk->countByEmail((string)$email)." UPDATING RECORD \n";
+				echo " Manager found with email '$email' = ".$chk->countByEmail((string)$email)." UPDATING RECORD \n";
 				$manager = Managers::model()->find('name=:name', array(':name' => $name));
 				$manager->name			= $name;
 				$manager->email			= $email;
@@ -152,7 +152,7 @@ class EmployeesCommand extends CConsoleCommand {
 		unset($manager2_id);
 		unset($manager);
 		} else { // email is empty
-			echo " WARNING: Manager ID is NULL because no email received \n\n";
+			echo " - WARNING: Manager ID is NULL because no email received \n";
 			return false;
 		}
 	}
