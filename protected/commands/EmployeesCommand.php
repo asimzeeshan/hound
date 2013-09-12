@@ -118,10 +118,10 @@ class EmployeesCommand extends CConsoleCommand {
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					echo "  - New Manager Added with id=".$manager->id."\n";
+					echo "  * New Manager Added with id=".$manager->id."\n";
 					return $manager->id;
 				} else {
-					echo "  - Manager ID = ".$manager->id;
+					echo "  * Manager ID = ".$manager->id;
 					return $manager->id;
 				}				
 			} else {
@@ -132,10 +132,10 @@ class EmployeesCommand extends CConsoleCommand {
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					echo "  - Manager Updated with id=".$manager->id."\n";
+					echo "  * Manager Updated with id=".$manager->id."\n";
 					return $manager->id;
 				} else {
-					echo "  - Manager ID = ".$manager->id;
+					echo "  * Manager ID = ".$manager->id;
 					return $manager->id;
 				}
 			}
@@ -144,7 +144,7 @@ class EmployeesCommand extends CConsoleCommand {
 		unset($manager2_id);
 		unset($manager);
 		} else { // email is empty
-			echo "  - WARNING! Manager ID is NULL because no email received \n";
+			echo "  * WARNING! Manager ID is NULL because no email received \n";
 			return false;
 		}
 	}
