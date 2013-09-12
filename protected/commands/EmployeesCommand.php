@@ -51,9 +51,17 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified		= new CDbExpression('NOW()');
 			$employee->modified_by	= 1; // added by SysAdmin
-			print_r($employee->attributes);
-			$employee->save();
-			echo "  ********** SAVED!! **********\n\n\n";
+			if ($employee->save()) {
+				echo "  - ADDED EMPID=".$data['emp_id']." record! \n";
+				return true;
+			} else {
+				echo "  - WARNING: Failed ADDING: EMPID=".$data['emp_id']." \n";
+				foreach ($employee->getErrors() as $error) {
+					echo "    => ".$error[0]."\n";	
+				}
+				echo "\n";
+				return false;
+			}
 		} else {
 			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so UPDATING RECORD \n\n";
 
@@ -75,9 +83,17 @@ class EmployeesCommand extends CConsoleCommand {
 	
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified_by	= 1; // added by SysAdmin
-			print_r($employee->attributes);
-			$employee->save();
-			echo "  ********** UPDATED!! **********\n\n\n";
+			if ($employee->save()) {
+				echo "  - ADDED EMPID=".$data['emp_id']." record! \n";
+				return true;
+			} else {
+				echo "  - WARNING: Failed ADDING: EMPID=".$data['emp_id']." \n";
+				foreach ($employee->getErrors() as $error) {
+					echo "    => ".$error[0]."\n";	
+				}
+				echo "\n";
+				return false;
+			}
 		}
 		unset($chk);
 		unset($employee);
