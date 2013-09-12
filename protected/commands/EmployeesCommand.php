@@ -9,7 +9,7 @@ class EmployeesCommand extends CConsoleCommand {
 		if ((string)$NextHRM->getSittingDetail->status == "success") {
 			$data = json_decode($NextHRM->getSittingDetail->response, true);
 			foreach ($data as $record) {
-				echo " ========== EmpID: ".$data['emp_id']." ========== \n";
+				echo " ========== EmpID: ".$record['emp_id']." ========== \n";
 				print_r($record);
 				$this->_replaceRecord($record);
 			}
