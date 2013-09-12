@@ -58,12 +58,12 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->modified		= new CDbExpression('NOW()');
 			$employee->modified_by	= 1; // added by SysAdmin
 			if ($employee->save()) {
-				echo "  - ADDED EMPID=".$data['emp_id']." record! \n";
+				echo " - ADDED EMPID=".$data['emp_id']." record! \n";
 				return true;
 			} else {
-				echo "  - WARNING: Failed ADDING: EMPID=".$data['emp_id']." \n";
+				echo " - WARNING: Failed ADDING: EMPID=".$data['emp_id']." \n";
 				foreach ($employee->getErrors() as $error) {
-					echo "    => ".$error[0]."\n";	
+					echo "   => ".$error[0]."\n";	
 				}
 				echo "\n";
 				return false;
@@ -96,10 +96,10 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified_by	= 1; // added by SysAdmin
 			if ($employee->save()) {
-				echo "  - ADDED EMPID=".$data['emp_id']." record! \n";
+				echo "  - UPDATED EMPID=".$data['emp_id']." record! \n";
 				return true;
 			} else {
-				echo "  - WARNING: Failed ADDING: EMPID=".$data['emp_id']." \n";
+				echo "  - WARNING: Failed UPDATING EMPID=".$data['emp_id']." \n";
 				foreach ($employee->getErrors() as $error) {
 					echo "    => ".$error[0]."\n";	
 				}
