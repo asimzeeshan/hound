@@ -52,6 +52,7 @@ class ImportdataCommand extends CConsoleCommand {
 
 		echo " NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
 		$this->_replaceRecord($data);
+		echo "\n\n";
 	}
 	
 	private function _parseObject($obj) {
@@ -147,9 +148,6 @@ class ImportdataCommand extends CConsoleCommand {
 				return false;
 			}	
 		}
-		echo "\n\n";
-
-
 	}
 	
 	private function _addRecord($data) {
