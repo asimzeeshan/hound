@@ -112,12 +112,12 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->location		= "N/A";
 	
 			if ($device->save()) {
-				echo "   - ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
+				echo "  - ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
 				return true;
 			} else {
-				echo "   - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
+				echo "  - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
 				foreach ($device->getErrors() as $error) {
-					echo "     => ".$error[0]."\n";	
+					echo "    => ".$error[0]."\n";	
 				}
 				echo "\n";
 				return false;
@@ -136,12 +136,12 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
 	
 			if ($device->save()) {
-				echo "   - UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
+				echo "  - UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
 				return true;
 			} else {
-				echo "   - WARNING: Failed UPDATING: MAC=".$data['mac']." / SEGMENT=".$data['opt']." \n";
+				echo "  - WARNING: Failed UPDATING: MAC=".$data['mac']." / SEGMENT=".$data['opt']." \n";
 				foreach ($device->getErrors() as $error) {
-					echo "     => ".$error[0]."\n";	
+					echo "    => ".$error[0]."\n";	
 				}
 				echo "\n";
 				return false;
