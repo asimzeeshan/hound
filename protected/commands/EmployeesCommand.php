@@ -115,8 +115,6 @@ class EmployeesCommand extends CConsoleCommand {
 	
 	private function _getManagerID($name, $email) {
 		echo "This is _getManagerID(); \n";
-		echo " - Received Name = ".$name."\n";
-		echo " - Received Email = ".$email."\n";
 		if (!empty($email)) {
 			$chk = new Managers;
 			if ($chk->countByEmail((string)$email)==0) { 
