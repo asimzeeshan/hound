@@ -95,7 +95,7 @@ class ImportdataCommand extends CConsoleCommand {
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 
-			echo "  - ".$checkResult." device found so ADDING NEW RECORD \n\n";
+			echo "  - ".$checkResult." device found so ADDING NEW RECORD \n";
 			
 			$device 				= new Devices;
 			$device->emp_id			= $data['emp_id'];
@@ -124,7 +124,7 @@ class ImportdataCommand extends CConsoleCommand {
 				return false;
 			}
 		} else {
-			echo "  - ".$checkResult." device(s) found so UPDATING RECORD \n\n";
+			echo "  - ".$checkResult." device(s) found so UPDATING RECORD \n";
 
 			$device 				= Devices::model()->find('mac_address=:mac AND opt=:opt', array(':mac'=>$data['mac'], ':opt'=>$data['opt']));
 			$device->emp_id			= $data['emp_id'];
