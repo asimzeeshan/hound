@@ -9,6 +9,7 @@ class EmployeesCommand extends CConsoleCommand {
 		if ((string)$NextHRM->getSittingDetail->status == "success") {
 			$data = json_decode($NextHRM->getSittingDetail->response, true);
 			foreach ($data as $record) {
+				echo " ========== EmpID: ".$data['emp_id']." ========== \n";
 				print_r($record);
 				$this->_replaceRecord($record);
 			}
@@ -25,7 +26,6 @@ class EmployeesCommand extends CConsoleCommand {
 	
 	private function _replaceRecord($data) {
 		echo "Executing _replaceRecord();\n";
-		echo " EmpID: ".$data['emp_id']." \n";
 		$chk = new Employees;
 		if ($chk->countByEmpID((int)$data['emp_id'])==0) { 
 			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so ADDING NEW RECORD \n\n";
