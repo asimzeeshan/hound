@@ -50,72 +50,8 @@ class ImportdataCommand extends CConsoleCommand {
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		$records = Devices::model()->countBySegMAC($data['mac'], $data['opt']);
-		if ($records==0) { // no record fouund
-			echo "  - No match for hostname = ".$data['hostname']." found ... ADDING NEW RECORD \n";
-			$this->_replaceRecord($data);
-		} elseif ($records==1) {
-			echo "  - $records matched for hostname = ".$data['hostname']." found ... UPDATING 1 RECORD \n";
-			$device					= Devices::model()->countByEmpID($data['emp_id']);
-			if ($device==0) {
-				echo "   - This Hostname does not have correct EmpID \n";
-				$this->_addRecord($data);
-			} else {
-				$device				= Devices::model()->find('hostname=:hostname', array(':hostname' => $data['hostname']));
-				if ($data['name']!="")
-					$device->name		= $data['name'];
-				$device->mac_address	= $data['mac'];
-				$device->ip_address	= $data['ipaddr'];
-				$device->hostname		= $data['hostname'];
-				if ($data['descr']!="")
-					$device->description	= $data['descr'];
-				$device->modified_by	= 1;
-				if ($device->save()) {
-					echo "   - Saved EmpID='".$data['emp_id']."' / HOSTNAME='".$data['hostname']."' successfully! \n\n";
-				} else {
-					echo "   - WARNING: Failed adding ".$data['emp_id']." \n";
-					foreach ($device->getErrors() as $error) {
-						echo "     => ".$error[0]."\n";
-					}
-					echo "\n";
-				}
-			}
-			// free memory
-			unset($device);
-		} elseif ($records > 1) {
-			echo "  - $records matched for hostname = ".$data['hostname']." found ... UPDATING $records RECORD \n";
-			$device					= Devices::model()->countByHostNameEmpID($data['emp_id'], $data['hostname']);
-			if ($device==0) {
-				echo "   - This Hostname does not have correct EmpID \n";
-				$this->_addRecord($data);
-			} else {
-				$device				= Devices::model()->find('emp_id=:emp_id AND hostname=:hostname',
-														array(':emp_id'=>$data['emp_id'], ':hostname'=>$data['hostname']));
-				if ($data['name']!="")
-					$device->name		= $data['name'];
-				$device->mac_address	= $data['mac'];
-				$device->ip_address	= $data['ipaddr'];
-				if ($data['descr']!="")
-					$device->description	= $data['descr'];
-				$device->modified_by	= 1;
-				if ($device->save()) {
-					echo "   - Saved EmpID='".$data['emp_id']."' / HOSTNAME='".$data['hostname']."' successfully! \n\n";
-				} else {
-					echo "   - WARNING: Failed adding ".$data['emp_id']." \n";
-					foreach ($device->getErrors() as $error) {
-						echo "     => ".$error[0]."\n";
-					}
-					echo "\n";
-				}				
-			}
-		} else {
-			//$device_records 		= Devices::model()->countByHostName($data['emp_id']);
-			echo " WARNING! WARNING! WARNING! WARNING! WARNING! ";
-			echo "  - RECORDS FOUND ARE '$records', loggically incorrect!! \n";
-			print_r($data);
-		}
-
-		
+		echo "  NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
+		$this->_replaceRecord($data);
 	}
 	
 	private function _parseObject($obj) {
