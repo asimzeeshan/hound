@@ -78,20 +78,12 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->location		= $data['emp_location'];
 			$employee->hall			= $data['emp_hall'];
 			$manager1_id = $this->_getManagerID(trim($data['emp_manager_name']), trim($data['emp_manager_email']));
-			if (!empty($manager1_id)) {
-				echo " - Received Manager1 ID=".$manager1_id."\n";
+			if (!empty($manager1_id))
 				$employee->manager1_id	= $manager1_id;
-			} else {
-				echo " - WARNING: No Manager1 ID received!\n";
-			}
 				
 			$manager2_id = $this->_getManagerID(trim($data['emp_manager2_name']), trim($data['emp_manager2_email']));
-			if (!empty($manager2_id)) {
-				echo " - Received Manager2 ID=".$manager2_id."\n";
+			if (!empty($manager2_id))
 				$employee->manager2_id	= $manager2_id;
-			} else {
-				echo " - WARNING: No Manager2 ID received!\n";
-			}
 	
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified_by	= 1; // added by SysAdmin
@@ -114,11 +106,11 @@ class EmployeesCommand extends CConsoleCommand {
 	}
 	
 	private function _getManagerID($name, $email) {
-		echo "This is _getManagerID(); \n";
+		echo " - This is _getManagerID(); \n";
 		if (!empty($email)) {
 			$chk = new Managers;
 			if ($chk->countByEmail((string)$email)==0) { 
-				echo " Manager found with email '$email' = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD \n";
+				echo "  - Manager found with email '$email' = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD \n";
 				$manager = new Managers;
 				$manager->name			= $name;
 				$manager->email			= $email;
@@ -126,24 +118,24 @@ class EmployeesCommand extends CConsoleCommand {
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					echo " - New Manager Added with id=".$manager->id."\n";
+					echo "  - New Manager Added with id=".$manager->id."\n";
 					return $manager->id;
 				} else {
-					echo " - Manager ID = ".$manager->id;
+					echo "  - Manager ID = ".$manager->id;
 					return $manager->id;
 				}				
 			} else {
-				echo " Manager found with email '$email' = ".$chk->countByEmail((string)$email)." UPDATING RECORD \n";
+				echo "  - Manager found with email '$email' = ".$chk->countByEmail((string)$email)." UPDATING RECORD \n";
 				$manager = Managers::model()->find('name=:name', array(':name' => $name));
 				$manager->name			= $name;
 				$manager->email			= $email;
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					echo " - Manager Updated with id=".$manager->id."\n";
+					echo "  - Manager Updated with id=".$manager->id."\n";
 					return $manager->id;
 				} else {
-					echo " - Manager ID = ".$manager->id;
+					echo "  - Manager ID = ".$manager->id;
 					return $manager->id;
 				}
 			}
@@ -152,7 +144,7 @@ class EmployeesCommand extends CConsoleCommand {
 		unset($manager2_id);
 		unset($manager);
 		} else { // email is empty
-			echo " - WARNING: Manager ID is NULL because no email received \n";
+			echo "  - WARNING! Manager ID is NULL because no email received \n";
 			return false;
 		}
 	}
