@@ -29,7 +29,7 @@ class EmployeesCommand extends CConsoleCommand {
 		$chk = new Employees;
 		
 		if (trim($data['emp_company_email'])=="") {
-			$body = "Team,<br /><br />
+			/*$body = "Team,<br /><br />
 
 					{emp_id} has missing email data, NextHRM said
 					
@@ -57,7 +57,8 @@ class EmployeesCommand extends CConsoleCommand {
 				echo "WARNING! EMAIL SENDING Failed: " . $mail->ErrorInfo;
 			} else {
 				echo "EMAIL sent!";
-			}
+			}*/
+			echo " WARNING! The user '".$data['emp_name']."' having EmpID=".$data['emp_id']." has no 'Company Email' \n";
 		}
 		
 		if ($chk->countByEmpID((int)$data['emp_id'])==0) { 
