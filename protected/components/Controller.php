@@ -28,7 +28,6 @@ class Controller extends CController
 	public function sendMail($args){
 		extract($args);
 			$mail             = new PHPMailer();
-			$body             = $body;
 			$body             = str_replace("[\]",'',$body);
 
 			$mail->AddReplyTo('noc@nxvt.com', 'NOC Team');
