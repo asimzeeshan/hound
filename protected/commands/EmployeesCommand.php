@@ -46,15 +46,15 @@ class EmployeesCommand extends CConsoleCommand {
 			$mail             = new PHPMailer();
 			$body             = str_replace("[\]",'',$body);
 			$mail->AddReplyTo('noc@nxvt.com', 'NOC Team');
-			$mail->SetFrom('noc@nxvt.com', 'NOC Team');
-			$mail->AddAddress($v, $v);
+			$mail->SetFrom('noreply@projectx.vteamslabs.com', 'ProjectX');
+			$mail->AddAddress('noc@nxvt.com', 'NOC Team');
 			$mail->Subject    = "[Reportr] Missing 'Company Email' for EmpID=".$data['emp_id']."";
 			$mail->MsgHTML();
 
 			//$mail->AddAttachment("images/phpmailer.gif");      // attachment
 
 			if(!$mail->Send()) {
-				die("Mailer Error: " . $mail->ErrorInfo);
+				echo "WARNING! Mailer Error: " . $mail->ErrorInfo;
 			} else {
 				echo "Message sent!";
 			}
