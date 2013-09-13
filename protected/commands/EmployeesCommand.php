@@ -27,16 +27,49 @@ class EmployeesCommand extends CConsoleCommand {
 	private function _replaceRecord($data) {
 		echo "Executing _replaceRecord();\n";
 		$chk = new Employees;
+		
+		if (trim($data['emp_company_email'])=="") {
+			$body = "Team,<br /><br />
+
+					{emp_id} has missing email data, NextHRM said
+					
+					<p><pre>{nexthrm_dump}</pre></p>
+					
+					<p><strong>Note:</strong> The system us using noreply@nxb.com.pk instead, for the time being.</p>";
+			
+			// parse Body
+			$search = array('{emp_id}', '{nexthrm_dump}');
+			$replace = array($data['emp_id'], print_r($data, true));
+			$body = str_ireplace($search, $replace, $body);
+			// ends parse Body
+			
+			$mail             = new PHPMailer();
+			$body             = str_replace("[\]",'',$body);
+			$mail->AddReplyTo('noc@nxvt.com', 'NOC Team');
+			$mail->SetFrom('noc@nxvt.com', 'NOC Team');
+			$mail->AddAddress($v, $v);
+			$mail->Subject    = "[Reportr] Missing 'Company Email' for EmpID=".$data['emp_id']."";
+			$mail->MsgHTML();
+
+			//$mail->AddAttachment("images/phpmailer.gif");      // attachment
+
+			if(!$mail->Send()) {
+				die("Mailer Error: " . $mail->ErrorInfo);
+			} else {
+				echo "Message sent!";
+			}
+		}
+		
 		if ($chk->countByEmpID((int)$data['emp_id'])==0) { 
 			echo " ".$chk->countByEmpID((int)$data['emp_id'])." employee found so ADDING NEW RECORD \n\n";
 
 			$employee = new Employees;
 			$employee->emp_id 		= $data['emp_id'];
 			$employee->name 		= $data['emp_name'];
-			$employee->email 		= $data['emp_company_email'];
+			$employee->email 		= ($data['emp_company_email'] != "") ? $data['emp_company_email'] : "noreply@nxb.com.pk";
 			$employee->joining_date = $data['emp_joining_date'];
-			$employee->location		= $data['emp_location'];
-			$employee->hall			= $data['emp_hall'];
+			$employee->location		= ($data['emp_location'] != "") ? $data['emp_location'] : "N/A";
+			$employee->hall			= ($data['emp_hall'] != "") ? $data['emp_hall'] : "N/A";
 			$manager1_id = $this->_getManagerID(trim($data['emp_manager_name']), trim($data['emp_manager_email']));
 			if (!empty($manager1_id))
 				$employee->manager1_id	= $manager1_id;
