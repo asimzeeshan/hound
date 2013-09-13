@@ -54,9 +54,9 @@ class EmployeesCommand extends CConsoleCommand {
 			//$mail->AddAttachment("images/phpmailer.gif");      // attachment
 
 			if(!$mail->Send()) {
-				echo "WARNING! Mailer Error: " . $mail->ErrorInfo;
+				echo "WARNING! EMAIL SENDING Failed: " . $mail->ErrorInfo;
 			} else {
-				echo "Message sent!";
+				echo "EMAIL sent!";
 			}
 		}
 		
