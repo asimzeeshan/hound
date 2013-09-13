@@ -49,7 +49,7 @@ class EmployeesCommand extends CConsoleCommand {
 			$mail->SetFrom('noreply@projectx.vteamslabs.com', 'ProjectX');
 			$mail->AddAddress('noc@nxvt.com', 'NOC Team');
 			$mail->Subject    = "[Reportr] Missing 'Company Email' for EmpID=".$data['emp_id']."";
-			$mail->MsgHTML();
+			$mail->MsgHTML($body);
 
 			//$mail->AddAttachment("images/phpmailer.gif");      // attachment
 
