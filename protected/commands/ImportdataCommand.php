@@ -1,46 +1,48 @@
 <?php
 class ImportdataCommand extends CConsoleCommand {
+	private $log = NULL;
+
 	public function getHelp() {
 		echo "Process the NOC XML data from dmz everynight";
 	}
 	
+	public function init() {
+		$this->log = LeLogger::getLogger("d4a2b96e-2c51-4428-813b-f63d5573e95f", true, false, LOG_DEBUG);
+	}
+	
 	public function run($args) {
-		//Yii::import('application.helpers.logentries.*');
-		//Yii::import('application.helpers.logentries.logentries');
-		$log = LeLogger::getLogger("d4a2b96e-2c51-4428-813b-f63d5573e95f", true, false, LOG_DEBUG);
-		
-		$log->Info("Cron Job Begins");
+		$this->log->Info("Cron Job Begins");
 		$xml = simplexml_load_file('https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
-		$log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php ");
+		$this->log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php ");
 		foreach ($xml->dhcpd->lan->staticmap as $node) {
 			$this->_processNode($node, "lan");
 		}
 		
-		$log->Info("==================== Start OPT1 ====================");
+		$this->log->Info("==================== Start OPT1 ====================");
 		
 		foreach ($xml->dhcpd->opt1->staticmap as $node) {
 			$this->_processNode($node, "opt1");
 		}
 		
-		$log->Info("==================== Start OPT2 ====================");
+		$this->log->Info("==================== Start OPT2 ====================");
 		
 		foreach ($xml->dhcpd->opt2->staticmap as $node) {
 			$this->_processNode($node, "opt2");
 		}
 		
-		$log->Info("==================== Start OPT3 ====================");
+		$this->log->Info("==================== Start OPT3 ====================");
 		
 		foreach ($xml->dhcpd->opt3->staticmap as $node) {
 			$this->_processNode($node, "opt3");
 		}
 		
-		$log->Info("==================== Start OPT4 ====================");
+		$this->log->Info("==================== Start OPT4 ====================");
 		
 		foreach ($xml->dhcpd->opt4->staticmap as $node) {
 			$this->_processNode($node, "opt4");
 		}
 		
-		$log->Info("==================== Start OPTXXXX =================");
+		$this->log->Info("==================== Start OPTXXXX =================");
 		
 		foreach ($xml->dhcpd->optxxxx->staticmap as $node) {
 			$this->_processNode($node, "optxxxx");
@@ -49,12 +51,12 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _processNode($obj, $opt) {
-		$log->Debug("Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname);
+		$this->log->Debug("Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname);
 		
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		$log->Debug("NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
+		$this->log->Debug("NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$this->_replaceRecord($data);
 	}
 	
@@ -93,12 +95,12 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
-		$log->Debug("This is _replaceRecord();");
-		$log->Debug("Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
+		$this->log->Debug("This is _replaceRecord();");
+		$this->log->Debug("Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 
-			$log->Debug($checkResult." device found so ADDING NEW RECORD");
+			$this->log->Debug($checkResult." device found so ADDING NEW RECORD");
 			
 			$device 				= new Devices;
 			$device->emp_id			= $data['emp_id'];
@@ -116,7 +118,7 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->location		= "N/A";
 	
 			if ($device->save()) {
-				$log->Notice("ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
+				$this->log->Notice("ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
 				$error = "";
@@ -124,11 +126,11 @@ class ImportdataCommand extends CConsoleCommand {
 				foreach ($device->getErrors() as $error) {
 					$error .= "    => ".$error[0]."\n";	
 				}
-				$log->Error($error);
+				$this->log->Error($error);
 				return false;
 			}
 		} else {
-			$log->Debug($checkResult." device(s) found so UPDATING RECORD");
+			$this->log->Debug($checkResult." device(s) found so UPDATING RECORD");
 
 			$device 				= Devices::model()->find('mac_address=:mac AND opt=:opt', array(':mac'=>$data['mac'], ':opt'=>$data['opt']));
 			$device->emp_id			= $data['emp_id'];
@@ -141,7 +143,7 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
 	
 			if ($device->save()) {
-				$log->Notice("UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
+				$this->log->Notice("UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
 				$error = "";
@@ -149,14 +151,14 @@ class ImportdataCommand extends CConsoleCommand {
 				foreach ($device->getErrors() as $error) {
 					$error .= "    => ".$error[0]."\n";	
 				}
-				$log->Error($error);
+				$this->log->Error($error);
 				return false;
 			}	
 		}
 	}
 	
 	private function _addRecord($data) {
-		$log->Debug("This is _addRecord();");
+		$this->log->Debug("This is _addRecord();");
 
 		$device 				= new Devices;
 		$device->emp_id			= $data['emp_id'];
@@ -174,7 +176,7 @@ class ImportdataCommand extends CConsoleCommand {
 		$device->location		= "N/A";
 
 		if ($device->save()) {
-			$log->Notice("Record ".$data['hostname']." added!");
+			$this->log->Notice("Record ".$data['hostname']." added!");
 			return true;
 		} else {
 			$error = "";
@@ -182,7 +184,7 @@ class ImportdataCommand extends CConsoleCommand {
 			foreach ($device->getErrors() as $error) {
 				$error .= "    => ".$error[0]."\n";	
 			}
-			$log->Error($error);
+			$this->log->Error($error);
 			return false;
 		}
 	}
