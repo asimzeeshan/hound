@@ -1,11 +1,17 @@
 <?php
 class NexthrmCommand extends CConsoleCommand {
+	private $log = NULL;
+
 	public function getHelp() {
 		echo "Process the NOC XML data from dmz everynight";
 	}
 	
+	public function init() {
+		$this->log = LeLogger::getLogger("70ccf57c-144c-4221-9723-b197de86bd88", true, false, LOG_DEBUG);
+	}
+	
 	public function run($args) {
-		echo "Looking for all devices where emp_id is not NULL \n";
+		$this->log->Info("Looking for all devices where emp_id is not NULL");
 		$devices = Devices::model()->findAll(array('condition'=>'emp_id!=""'));
 		foreach ($devices as $device) {
 			$NextHRM = $this->_callNextHRM($device->emp_id);
@@ -15,10 +21,10 @@ class NexthrmCommand extends CConsoleCommand {
 					$this->_updateRecord($device->emp_id, $record);
 				}
 			} else {
-				echo "   => Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status." \n\n";
+				$this->log->Emerg("Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status);
 			}
 		// usleep for 200 ms
-		usleep(200);
+		usleep(100);
 		}
 
 	}
@@ -34,7 +40,7 @@ class NexthrmCommand extends CConsoleCommand {
 											'line_manager'	=> (string)$data->emp_manager_name, 
 											'location'		=> (string)$data->emp_location, 
 										), 'emp_id=:emp_id', array(':emp_id' => $emp_id));
-		echo " * Updated all records for EmpID: ".$emp_id." successfully! \n";
+		$this->log->Notice(" * Updated all records for EmpID: ".$emp_id." successfully!");
 	}
 }
 ?>
