@@ -50,7 +50,7 @@ class ImportdataCommand extends CConsoleCommand {
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		$log->Debug(" NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
+		$log->Debug("NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$this->_replaceRecord($data);
 	}
 	
@@ -89,12 +89,12 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
-		$log->Debug("  This is _replaceRecord();");
-		$log->Debug("  - Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
+		$log->Debug("This is _replaceRecord();");
+		$log->Debug("Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 
-			$log->Debug( "  - ".$checkResult." device found so ADDING NEW RECORD");
+			$log->Debug($checkResult." device found so ADDING NEW RECORD");
 			
 			$device 				= new Devices;
 			$device->emp_id			= $data['emp_id'];
@@ -112,11 +112,11 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->location		= "N/A";
 	
 			if ($device->save()) {
-				$log->Notice("  - ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
+				$log->Notice("ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
 				$error = "";
-				$error = "  - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
+				$error = "Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
 				foreach ($device->getErrors() as $error) {
 					$error .= "    => ".$error[0]."\n";	
 				}
@@ -124,7 +124,7 @@ class ImportdataCommand extends CConsoleCommand {
 				return false;
 			}
 		} else {
-			echo "  - ".$checkResult." device(s) found so UPDATING RECORD \n";
+			$log->Debug($checkResult." device(s) found so UPDATING RECORD");
 
 			$device 				= Devices::model()->find('mac_address=:mac AND opt=:opt', array(':mac'=>$data['mac'], ':opt'=>$data['opt']));
 			$device->emp_id			= $data['emp_id'];
@@ -137,11 +137,11 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
 	
 			if ($device->save()) {
-				$log->Notice("  - UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
+				$log->Notice("UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
 				$error = "";
-				$error = "  - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
+				$error = "Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
 				foreach ($device->getErrors() as $error) {
 					$error .= "    => ".$error[0]."\n";	
 				}
@@ -152,7 +152,7 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _addRecord($data) {
-		$log->Debug("   This is _addRecord();");
+		$log->Debug("This is _addRecord();");
 
 		$device 				= new Devices;
 		$device->emp_id			= $data['emp_id'];
@@ -170,11 +170,11 @@ class ImportdataCommand extends CConsoleCommand {
 		$device->location		= "N/A";
 
 		if ($device->save()) {
-			$log->Notice("   - Record ".$data['hostname']." added!");
+			$log->Notice("Record ".$data['hostname']." added!");
 			return true;
 		} else {
 			$error = "";
-			$error = "   - WARNING: Failed adding ".$data['hostname']."\n";
+			$error = "Failed adding ".$data['hostname']."\n";
 			foreach ($device->getErrors() as $error) {
 				$error .= "    => ".$error[0]."\n";	
 			}
