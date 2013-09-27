@@ -1,7 +1,13 @@
 <?php
 class EmployeesCommand extends CConsoleCommand {
+	private $log = NULL;
+
 	public function getHelp() {
 		echo "Get all Employees from NextHRM and Populate database";
+	}
+	
+	public function init() {
+		$this->log = LeLogger::getLogger("d4a2b96e-2c51-4428-813b-f63d5573e95f", true, false, LOG_DEBUG);
 	}
 	
 	public function run($args) {
@@ -9,12 +15,12 @@ class EmployeesCommand extends CConsoleCommand {
 		if ((string)$NextHRM->getSittingDetail->status == "success") {
 			$data = json_decode($NextHRM->getSittingDetail->response, true);
 			foreach ($data as $record) {
-				$this->_log("==================== EmpID: ".$record['emp_id']." ====================\n", "debug");
-				$this->_log($record, "debug");
+				$this->log->Debug("==================== EmpID: ".$record['emp_id']." ====================\n");
+				$this->log->Debug(print_r($record, true));
 				$this->_replaceRecord($record);
 			}
 		} else {
-			$this->_log("Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status, "Emerg");
+			$this->log->Emerg("Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status);
 		}
 		exit;
 
@@ -25,7 +31,7 @@ class EmployeesCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
-		$this->_log("Executing _replaceRecord();\n");
+		$this->log->Info("Executing _replaceRecord();");
 		$chk = new Employees;
 		
 		if (trim($data['emp_company_email'])=="") {
@@ -58,11 +64,11 @@ class EmployeesCommand extends CConsoleCommand {
 			} else {
 				echo "EMAIL sent!";
 			}*/
-			$this->_log(" WARNING! The user '".$data['emp_name']."' having EmpID=".$data['emp_id']." has no 'Company Email' \n", "warning");
+			$this->log->Warn("WARNING! The user '".$data['emp_name']."' having EmpID=".$data['emp_id']." has no 'Company Email' \n");
 		}
 		
 		if ($chk->countByEmpID((int)$data['emp_id'])==0) { 
-			$this->_log(" ".$chk->countByEmpID((int)$data['emp_id'])." employee found so ADDING NEW RECORD \n\n");
+			$this->log->Info($chk->countByEmpID((int)$data['emp_id'])." employee found so ADDING NEW RECORD");
 
 			$employee = new Employees;
 			$employee->emp_id 		= $data['emp_id'];
@@ -84,17 +90,19 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->modified		= new CDbExpression('NOW()');
 			$employee->modified_by	= 1; // added by SysAdmin
 			if ($employee->save()) {
-				$this->_log(" - ADDED EMPID=".$data['emp_id']." record! \n");
+				$this->log->Info("ADDED EMPID=".$data['emp_id']." record!");
 				return true;
 			} else {
-				$this->_log(" - Failed ADDING: EMPID=".$data['emp_id']." \n", "error");
+				$error = "";
+				$error = "Failed ADDING: EMPID=".$data['emp_id']."\n";
 				foreach ($employee->getErrors() as $error) {
-					$this->_log("   => ".$error[0]."\n", "error");	
+					$error .= "    => ".$error[0]."\n";	
 				}
+				$this->log->Error($error);
 				return false;
 			}
 		} else {
-			$this->_log(" ".$chk->countByEmpID((int)$data['emp_id'])." employee found so UPDATING RECORD \n\n");
+			$this->log->Info($chk->countByEmpID((int)$data['emp_id'])." employee found so UPDATING RECORD");
 
 			$employee = Employees::model()->find('emp_id=:emp_id', array(':emp_id' => (int)$data['emp_id']));
 			$employee->name 		= $data['emp_name'];
@@ -113,13 +121,15 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->created_by	= 1; // added by SysAdmin
 			$employee->modified_by	= 1; // added by SysAdmin
 			if ($employee->save()) {
-				$this->_log(" UPDATED EMPID=".$data['emp_id']." record! \n");
+				$this->log->Info("UPDATED EMPID=".$data['emp_id']." record!");
 				return true;
 			} else {
-				$this->_log(" Failed UPDATING EMPID=".$data['emp_id']." \n", "warning");
+				$error = "";
+				$error = "Failed ADDING: EMPID=".$data['emp_id']."\n";
 				foreach ($employee->getErrors() as $error) {
-					$this->_log( "    => ".$error[0]."\n", "warning");	
+					$error .= "    => ".$error[0]."\n";	
 				}
+				$this->log->Error($error);
 				return false;
 			}
 		}
@@ -130,11 +140,11 @@ class EmployeesCommand extends CConsoleCommand {
 	}
 	
 	private function _getManagerID($name, $email) {
-		$this->_log(" - This is _getManagerID(); \n", "debug");
+		$this->log->Info("This is _getManagerID();");
 		if (!empty($email)) {
 			$chk = new Managers;
 			if ($chk->countByEmail((string)$email)==0) { 
-				$this->_log("  - Manager found with email '$email' = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD \n", "debug");
+				$this->log->Debug("Manager found with email '$email' = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD");
 				$manager = new Managers;
 				$manager->name			= $name;
 				$manager->email			= $email;
@@ -142,24 +152,24 @@ class EmployeesCommand extends CConsoleCommand {
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					$this->_log("  * New Manager Added with id=".$manager->id."\n", "debug");
+					$this->log->Debug(" - New Manager Added with id=".$manager->id);
 					return $manager->id;
 				} else {
-					$this->_log("  * Manager ID = ".$manager->id, "debug");
+					$this->log->Debug(" - Manager ID = ".$manager->id);
 					return $manager->id;
 				}				
 			} else {
-				$this->_log("  - Manager found with email '$email' = ".$chk->countByEmail((string)$email)." UPDATING RECORD \n", "debug");
+				$this->log->Debug("Manager found with email '$email' = ".$chk->countByEmail((string)$email)." UPDATING RECORD");
 				$manager = Managers::model()->find('name=:name', array(':name' => $name));
 				$manager->name			= $name;
 				$manager->email			= $email;
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					$this->_log("  * Manager Updated with id=".$manager->id."\n", "debug");
+					$this->log->Debug(" - Manager Updated with id=".$manager->id);
 					return $manager->id;
 				} else {
-					$this->_log("  * Manager ID = ".$manager->id, "debug");
+					$this->log->Debug(" - Manager ID = ".$manager->id);
 					return $manager->id;
 				}
 			}
@@ -168,22 +178,8 @@ class EmployeesCommand extends CConsoleCommand {
 		unset($manager2_id);
 		unset($manager);
 		} else { // email is empty
-			$this->_log("  * WARNING! Manager ID is NULL because no email received \n", "error");
+			$this->log->Warn(" * WARNING! Manager ID is NULL because no email received \n");
 			return false;
-		}
-	}
-	
-	private function _log($string, $type="info") {
-		if ($type=="info") {
-			// do nothing
-		} else {
-			echo strtoupper($type).": ";				
-		}
-
-		if (is_object($string) || is_array($string)) { // check if its an object
-			print_r($string);
-		} else {
-			echo $string;
 		}
 	}
 }
