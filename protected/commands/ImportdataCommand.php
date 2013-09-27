@@ -5,38 +5,38 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	public function run($args) {
-		echo "Cron Job Begins \n";
+		$log->Info("Cron Job Begins");
 		$xml = simplexml_load_file('https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
-		echo "File downloaded ... \n";
+		$log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php ");
 		foreach ($xml->dhcpd->lan->staticmap as $node) {
 			$this->_processNode($node, "lan");
 		}
 		
-		echo "==================== Start OPT1 ====================\n\n";
+		$log->Info("==================== Start OPT1 ====================");
 		
 		foreach ($xml->dhcpd->opt1->staticmap as $node) {
 			$this->_processNode($node, "opt1");
 		}
 		
-		echo "==================== Start OPT2 ====================\n\n";
+		$log->Info("==================== Start OPT2 ====================");
 		
 		foreach ($xml->dhcpd->opt2->staticmap as $node) {
 			$this->_processNode($node, "opt2");
 		}
 		
-		echo "==================== Start OPT3 ====================\n\n";
+		$log->Info("==================== Start OPT3 ====================");
 		
 		foreach ($xml->dhcpd->opt3->staticmap as $node) {
 			$this->_processNode($node, "opt3");
 		}
 		
-		echo "==================== Start OPT4 ====================\n\n";
+		$log->Info("==================== Start OPT4 ====================");
 		
 		foreach ($xml->dhcpd->opt4->staticmap as $node) {
 			$this->_processNode($node, "opt4");
 		}
 		
-		echo "==================== Start OPTXXXX ====================\n\n";
+		$log->Info("==================== Start OPTXXXX =================");
 		
 		foreach ($xml->dhcpd->optxxxx->staticmap as $node) {
 			$this->_processNode($node, "optxxxx");
@@ -45,14 +45,13 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _processNode($obj, $opt) {
-		echo "Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname." \n";
+		$log->Debug("Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname);
 		
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		echo " NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
+		$log->Debug(" NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$this->_replaceRecord($data);
-		echo "\n\n";
 	}
 	
 	private function _parseObject($obj) {
@@ -90,12 +89,12 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
-		echo "  This is _replaceRecord(); \n";
-		echo "  - Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']." \n";
+		$log->Debug("  This is _replaceRecord();");
+		$log->Debug("  - Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 
-			echo "  - ".$checkResult." device found so ADDING NEW RECORD \n";
+			$log->Debug( "  - ".$checkResult." device found so ADDING NEW RECORD");
 			
 			$device 				= new Devices;
 			$device->emp_id			= $data['emp_id'];
@@ -113,14 +112,15 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->location		= "N/A";
 	
 			if ($device->save()) {
-				echo "  - ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
+				$log->Notice("  - ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
-				echo "  - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
+				$error = "";
+				$error = "  - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
 				foreach ($device->getErrors() as $error) {
-					echo "    => ".$error[0]."\n";	
+					$error .= "    => ".$error[0]."\n";	
 				}
-				echo "\n";
+				$log->Error($error);
 				return false;
 			}
 		} else {
@@ -137,21 +137,22 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
 	
 			if ($device->save()) {
-				echo "  - UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record! \n";
+				$log->Notice("  - UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
-				echo "  - WARNING: Failed UPDATING: MAC=".$data['mac']." / SEGMENT=".$data['opt']." \n";
+				$error = "";
+				$error = "  - WARNING: Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
 				foreach ($device->getErrors() as $error) {
-					echo "    => ".$error[0]."\n";	
+					$error .= "    => ".$error[0]."\n";	
 				}
-				echo "\n";
+				$log->Error($error);
 				return false;
 			}	
 		}
 	}
 	
 	private function _addRecord($data) {
-		echo "   This is _addRecord(); \n";
+		$log->Debug("   This is _addRecord();");
 
 		$device 				= new Devices;
 		$device->emp_id			= $data['emp_id'];
@@ -169,14 +170,15 @@ class ImportdataCommand extends CConsoleCommand {
 		$device->location		= "N/A";
 
 		if ($device->save()) {
-			echo "   - Record ".$data['hostname']." added! \n";
+			$log->Notice("   - Record ".$data['hostname']." added!");
 			return true;
 		} else {
-			echo "   - WARNING: Failed adding ".$data['hostname']."\n";
+			$error = "";
+			$error = "   - WARNING: Failed adding ".$data['hostname']."\n";
 			foreach ($device->getErrors() as $error) {
-				echo "     => ".$error[0]."\n";	
+				$error .= "    => ".$error[0]."\n";	
 			}
-			echo "\n";
+			$log->Error($error);
 			return false;
 		}
 	}
