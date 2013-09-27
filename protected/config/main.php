@@ -18,6 +18,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.helpers.phpmailer.*',
+		'application.helpers.logentries.*',
 	),
 
 	'modules'=>array(
