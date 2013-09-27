@@ -5,7 +5,9 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	public function run($args) {
-		Yii::import('application.helpers.logentries.*');
+		//Yii::import('application.helpers.logentries.*');
+		//Yii::import('application.helpers.logentries.logentries');
+		$log = LeLogger::getLogger("d4a2b96e-2c51-4428-813b-f63d5573e95f", true, false, LOG_DEBUG);
 		
 		$log->Info("Cron Job Begins");
 		$xml = simplexml_load_file('https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
