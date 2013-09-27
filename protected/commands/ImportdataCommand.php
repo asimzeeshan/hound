@@ -5,6 +5,8 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	public function run($args) {
+		global $log;
+
 		$log->Info("Cron Job Begins");
 		$xml = simplexml_load_file('https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
 		$log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php ");
