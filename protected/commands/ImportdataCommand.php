@@ -7,7 +7,7 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	public function init() {
-		$this->log = LeLogger::getLogger("d4a2b96e-2c51-4428-813b-f63d5573e95f", true, false, LOG_DEBUG);
+		$this->log = LeLogger::getLogger("70ccf57c-144c-4221-9723-b197de86bd88", true, false, LOG_DEBUG);
 	}
 	
 	public function run($args) {
