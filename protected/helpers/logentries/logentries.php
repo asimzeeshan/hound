@@ -6,7 +6,7 @@
 	 *  User - Defined Variables
 	 */
 
-	$LOGENTRIES_TOKEN = "";
+	$LOGENTRIES_TOKEN = "d4a2b96e-2c51-4428-813b-f63d5573e95f";
 
 	// Whether the socket is persistent or not
 	$Persistent = true;
