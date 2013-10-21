@@ -28,8 +28,14 @@ $this->menu=array(
 		'joining_date',
 		'location',
 		'hall',
-		'manager1_id',
-		'manager2_id',
+		array(
+				'name'=>'manager1_id',
+				'value'=>$model->manager1->name,
+				),
+		array(
+				'name'=>'manager2_id',
+				'value'=>$model->manager2->name,
+				),
 		'created',
 		'created_by',
 		'modified',
