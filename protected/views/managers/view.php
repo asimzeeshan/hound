@@ -25,8 +25,14 @@ $this->menu=array(
 		'name',
 		'email',
 		'created',
-		'created_by',
+		array(
+				'name'=>'created_by',
+				'value'=>$model->CreatedBy->name(),
+				),
 		'modified',
-		'modified_by',
+		array(
+				'name'=>'modified_by',
+				'value'=>$model->CreatedBy->name(),
+				),
 	),
 )); ?>

@@ -50,9 +50,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'email_to',
 		'email_cc',
 		'subject',
-		'body',
 		/*
-		'user_id',
 		'created',
 		'created_by',
 		'modified',

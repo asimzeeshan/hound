@@ -30,15 +30,21 @@ $this->menu=array(
 		'hall',
 		array(
 				'name'=>'manager1_id',
-				'value'=>$model->manager1->name,
+				'value'=>$model->manager1_id==NULL ? "n/a" : $model->manager1->details(),
 				),
 		array(
 				'name'=>'manager2_id',
-				'value'=>$model->manager2->name,
+				'value'=>$model->manager2_id==NULL ? "n/a" : $model->manager2->details(),
 				),
 		'created',
-		'created_by',
+		array(
+				'name'=>'created_by',
+				'value'=>$model->CreatedBy->name(),
+				),
 		'modified',
-		'modified_by',
+		array(
+				'name'=>'modified_by',
+				'value'=>$model->CreatedBy->name(),
+				),
 	),
 )); ?>

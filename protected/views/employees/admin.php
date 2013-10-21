@@ -51,8 +51,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'email',
 		'joining_date',
 		'location',
-		/*
 		'hall',
+		/*
 		'manager1_id',
 		'manager2_id',
 		'created',
