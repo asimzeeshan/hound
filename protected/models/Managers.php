@@ -50,10 +50,15 @@ class Managers extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
+		$new_relations = array(
 			'manager2' => array(self::HAS_MANY, 'Employees', 'manager2_id'),
 			'manager1' => array(self::HAS_MANY, 'Employees', 'manager1_id'),
 		);
+		
+		$relations = parent::relations();
+		$relations = array_merge($relations, $new_relations);
+		
+		return $relations;
 	}
 
 	/**
@@ -118,4 +123,14 @@ class Managers extends AZActiveRecord
     public function countByEmail($email){
         return $this->count('email=:email', array(':email' => $email));
     }
+	
+	// return the name
+	public function name() {
+		return $this->name;
+	}
+	
+	// return the name and email
+	public function details() {
+		return $this->name." (".$this->email.")";
+	}
 }

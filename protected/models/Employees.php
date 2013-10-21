@@ -58,10 +58,15 @@ class Employees extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
+		$new_relations = array(
 			'manager2' => array(self::BELONGS_TO, 'Managers', 'manager2_id'),
 			'manager1' => array(self::BELONGS_TO, 'Managers', 'manager1_id'),
 		);
+		
+		$relations = parent::relations();
+		$relations = array_merge($relations, $new_relations);
+		
+		return $relations;
 	}
 
 	/**

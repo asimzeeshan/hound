@@ -51,12 +51,14 @@ class EmailLogs extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		$relations = parent::relations();
-		$more_relations = array(
+		$new_relations = array(
 			'User' => array(self::BELONGS_TO, 'Users', 'user_id'),
 		);
-		$all_relations = array_merge($relations, $more_relations);
-		return $all_relations;
+
+		$relations = parent::relations();
+		$relations = array_merge($relations, $new_relations);
+		
+		return $relations;
 	}
 
 	/**
