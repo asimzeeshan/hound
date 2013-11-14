@@ -46,7 +46,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model,'created_by'); ?>
-        <?php echo $model->CreatedBy->name(); ?>
+        <?php echo $model->CreatedBy ? $model->CreatedBy->name() : ''; ?>
     </div>
 
     <div class="row">
@@ -56,7 +56,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model,'modified_by'); ?>
-        <?php echo $model->ModifiedBy->name(); ?>
+        <?php echo $model->ModifiedBy ? $model->ModifiedBy->name(): ''; ?>
     </div>
 
 	<?php } ?>
