@@ -91,7 +91,7 @@ if(count($userdata) > 0) {
     </tr>
     <tr>
       <td bgcolor="#FFFF00">LAN Segment</td>
-      <td bgcolor="#FFFF00"><?php echo strtoupper($value['opt']); ?></td>
+      <td bgcolor="#FFFF00"><?php echo strtoupper($value['opt']); if (strstr($value['opt'], "C1")) { ?><font color="#FF0000"><b>WARNING: THIS RECORD MAY BE OLD</b></font><?php } ?></td>
     </tr>
     <tr>
       <td>HostName</td>
