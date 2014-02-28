@@ -107,7 +107,7 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->mac_address	= $data['mac'];
 			$device->ip_address		= $data['ipaddr'];
 			$device->hostname		= $data['hostname'];
-			$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
+			$device->description	= ($data['descr'] != "") ? $data['descr'] : " ";
 			$device->created		= new CDbExpression('NOW()');
 			$device->created_by		= 1;
 			$device->modified_by	= 1;
