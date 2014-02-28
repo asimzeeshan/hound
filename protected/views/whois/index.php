@@ -90,8 +90,8 @@ if(count($userdata) > 0) {
       <td><?php echo $value['ip_address']; ?></td>
     </tr>
     <tr>
-      <td bgcolor="#FF0000">LAN Segment</td>
-      <td bgcolor="#FF0000"><?php echo strtoupper($value['opt']); ?></td>
+      <td bgcolor="#FFFF00">LAN Segment</td>
+      <td bgcolor="#FFFF00"><?php echo strtoupper($value['opt']); ?></td>
     </tr>
     <tr>
       <td>HostName</td>
