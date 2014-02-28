@@ -11,47 +11,48 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	public function run($args) {
-		$this->log->Info("Cron Job Begins");
+		// ************************************************************
+		//   Processing C1 PFSENSE
+		// ************************************************************
+		$this->log->Info("Cron Job Begins for C1-PFSENSE (codename: DMZ)");
 		$xml = simplexml_load_file('https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
 		$this->log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php");
 		foreach ($xml->dhcpd->lan->staticmap as $node) {
-			$this->_processNode($node, "lan");
+			$this->_processNode($node, "c1-lan");
+		}
+		$this->log->Info("Cron Job Ends for C1-PFSENSE (codename: DMZ)");
+		
+		// ************************************************************
+		//   Processing D1 PFSENSE
+		// ************************************************************		
+		$this->log->Info("Cron Job Begins for D1-PFSENSE (codename: PFSENSE)");
+		$xml = simplexml_load_file('https://pfsense.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
+		$this->log->Info("File downloaded ... https://pfsense.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php");
+		foreach ($xml->dhcpd->lan->staticmap as $node) {
+			$this->_processNode($node, "d1-lan");
 		}
 		
 		$this->log->Info("==================== Start OPT1 ====================");
 		
 		foreach ($xml->dhcpd->opt1->staticmap as $node) {
-			$this->_processNode($node, "opt1");
-		}
-		
-		$this->log->Info("==================== Start OPT2 ====================");
-		
-		foreach ($xml->dhcpd->opt2->staticmap as $node) {
-			$this->_processNode($node, "opt2");
+			$this->_processNode($node, "d1-opt1");
 		}
 		
 		$this->log->Info("==================== Start OPT3 ====================");
 		
 		foreach ($xml->dhcpd->opt3->staticmap as $node) {
-			$this->_processNode($node, "opt3");
+			$this->_processNode($node, "d1-opt3");
 		}
 		
-		$this->log->Info("==================== Start OPT4 ====================");
+		$this->log->Info("==================== Start WAN ====================");
 	
 		foreach ($xml->dhcpd->opt4->staticmap as $node) {
-			$this->_processNode($node, "opt4");
+			$this->_processNode($node, "d1-wan");
 		}
-		
-		$this->log->Info("==================== Start OPTXXXX =================");
-			
-		foreach ($xml->dhcpd->optxxxx->staticmap as $node) {
-			$this->_processNode($node, "optxxxx");
-		}
+		$this->log->Info("Cron Job Ends for D1-PFSENSE (codename: PFSENSE)");
 	}
 	
 	private function _processNode($obj, $opt) {
-		$this->log->Info("Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname);
-		
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
@@ -94,8 +95,7 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
-		$this->log->Info("This is _replaceRecord();");
-		$this->log->Info("Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
+		$this->log->Info("_replaceRecord() received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 

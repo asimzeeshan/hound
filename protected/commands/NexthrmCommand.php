@@ -40,7 +40,7 @@ class NexthrmCommand extends CConsoleCommand {
 											'line_manager'	=> (string)$data->emp_manager_name, 
 											'location'		=> (string)$data->emp_location, 
 										), 'emp_id=:emp_id', array(':emp_id' => $emp_id));
-		$this->log->Notice(" * Updated all records for EmpID: ".$emp_id." successfully!");
+		$this->log->Info(" * Updated all records for EmpID: ".$emp_id." successfully!");
 	}
 }
 ?>
