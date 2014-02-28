@@ -7,7 +7,7 @@ class NexthrmCommand extends CConsoleCommand {
 	}
 	
 	public function init() {
-		$this->log = LeLogger::getLogger("70ccf57c-144c-4221-9723-b197de86bd88", true, false, LOG_DEBUG);
+		// do nothing
 	}
 	
 	public function run($args) {
@@ -21,7 +21,7 @@ class NexthrmCommand extends CConsoleCommand {
 					$this->_updateRecord($device->emp_id, $record);
 				}
 			} else {
-				$this->log->Emerg("Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status);
+				$this->log->Warning("Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status);
 			}
 		// usleep for 200 ms
 		usleep(100);

@@ -7,7 +7,7 @@ class EmployeesCommand extends CConsoleCommand {
 	}
 	
 	public function init() {
-		$this->log = LeLogger::getLogger("70ccf57c-144c-4221-9723-b197de86bd88", true, false, LOG_DEBUG);
+		// do nothing
 	}
 	
 	public function run($args) {
@@ -15,12 +15,12 @@ class EmployeesCommand extends CConsoleCommand {
 		if ((string)$NextHRM->getSittingDetail->status == "success") {
 			$data = json_decode($NextHRM->getSittingDetail->response, true);
 			foreach ($data as $record) {
-				$this->log->Debug("==================== EmpID: ".$record['emp_id']." ====================\n");
-				$this->log->Debug(print_r($record, true));
+				$this->log->Info("==================== EmpID: ".$record['emp_id']." ====================\n");
+				$this->log->Info(print_r($record, true));
 				$this->_replaceRecord($record);
 			}
 		} else {
-			$this->log->Emerg("Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status);
+			$this->log->Warning("Server says bobo, the actual message is: ".(string)$NextHRM->getSitting->status);
 		}
 		exit;
 
@@ -64,7 +64,7 @@ class EmployeesCommand extends CConsoleCommand {
 			} else {
 				echo "EMAIL sent!";
 			}*/
-			$this->log->Warn("WARNING! The user '".$data['emp_name']."' having EmpID=".$data['emp_id']." has no 'Company Email'");
+			$this->log->Warning("WARNING! The user '".$data['emp_name']."' having EmpID=".$data['emp_id']." has no 'Company Email'");
 		}
 		
 		if ($chk->countByEmpID((int)$data['emp_id'])==0) { 
@@ -144,7 +144,7 @@ class EmployeesCommand extends CConsoleCommand {
 		if (!empty($email)) {
 			$chk = new Managers;
 			if ($chk->countByEmail((string)$email)==0) { 
-				$this->log->Debug("Manager found with email '$email' = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD");
+				$this->log->Info("Manager found with email '$email' = ".$chk->countByEmail((string)$email)." ADDING NEW RECORD");
 				$manager = new Managers;
 				$manager->name			= $name;
 				$manager->email			= $email;
@@ -152,24 +152,24 @@ class EmployeesCommand extends CConsoleCommand {
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					$this->log->Debug(" - New Manager Added with id=".$manager->id);
+					$this->log->Info(" - New Manager Added with id=".$manager->id);
 					return $manager->id;
 				} else {
-					$this->log->Debug(" - Manager ID = ".$manager->id);
+					$this->log->Info(" - Manager ID = ".$manager->id);
 					return $manager->id;
 				}				
 			} else {
-				$this->log->Debug("Manager found with email '$email' = ".$chk->countByEmail((string)$email)." UPDATING RECORD");
+				$this->log->Info("Manager found with email '$email' = ".$chk->countByEmail((string)$email)." UPDATING RECORD");
 				$manager = Managers::model()->find('name=:name', array(':name' => $name));
 				$manager->name			= $name;
 				$manager->email			= $email;
 				$manager->created_by	= 1; // added by SysAdmin
 				$manager->modified_by	= 1; // added by SysAdmin	
 				if ($manager->save()) {
-					$this->log->Debug(" - Manager Updated with id=".$manager->id);
+					$this->log->Info(" - Manager Updated with id=".$manager->id);
 					return $manager->id;
 				} else {
-					$this->log->Debug(" - Manager ID = ".$manager->id);
+					$this->log->Info(" - Manager ID = ".$manager->id);
 					return $manager->id;
 				}
 			}
@@ -178,7 +178,7 @@ class EmployeesCommand extends CConsoleCommand {
 		unset($manager2_id);
 		unset($manager);
 		} else { // email is empty
-			$this->log->Warn(" * WARNING! Manager ID is NULL because no email received \n");
+			$this->log->Warning(" * WARNING! Manager ID is NULL because no email received \n");
 			return false;
 		}
 	}

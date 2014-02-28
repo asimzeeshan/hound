@@ -18,7 +18,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.helpers.phpmailer.*',
-		'application.helpers.logentries.*',
+		'application.helpers.logging.*',
 	),
 
 	'modules'=>array(
@@ -70,6 +70,16 @@ return array(
 					'class'=>'CWebLogRoute',
 					'levels'=>'trace, info, error, warning',
 					'categories'=>'system.db.*',
+				),
+				array(
+					'class'=>'CEmailLogRoute',
+		            'levels'=>'error, warning',
+					'except'=>'system.db.*',
+					'emails'=>'asim@yho.me',
+				),
+				array(
+					'class'=>'CProfileLogRoute',
+		            'report'=>'summary',
 				),
 			),
 		),

@@ -7,13 +7,13 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	public function init() {
-		$this->log = LeLogger::getLogger("70ccf57c-144c-4221-9723-b197de86bd88", true, false, LOG_DEBUG);
+		// do nothing
 	}
 	
 	public function run($args) {
 		$this->log->Info("Cron Job Begins");
 		$xml = simplexml_load_file('https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
-		$this->log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php ");
+		$this->log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php");
 		foreach ($xml->dhcpd->lan->staticmap as $node) {
 			$this->_processNode($node, "lan");
 		}
@@ -37,26 +37,25 @@ class ImportdataCommand extends CConsoleCommand {
 		}
 		
 		$this->log->Info("==================== Start OPT4 ====================");
-		
+	
 		foreach ($xml->dhcpd->opt4->staticmap as $node) {
 			$this->_processNode($node, "opt4");
 		}
 		
 		$this->log->Info("==================== Start OPTXXXX =================");
-		
+			
 		foreach ($xml->dhcpd->optxxxx->staticmap as $node) {
 			$this->_processNode($node, "optxxxx");
 		}
-
 	}
 	
 	private function _processNode($obj, $opt) {
-		$this->log->Debug("Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname);
+		$this->log->Info("Got MAC=".$obj->mac." | HOSTNAME=".$obj->hostname);
 		
 		$data 			= $this->_parseObject($obj);
 		$data['opt'] 	= $opt;
 
-		$this->log->Debug("NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
+		$this->log->Info("NOW PROCESSING ... MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$this->_replaceRecord($data);
 	}
 	
@@ -95,12 +94,12 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _replaceRecord($data) {
-		$this->log->Debug("This is _replaceRecord();");
-		$this->log->Debug("Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
+		$this->log->Info("This is _replaceRecord();");
+		$this->log->Info("Received MAC=".$data['mac']." | HOSTNAME=".$data['hostname']);
 		$chk = new Devices;
 		$checkResult = $chk->countBySegMAC($data['mac'], $data['opt']);
 		if ($checkResult==0) { 
-			$this->log->Debug($checkResult." device found so ADDING NEW RECORD");
+			$this->log->Info($checkResult." device found so ADDING NEW RECORD");
 			
 			$device 				= new Devices;
 			$device->emp_id			= $data['emp_id'];
@@ -118,7 +117,7 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->location		= "N/A";
 	
 			if ($device->save()) {
-				$this->log->Notice("ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
+				$this->log->Info("ADDED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
 				$error = "";
@@ -130,7 +129,7 @@ class ImportdataCommand extends CConsoleCommand {
 				return false;
 			}
 		} else {
-			$this->log->Debug($checkResult." device(s) found so UPDATING RECORD");
+			$this->log->Info($checkResult." device(s) found so UPDATING RECORD");
 
 			$device 				= Devices::model()->find('mac_address=:mac AND opt=:opt', array(':mac'=>$data['mac'], ':opt'=>$data['opt']));
 			$device->emp_id			= $data['emp_id'];
@@ -143,7 +142,7 @@ class ImportdataCommand extends CConsoleCommand {
 			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
 	
 			if ($device->save()) {
-				$this->log->Notice("UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
+				$this->log->Info("UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;
 			} else {
 				$error = "";
@@ -158,7 +157,7 @@ class ImportdataCommand extends CConsoleCommand {
 	}
 	
 	private function _addRecord($data) {
-		$this->log->Debug("This is _addRecord();");
+		$this->log->Info("This is _addRecord();");
 
 		$device 				= new Devices;
 		$device->emp_id			= $data['emp_id'];
@@ -176,7 +175,7 @@ class ImportdataCommand extends CConsoleCommand {
 		$device->location		= "N/A";
 
 		if ($device->save()) {
-			$this->log->Notice("Record ".$data['hostname']." added!");
+			$this->log->Info("Record ".$data['hostname']." added!");
 			return true;
 		} else {
 			$error = "";
