@@ -29,6 +29,4 @@ class LoggingWrapper {
 		$this->Info($message);
 	}
 }
-
-$log = new LoggingWrapper;
 ?>

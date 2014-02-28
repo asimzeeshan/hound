@@ -7,7 +7,7 @@ class NexthrmCommand extends CConsoleCommand {
 	}
 	
 	public function init() {
-		// do nothing
+		$this->log = new LoggingWrapper;
 	}
 	
 	public function run($args) {
