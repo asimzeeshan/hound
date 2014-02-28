@@ -28,12 +28,12 @@ $this->menu=array(
 		'created',
 		array(
 				'name'=>'created_by',
-				'value'=>$model->CreatedBy->name(),
+				'value'=>$model->CreatedBy ? $model->CreatedBy->name() : 'Unknown',
 				),
 		'modified',
 		array(
 				'name'=>'modified_by',
-				'value'=>$model->CreatedBy->name(),
+				'value'=>$model->CreatedBy ? $model->CreatedBy->name() : 'Unknown',
 				),
 	),
 )); ?>
