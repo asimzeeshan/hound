@@ -46,7 +46,7 @@ class ImportdataCommand extends CConsoleCommand {
 		
 		$this->log->Info("==================== Start WAN ====================");
 	
-		foreach ($xml->dhcpd->opt4->staticmap as $node) {
+		foreach ($xml->dhcpd->wan->staticmap as $node) {
 			$this->_processNode($node, "d1-wan");
 		}
 		$this->log->Info("Cron Job Ends for D1-PFSENSE (codename: PFSENSE)");
