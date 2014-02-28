@@ -90,7 +90,11 @@ if(count($userdata) > 0) {
       <td><?php echo $value['ip_address']; ?></td>
     </tr>
     <tr>
-      <td>Host Name</td>
+      <td>LAN Segment</td>
+      <td><?php echo $value['opt']; ?></td>
+    </tr>
+    <tr>
+      <td>HostName</td>
       <td><?php echo $value['hostname']; ?></td>
     </tr>
     <tr>
