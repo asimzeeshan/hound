@@ -38,7 +38,9 @@ class NexthrmCommand extends CConsoleCommand {
 											'modified_by'	=> 1, 
 											'hall'			=> (string)$data->emp_hall, 
 											'line_manager'	=> (string)$data->emp_manager_name, 
-											'location'		=> (string)$data->emp_location, 
+											'location'		=> (string)$data->emp_location,
+											'pic'			=> (string)$data->emp_pic,
+											'location_pic'	=> (string)$data->pic,
 										), 'emp_id=:emp_id', array(':emp_id' => $emp_id));
 		$this->log->Info(" * Updated all records for EmpID: ".$emp_id." successfully!");
 	}

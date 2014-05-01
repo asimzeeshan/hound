@@ -74,6 +74,8 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee->emp_id 		= $data['emp_id'];
 			$employee->name 		= $data['emp_name'];
 			$employee->email 		= ($data['emp_company_email'] != "") ? $data['emp_company_email'] : "noreply@nxb.com.pk";
+			$employee->pic	 		= ($data['emp_pic'] != "") ? $data['emp_pic'] : "";
+			$employee->location_pic	= ($data['pic'] != "") ? $data['pic'] : "";
 			$employee->joining_date = $data['emp_joining_date'];
 			$employee->location		= ($data['emp_location'] != "") ? $data['emp_location'] : "N/A";
 			$employee->hall			= ($data['emp_hall'] != "") ? $data['emp_hall'] : "N/A";
@@ -93,10 +95,10 @@ class EmployeesCommand extends CConsoleCommand {
 				$this->log->Info("ADDED EMPID=".$data['emp_id']." record!");
 				return true;
 			} else {
-				$error = "";
-				$error = "Failed ADDING: EMPID=".$data['emp_id']."\n";
+				$errors = "";
+				$errors = "Failed ADDING: EMPID=".$data['emp_id']."\n";
 				foreach ($employee->getErrors() as $error) {
-					$error .= "    => ".$error[0]."\n";	
+					$errors .= "    => ".$error[0]."\n";	
 				}
 				$this->log->Error($error);
 				return false;
@@ -107,6 +109,8 @@ class EmployeesCommand extends CConsoleCommand {
 			$employee = Employees::model()->find('emp_id=:emp_id', array(':emp_id' => (int)$data['emp_id']));
 			$employee->name 		= $data['emp_name'];
 			$employee->email 		= $data['emp_company_email'];
+			$employee->pic	 		= ($data['emp_pic'] != "") ? $data['emp_pic'] : "";
+			$employee->location_pic	= ($data['pic'] != "") ? $data['pic'] : "";
 			$employee->joining_date = $data['emp_joining_date'];
 			$employee->location		= $data['emp_location'];
 			$employee->hall			= $data['emp_hall'];
