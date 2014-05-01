@@ -30,7 +30,7 @@ class NexthrmCommand extends CConsoleCommand {
 	}
 	
 	private function _callNextHRM($id) {
-		return simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=7eedf192b67b0b15dee3491b286babc9&method=getSitting&userName=noc@nexthrm.com&empId='.$id.'&empName=s');
+		return simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=7eedf192b67b0b15dee3491b286babc9&method=getSitting&userName=noc@nexthrm.com&empId='.$id.'&empName=');
 	}
 	
 	private function _updateRecord($emp_id, $data) {
