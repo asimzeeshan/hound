@@ -13,7 +13,7 @@ return array(
 	// preloading 'log' component
 	'preload'=>array('log'),
 	
-	// theme?
+	// active theme
 	'theme'=>'abound',
 
 	// autoloading model and component classes
