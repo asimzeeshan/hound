@@ -130,8 +130,8 @@ class EmployeesCommand extends CConsoleCommand {
 			} else {
 				$error = "";
 				$error = "Failed ADDING: EMPID=".$data['emp_id']."\n";
-				foreach ($employee->getErrors() as $error) {
-					$error .= "    => ".$error[0]."\n";	
+				foreach ($employee->getErrors() as $error_arr) {
+					$error .= "    => ".$error_arr[0]."\n";	
 				}
 				$this->log->Error($error);
 				return false;
