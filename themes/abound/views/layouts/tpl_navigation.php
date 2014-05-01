@@ -21,7 +21,7 @@
 						array('label'=>'Whois', 'url'=>array('/whois/index'), 'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'Devices', 'url'=>array('/devices/admin'), 'visible'=>!Yii::app()->user->isGuest),
 						
-						array('label'=>'Data? <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+						array('label'=>'Data? <span class="caret"></span>', 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
 							array('label'=>'All Employees', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Managers', 'url'=>array('/managers/admin'), 'visible'=>!Yii::app()->user->isGuest),
@@ -39,7 +39,7 @@
 							array('label'=>'Typography', 'url'=>array('/site/page', 'view'=>'typography')),
                         )),
                         /*array('label'=>'Gii generated', 'url'=>array('customer/index')),*/
-                        array('label'=>'My Account <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                        array('label'=>'My Account <span class="caret"></span>', 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
                             array('label'=>'My Messages <span class="badge badge-warning pull-right">26</span>', 'url'=>'#'),
 							array('label'=>'My Tasks <span class="badge badge-important pull-right">112</span>', 'url'=>'#'),
