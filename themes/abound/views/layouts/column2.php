@@ -10,7 +10,9 @@
 			'encodeLabel'=>false,
 			'items'=>array(
 				array('label'=>'<i class="icon icon-home"></i>  Dashboard <span class="label label-info pull-right">BETA</span>', 'url'=>array('/site/index'),'itemOptions'=>array('class'=>'')),
-				array('label'=>'<i class="icon icon-search"></i> About this theme <span class="label label-important pull-right">HOT</span>', 'url'=>'#'),
+				array('label'=>'<i class="icon icon-search"></i> WHOIS <span class="label label-info pull-right">BETA</span>', 'url'=>array('/whois/index')),
+				array('label'=>'<i class="icon icon-search"></i> All Devices <span class="label label-important pull-right">C1+D1</span>', 'url'=>array('/devices/admin')),
+				array('label'=>'<i class="icon icon-search"></i> All Employees <span class="label label-important pull-right">HOT</span>', 'url'=>array('/employees/admin')),
 				array('label'=>'<i class="icon icon-envelope"></i> Messages <span class="badge badge-success pull-right">12</span>', 'url'=>'#'),
 				// Include the operations menu
 				array('label'=>'OPERATIONS','items'=>$this->menu),

@@ -18,16 +18,13 @@
                     'encodeLabel'=>false,
                     'items'=>array(
                         array('label'=>'Dashboard', 'url'=>array('/site/index')),
-						array('label'=>'Whois', 'url'=>array('/whois/'), 'view'=>'tables', 'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'Whois', 'url'=>array('/whois/index'), 'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'Devices', 'url'=>array('/devices/admin'), 'visible'=>!Yii::app()->user->isGuest),
 						
 						array('label'=>'Data? <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
 							array('label'=>'All Employees', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Managers', 'url'=>array('/managers/admin'), 'visible'=>!Yii::app()->user->isGuest),
-							array('label'=>'Tables', 'url'=>array('/site/page', 'view'=>'tables')),
-							array('label'=>'Interface', 'url'=>array('/site/page', 'view'=>'interface')),
-							array('label'=>'Typography', 'url'=>array('/site/page', 'view'=>'typography')),
                         )),
 						
 						array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
