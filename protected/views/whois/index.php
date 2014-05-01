@@ -49,20 +49,22 @@ $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_
 			array('id'=>'search', 
        		'width'=>100, 
        		'maxlength'=>100));
+		
+		echo "&nbsp;&nbsp;";
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'yt0',
+			'caption'=>'Search',
+			'buttonType'=>'submit',
+			'htmlOptions'=>array('class'=>'btn btn-info'),
+		));
 			
 		echo CHtml::label('Search in', 'type');
 		echo CHtml::radioButtonList('type', $selected, array('ip_addr'=>'IP Address','emp_id'=>'Employee ID'),array(
 		    'labelOptions'=>array('style'=>'display:inline'), // add this code
 		    'separator'=>'&nbsp;&nbsp;&nbsp;&nbsp;',
 		));
-		echo "<br />";
 		//echo CHtml::submitButton('Search');
-		$this->widget('zii.widgets.jui.CJuiButton', array(
-			'name'=>'yt0',
-			'caption'=>'Search',
-			'buttonType'=>'submit',
-			'htmlOptions'=>array('class'=>'btn btn-danger'),
-		));
+
 		$this->endWidget();
 		echo CHtml::endForm();
 	?>
