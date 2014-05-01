@@ -120,8 +120,8 @@ class ImportdataCommand extends CConsoleCommand {
 			} else {
 				$error = "";
 				$error = "Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
-				foreach ($device->getErrors() as $error) {
-					$error .= "    => ".$error[0]."\n";	
+				foreach ($device->getErrors() as $error_arr) {
+					$error .= "    => ".$error_arr[0]."\n";	
 				}
 				$this->log->Error($error);
 				return false;
@@ -145,8 +145,8 @@ class ImportdataCommand extends CConsoleCommand {
 			} else {
 				$error = "";
 				$error = "Failed ADDING: MAC=".$data['mac']." / SEGMENT=".$data['opt']."\n";
-				foreach ($device->getErrors() as $error) {
-					$error .= "    => ".$error[0]."\n";	
+				foreach ($device->getErrors() as $error_arr) {
+					$error .= "    => ".$error_arr[0]."\n";	
 				}
 				$this->log->Error($error);
 				return false;
@@ -178,8 +178,8 @@ class ImportdataCommand extends CConsoleCommand {
 		} else {
 			$error = "";
 			$error = "Failed adding ".$data['hostname']."\n";
-			foreach ($device->getErrors() as $error) {
-				$error .= "    => ".$error[0]."\n";	
+			foreach ($device->getErrors() as $error_arr) {
+				$error .= "    => ".$error_arr[0]."\n";	
 			}
 			$this->log->Error($error);
 			return false;
