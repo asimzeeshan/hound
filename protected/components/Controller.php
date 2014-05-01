@@ -66,6 +66,9 @@ class Controller extends CController
 		$email_to = $address;
 		$email_cc = $ccaddress;
 		
+		// get logged-in user id else assume its being sent from the system
+		$user_id = isset(Yii::app()->user->id) ? Yii::app()->user->id : 1;
+		
 		if (is_array($email_to)) {
 			$email_to = implode(", ", $email_to);	
 		}
