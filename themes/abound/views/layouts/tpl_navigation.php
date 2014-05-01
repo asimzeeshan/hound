@@ -18,11 +18,29 @@
                     'encodeLabel'=>false,
                     'items'=>array(
                         array('label'=>'Dashboard', 'url'=>array('/site/index')),
-                        array('label'=>'Graphs & Charts', 'url'=>array('/site/page', 'view'=>'graphs')),
-                        array('label'=>'Forms', 'url'=>array('/site/page', 'view'=>'forms')),
-                        array('label'=>'Tables', 'url'=>array('/site/page', 'view'=>'tables')),
-						array('label'=>'Interface', 'url'=>array('/site/page', 'view'=>'interface')),
-                        array('label'=>'Typography', 'url'=>array('/site/page', 'view'=>'typography')),
+						array('label'=>'Whois', 'url'=>array('/whois/'), 'view'=>'tables', 'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'Devices', 'url'=>array('/devices/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						
+						array('label'=>'Data? <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                        'items'=>array(
+							array('label'=>'All Employees', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Managers', 'url'=>array('/managers/admin'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Tables', 'url'=>array('/site/page', 'view'=>'tables')),
+							array('label'=>'Interface', 'url'=>array('/site/page', 'view'=>'interface')),
+							array('label'=>'Typography', 'url'=>array('/site/page', 'view'=>'typography')),
+                        )),
+						
+						array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'abound menu <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                        'items'=>array(
+							array('label'=>'Graphs & Charts', 'url'=>array('/site/page', 'view'=>'graphs')),
+							array('label'=>'Forms', 'url'=>array('/site/page', 'view'=>'forms')),
+							array('label'=>'Tables', 'url'=>array('/site/page', 'view'=>'tables')),
+							array('label'=>'Interface', 'url'=>array('/site/page', 'view'=>'interface')),
+							array('label'=>'Typography', 'url'=>array('/site/page', 'view'=>'typography')),
+                        )),
                         /*array('label'=>'Gii generated', 'url'=>array('customer/index')),*/
                         array('label'=>'My Account <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
@@ -31,9 +49,10 @@
 							array('label'=>'My Invoices <span class="badge badge-info pull-right">12</span>', 'url'=>'#'),
 							array('label'=>'Separated link', 'url'=>'#'),
 							array('label'=>'One more separated link', 'url'=>'#'),
+							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                         )),
                         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-                        array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+
                     ),
                 )); ?>
     	</div>
