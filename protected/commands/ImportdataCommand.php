@@ -71,8 +71,6 @@ class ImportdataCommand extends CConsoleCommand {
 			$emp_id = '';
 		} else {
 			$emp_id	= str_pad(trim(substr($descr,0,$first_dash)), 5, "0", STR_PAD_LEFT);
-			//$deviceDataAPIresponse = $this->_callNextHRM($emp_id);
-			//$deviceDataArray = json_decode($deviceDataAPIresponse->getSitting->response);
 		}
 		
 		// PATCH1: if we dont have a "-" in the string, then dont truncate
@@ -186,10 +184,6 @@ class ImportdataCommand extends CConsoleCommand {
 			$this->log->Error($error);
 			return false;
 		}
-	}
-	
-	private function _callNextHRM($id) {
-		return simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=7eedf192b67b0b15dee3491b286babc9&method=getSitting&userName=noc@nexthrm.com&empId='.$id.'&empName=s');
 	}
 }
 ?>
