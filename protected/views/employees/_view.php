@@ -21,12 +21,20 @@
 	<?php echo CHtml::encode($data->email); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('pic')); ?>:</b>
+	<?php echo CHtml::link(CHtml::image($data->pic,'alt',array('width'=>'100px')),$data->pic, array('target'=>'_blank')); ?>
+	<br />
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('joining_date')); ?>:</b>
 	<?php echo CHtml::encode($data->joining_date); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('location')); ?>:</b>
 	<?php echo CHtml::encode($data->location); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('location_pic')); ?>:</b>
+	<?php echo CHtml::link(CHtml::image($data->location_pic,'alt',array('width'=>'750px')),$data->location_pic, array('target'=>'_blank')); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('hall')); ?>:</b>
