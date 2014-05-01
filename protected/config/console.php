@@ -8,28 +8,45 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array('log'),
+	
+	// autoloading model and component classes
+	'import'=>array(
+		'application.models.*',
+		'application.components.*',
+		'application.helpers.phpmailer.*',
+		'application.helpers.logging.*',
+	),
 
 	// application components
 	'components'=>array(
 		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
-		// uncomment the following to use a MySQL database
-		/*
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
+			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'abusereportr',
+			'password' => 'T9wHWVGSeYBuMrSX',
 			'charset' => 'utf8',
 		),
-		*/
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'info, error, warning',
+				),
+				array(
+					'class'=>'CWebLogRoute',
+					'levels'=>'trace, info, error, warning',
+					'categories'=>'system.db.*',
+				),
+				array(
+					'class'=>'CEmailLogRoute',
+		            'levels'=>'error, warning',
+					'except'=>'system.db.*',
+					'emails'=>'asim@yho.me',
+				),
+				array(
+					'class'=>'CProfileLogRoute',
+		            'report'=>'summary',
 				),
 			),
 		),
