@@ -3,7 +3,7 @@
 /* @var $model Employees */
 
 $this->breadcrumbs=array(
-	'Employees'=>array('index'),
+	'Employees'=>array('admin'),
 	$model->name,
 );
 
@@ -25,8 +25,18 @@ $this->menu=array(
 		'emp_id',
 		'name',
 		'email',
+		array(
+				'name'=>'Photo',
+				'type'=>'raw',
+				'value'=>CHtml::link(CHtml::image($model->pic,'alt',array('width'=>'100px')),$model->pic, array('target'=>'_blank')),
+				),
 		'joining_date',
 		'location',
+		array(
+				'name'=>'Workspace Location',
+				'type'=>'raw',
+				'value'=>CHtml::link(CHtml::image($model->location_pic,'alt',array('width'=>'750px')),$model->location_pic, array('target'=>'_blank')),
+				),
 		'hall',
 		array(
 				'name'=>'manager1_id',
