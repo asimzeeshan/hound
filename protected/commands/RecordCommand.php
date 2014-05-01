@@ -1,11 +1,7 @@
 <?php
-class RecordCommand extends CConsoleCommand
-{
-	
-	
-	public function newRecord()
-	{
-					
+class RecordCommand extends CConsoleCommand {
+
+	public function newRecord() {
 		$Criteria = new CDbCriteria();
 		$today = date('Y-m-d');
 		//$Criteria->condition = "created = modified And id = 1";
@@ -15,12 +11,9 @@ class RecordCommand extends CConsoleCommand
 		//CVarDumper::dump($Products);
 		//print_r ($Devices);
 		return $Devices;
-		
 	}
 	
-	public function changeRecord()
-	{
-					
+	public function changeRecord() {
 		$Criteria = new CDbCriteria();
 		$today = date('Y-m-d');
 		$Criteria->condition = "created != modified And DATE(modified) = '$today'";
@@ -30,9 +23,7 @@ class RecordCommand extends CConsoleCommand
 		print_r ($Devices);
 	}
 	
-	public function deleteRecord()
-	{
-	
+	public function deleteRecord() {
 		$Criteria = new CDbCriteria();
 		//$Criteria->condition = "DATE(modified) > subdate(Date(modified), 1)";
 		
@@ -43,8 +34,7 @@ class RecordCommand extends CConsoleCommand
 		print_r ($Devices);
 	}
 	
-	public function actionIndex()
-	{
+	public function actionIndex() {
 		$result = $this->newRecord();
 		//echo "Result of New Records :";
 		//print_r ($result);
@@ -68,7 +58,6 @@ class RecordCommand extends CConsoleCommand
 		//$result1 = $this->changeRecord();
 		//echo "Result of Change Records are :";
 		//print_r ($result1);
-	}
-	
+	}	
 }
 ?>
