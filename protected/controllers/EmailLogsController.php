@@ -144,7 +144,7 @@ class EmailLogsController extends Controller
 				// now send the email
 				$this->sendMail($email_data);
 	
-				Yii::app()->user->setFlash('success', "Your email has been sent to the conerned Line-Manager.");	
+				Yii::app()->user->setFlash('success', "The email has been sent to concerned line-managers ($to & $cc)");	
 				$this->refresh();
 			}
 		}
