@@ -2,7 +2,7 @@
 /* @var $this WhoisController */
 
 $this->breadcrumbs=array(
-	'Whois',
+	'Whois'=>array('index'),
 );
 $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_id' : 'ip_addr');
 ?>
@@ -38,27 +38,34 @@ $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_
 <?php endif; ?>
 
 <div class="form">
-<?php echo CHtml::beginForm(); ?>
-  <div class="row">
-        <?php 
-        	echo CHtml::textField('search', '',
+  <?php
+  		echo CHtml::beginForm();
+		$this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>"Who do you want to BUST today?",
+		));
+		$search = isset($_POST['search']) ? $_POST['search'] : '';
+		echo CHtml::label('Search for', 'search');
+      	echo CHtml::textField('search', $search,
 			array('id'=>'search', 
        		'width'=>100, 
        		'maxlength'=>100));
-       	?>
-    </div>
-    <div class="row">
-    	<label>Search In :</label>
-        <?php echo CHtml::radioButtonList('type', $selected, array('ip_addr'=>'IP Address','emp_id'=>'Employee ID'),array(
+			
+		echo CHtml::label('Search in', 'type');
+		echo CHtml::radioButtonList('type', $selected, array('ip_addr'=>'IP Address','emp_id'=>'Employee ID'),array(
 		    'labelOptions'=>array('style'=>'display:inline'), // add this code
 		    'separator'=>'&nbsp;&nbsp;&nbsp;&nbsp;',
-		)); ?>
-    </div>
-    <div class="row submit">
-        <?php echo CHtml::submitButton('Search'); ?>
-    </div>
- 
-<?php echo CHtml::endForm(); ?>
+		));
+		echo "<br />";
+		//echo CHtml::submitButton('Search');
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'yt0',
+			'caption'=>'Search',
+			'buttonType'=>'submit',
+			'htmlOptions'=>array('class'=>'btn btn-danger'),
+		));
+		$this->endWidget();
+		echo CHtml::endForm();
+	?>
 </div><!-- form -->
 <?php
 $emp_id = '';
@@ -68,22 +75,30 @@ if(count($userdata) > 0) {
 		{
 			$emp_id = $value['emp_id'];
 		}
-
-		if ($value['ip_address']==$_POST['search']) {
-			$class = " foundit"	;
-		} elseif ($value['emp_id']==$_POST['search']) {
-			$class = " foundit"	;
-		} else {
-			$class = " notfound";
-		}
 ?>
 <div class="view">
-  <table cellspacing="2" cellpadding="3" align="center" class="<?php echo $class; ?>" border="1" >
+  <?php
+  		$wtitle = $value['description']." (".$value['ip_address'].")";
+		$this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>$wtitle,
+		));
+		
+	?>
+  <table cellspacing="2" cellpadding="3" align="center" class="table table-striped" border="1" >
+  <caption><?php
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'button-'.rand(),
+			'caption'=>'Report this?',
+			'buttonType'=>'link',
+			'htmlOptions'=>array('class'=>'btn btn-danger'),
+			'url'=>CController::createUrl('emailLogs/sendemail', array('emp_id' => $emp_id )),
+		));
+		?></caption>
+  <tbody>
     <tr>
       <td width="200">Employee ID</td>
-      <td><?php echo $value['emp_id']; ?> <?php if($value['emp_id'] != ''){ ?>(
-        <a href='<?php echo CController::createUrl('emailLogs/sendemail', array('emp_id' => $emp_id )); ?>'>REPORT?</a>
-      )<?php } else { ?><font class="notice">MISSING EMPLOYEE ID</font><?php } ?></td>
+      <td><?php echo $value['emp_id']; ?> <?php if($value['emp_id'] != ''){ ?>
+      <?php } else { ?><font class="notice">MISSING EMPLOYEE ID</font><?php } ?></td>
     </tr>
     <tr>
       <td width="200">IP Address</td>
@@ -98,7 +113,7 @@ if(count($userdata) > 0) {
       <td><?php echo $value['hostname']; ?></td>
     </tr>
     <tr>
-      <td>Employee Name</td>
+      <td>Description / Employee Name</td>
       <td><?php echo $value['description']; ?></td>
     </tr>
     <tr>
@@ -113,7 +128,9 @@ if(count($userdata) > 0) {
       <td>Sitting Hall</td>
       <td><?php echo $value['hall']; ?></td>
     </tr>
+   </tbody>
   </table>
+    <?php $this->endWidget();?>
 </div>
 <?php
 	}
