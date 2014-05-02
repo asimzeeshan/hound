@@ -111,7 +111,7 @@ class RecordCommand extends CConsoleCommand {
 		$subject = "Today's Import Report [".$current_date."].";
 		$body = $new. $change.$delete.$footer;
 		$to = $cc = $bcc = array();
-		$to = array("asim.sarwar@nxb.com.pk");
+		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
 		$record_data = array(
 					'address'	=> $to,
 					'ccaddress'	=> $cc,
