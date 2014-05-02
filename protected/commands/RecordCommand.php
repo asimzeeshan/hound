@@ -43,7 +43,7 @@ class RecordCommand extends CConsoleCommand {
 	// this function is used to dispaly all records...
 	public function run(){
 		$newRecord = $this->_newRecord();
-		$new = "New Records are\n;
+		$new = "<strong>New Records:</strong>\n\n;
 		 <table border=1 width='50%'>
 			  <th> Name</th>
 			  <th>Mac</th>
@@ -59,7 +59,7 @@ class RecordCommand extends CConsoleCommand {
 				   $new .= "</table>";
 				   //echo $new;
 		$changeRecord = $this->_changeRecord();
-		$change = "Changed Records are\n;
+		$change = "<strong>Changed Records</strong>:<BR /> <br />
 		 <table border=1 width='50%'>
 			  <th> Name</th>
 			  <th>Mac</th>
@@ -75,7 +75,7 @@ class RecordCommand extends CConsoleCommand {
 				   $change .= "</table>";
 				   //echo $change;
 		$deleteRecord = $this->_deleteRecord();
-		$delete = "Deleted Records are\n;
+		$delete = "<strong>Deleted Records:</strong>\n;\n;
 		 <table border=1 width='50%'>
 			  <th> Name</th>
 			  <th>Mac</th>
@@ -88,7 +88,18 @@ class RecordCommand extends CConsoleCommand {
 					      <td align='center'>". $query['ip_address']."</td>
 					      <td align='center'>". $query['hostname']."</td></tr>";
 				}
-				  $delete .= "</table>";
+				  $delete .= "</table>
+				  
+				  
+				  <br /><br /><br />
+				  ";
+			$footer = '<div dir="ltr"><span style="font-family:courier new,monospace"><span style="color:rgb(153,153,153)"><span style="font-size:11px">Kind regards,<br>
+        <br><b>Noc Team</b><br>
+        <b>Nextbridge Pvt ltd.</b><br>
+        <br>
+        Let’s connect.<br>Call me @ +9xx-xxx-xxxx-6<br>
+        Skype me @ asim.vteams<br>
+        email us @ <a target="_blank" href="mailto:noc@nxvt.com">noc@nxvt.com</a><b><br></b>Web @ <a target="_blank" href="http://www.ieatbytes.com">http://www.ieatbytes.com</a> <b><br></b></span></span></span></div>';	  
 				   //echo $delete;		   		   
 		/*$fp = fopen('D:/test1.html', 'w') or die('error creating file');
 		fwrite($fp,$new) or die('error writing file');
@@ -100,7 +111,7 @@ class RecordCommand extends CConsoleCommand {
 		$subject = "Today's Import Report [".$current_date."].";
 		$body = $new. $change.$delete;
 		$to = $cc = $bcc = array();
-		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk");
+		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
 		$record_data = array(
 					'address'	=> $to,
 					'ccaddress'	=> $cc,
