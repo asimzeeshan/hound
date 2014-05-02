@@ -20,10 +20,10 @@ return array(
 	// application components
 	'components'=>array(
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=abusereporter',
+			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'abusereportr',
+			'password' => 'T9wHWVGSeYBuMrSX',
 			'charset' => 'utf8',
 		),
 		'log'=>array(
