@@ -90,20 +90,26 @@ class RecordCommand extends CConsoleCommand {
 				}
 				  $delete .= "</table>";
 				   //echo $delete;		   		   
-		$fp = fopen('D:/test1.html', 'w') or die('error creating file');
+		/*$fp = fopen('D:/test1.html', 'w') or die('error creating file');
 		fwrite($fp,$new) or die('error writing file');
 		fwrite($fp, $change)  or die('error writing file');
 		fwrite($fp,  $delete)  or die('error writing file');
 		fclose($fp);
-		exit();
-		$parse_subject = "Today's Import Report [05-02-2014].";
-		$parse_body = array($new, $change, $delete);
+		exit();*/
+		
+		$parsed_subject = "Today's Import Report [05-02-2014].";
+		$parsed_body = $new. $change.$delete;
+		$to = $cc = $bcc = array();
+		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk");
 		$record_data = array(
+					'address'	=> $to,
+					'ccaddress'	=> $cc,
+					'bccaddress'=> $bcc,
 					'subject'	=> $parsed_subject,
-					'body'		=> $parsed_body,				
+					'body'		=> $parsed_body,
+					'user_id'	=> 1,
 				);
-		$parentController = new	Controller();
-		$parentController->sendMail($record_data);
+		Controller::sendMail($record_data);
 	}	
 }
 ?>
