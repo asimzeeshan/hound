@@ -46,9 +46,9 @@ class RecordCommand extends CConsoleCommand {
 		$new = "<strong>New Records:</strong>\n\n
 		 <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
-			  <th width='45%'>Mac</th>
-			  <th width='45%'>Ipaddar</th>
-			  <th width='45%'>Hostname</th>  ";
+			  <th width='17%'>Mac</th>
+			  <th width='17%'>Ipaddar</th>
+			  <th width='17%'>Hostname</th>  ";
 		           foreach($newRecord as $query){
 					   
 			      $new .= "<tr><td align='center'>".$query['name']."</td>
@@ -62,9 +62,9 @@ class RecordCommand extends CConsoleCommand {
 		$change = "<strong>Changed Records</strong>:<BR /> <br />
 		 <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
-			  <th width='45%'>Mac</th>
-			  <th width='45%'>Ipaddar</th>
-			  <th width='45%'>Hostname</th>  ";
+			  <th width='17%'>Mac</th>
+			  <th width='17%'>Ipaddar</th>
+			  <th width='17%'>Hostname</th> ";
 		           foreach($changeRecord as $query){
 					   
 			       $change .= "<tr><td align='center'>".$query['name']."</td>
@@ -77,10 +77,10 @@ class RecordCommand extends CConsoleCommand {
 		$deleteRecord = $this->_deleteRecord();
 		$delete = "<strong>Deleted Records:</strong>\n\n
 		 <table border=1 width='95%'>
-			  <th width='45%'> Name</th>
-			  <th width='45%'>Mac</th>
-			  <th width='45%'>Ipaddar</th>
-			  <th width='45%'>Hostname</th>  ";
+			 <th width='45%'> Name</th>
+			  <th width='17%'>Mac</th>
+			  <th width='17%'>Ipaddar</th>
+			  <th width='17%'>Hostname</th>  ";
 		           foreach($deleteRecord as $query){
 					   
 			       $delete .= "<tr><td align='center'>".$query['name']."</td>
@@ -99,7 +99,7 @@ class RecordCommand extends CConsoleCommand {
         <br>
         Let’s connect.<br>Call me @ +9xx-xxx-xxxx-6<br>
         Skype me @ asim.vteams<br>
-        email us @ <a target="_blank" href="mailto:noc@nxvt.com">noc@nxvt.com</a><b><br></b>Web @ <a target="_blank" href="http://www.ieatbytes.com">http://www.ieatbytes.com</a> <b><br></b></span></span></span></div>';	  
+        email us @ <a target="_blank" href="mailto:noc@nxvt.com">noc@nxvt.com</a><b><br></b>Web @ <a target="_blank" href="http://www.nextbridge.pk">http://www.nextbridge.pk</a> <b><br></b></span></span></span></div>';	  
 				   //echo $delete;		   		   
 		/*$fp = fopen('D:/test1.html', 'w') or die('error creating file');
 		fwrite($fp,$new) or die('error writing file');
