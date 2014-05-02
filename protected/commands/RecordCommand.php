@@ -43,12 +43,12 @@ class RecordCommand extends CConsoleCommand {
 	// this function is used to dispaly all records...
 	public function run(){
 		$newRecord = $this->_newRecord();
-		$new = "<strong>New Records:</strong>\n\n
+		$new = "<strong>New Records:</strong><br /> <br />
 		 <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
-			  <th width='17%'>Mac</th>
-			  <th width='17%'>Ipaddar</th>
-			  <th width='17%'>Hostname</th>  ";
+			  <th width='16%'>Mac</th>
+			  <th width='16%'>Ipaddar</th>
+			  <th width='16%'>Hostname</th>  ";
 		           foreach($newRecord as $query){
 					   
 			      $new .= "<tr><td align='center'>".$query['name']."</td>
@@ -59,12 +59,12 @@ class RecordCommand extends CConsoleCommand {
 				   $new .= "</table>";
 				   //echo $new;
 		$changeRecord = $this->_changeRecord();
-		$change = "<strong>Changed Records</strong>:<BR /> <br />
+		$change = "<br /><strong>Changed Records</strong>:<br /> <br />
 		 <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
-			  <th width='17%'>Mac</th>
-			  <th width='17%'>Ipaddar</th>
-			  <th width='17%'>Hostname</th> ";
+			  <th width='16%'>Mac</th>
+			  <th width='16%'>Ipaddar</th>
+			  <th width='16%'>Hostname</th>  ";
 		           foreach($changeRecord as $query){
 					   
 			       $change .= "<tr><td align='center'>".$query['name']."</td>
@@ -75,12 +75,12 @@ class RecordCommand extends CConsoleCommand {
 				   $change .= "</table>";
 				   //echo $change;
 		$deleteRecord = $this->_deleteRecord();
-		$delete = "<strong>Deleted Records:</strong>\n\n
+		$delete = "<br/><strong>Deleted Records:</strong><br /> <br />
 		 <table border=1 width='95%'>
 			 <th width='45%'> Name</th>
-			  <th width='17%'>Mac</th>
-			  <th width='17%'>Ipaddar</th>
-			  <th width='17%'>Hostname</th>  ";
+			 <th width='16%'>Mac</th>
+			  <th width='16%'>Ipaddar</th>
+			  <th width='16%'>Hostname</th>  ";
 		           foreach($deleteRecord as $query){
 					   
 			       $delete .= "<tr><td align='center'>".$query['name']."</td>
