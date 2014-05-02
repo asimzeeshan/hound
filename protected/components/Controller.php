@@ -26,6 +26,7 @@ class Controller extends CController
 	 * Adding ability to send email using phpMailer
 	 */
 	public function sendMail($args){
+		
 		extract($args);
 			$mail             = new PHPMailer();
 			$body             = str_replace("[\]",'',$body);
