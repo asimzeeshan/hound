@@ -96,17 +96,17 @@ class RecordCommand extends CConsoleCommand {
 		fwrite($fp,  $delete)  or die('error writing file');
 		fclose($fp);
 		exit();*/
-		
-		$parsed_subject = "Today's Import Report [05-02-2014].";
-		$parsed_body = $new. $change.$delete;
+		$current_date = date('Y-m-d');
+		$subject = "Today's Import Report [".$current_date."].";
+		$body = $new. $change.$delete;
 		$to = $cc = $bcc = array();
 		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk");
 		$record_data = array(
 					'address'	=> $to,
 					'ccaddress'	=> $cc,
 					'bccaddress'=> $bcc,
-					'subject'	=> $parsed_subject,
-					'body'		=> $parsed_body,
+					'subject'	=> $subject,
+					'body'		=> $body,
 					'user_id'	=> 1,
 				);
 		Controller::sendMail($record_data);
