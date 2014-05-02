@@ -43,12 +43,12 @@ class RecordCommand extends CConsoleCommand {
 	// this function is used to dispaly all records...
 	public function run(){
 		$newRecord = $this->_newRecord();
-		$new = "<strong>New Records:</strong>\n\n;
-		 <table border=1 width='50%'>
-			  <th> Name</th>
-			  <th>Mac</th>
-			  <th>Ipaddar</th>
-			  <th>Hostname</th>  ";
+		$new = "<strong>New Records:</strong>\n\n
+		 <table border=1 width='95%'>
+			  <th width='45%'> Name</th>
+			  <th width='45%'>Mac</th>
+			  <th width='45%'>Ipaddar</th>
+			  <th width='45%'>Hostname</th>  ";
 		           foreach($newRecord as $query){
 					   
 			      $new .= "<tr><td align='center'>".$query['name']."</td>
@@ -60,11 +60,11 @@ class RecordCommand extends CConsoleCommand {
 				   //echo $new;
 		$changeRecord = $this->_changeRecord();
 		$change = "<strong>Changed Records</strong>:<BR /> <br />
-		 <table border=1 width='50%'>
-			  <th> Name</th>
-			  <th>Mac</th>
-			  <th>Ipaddar</th>
-			  <th>Hostname</th>  ";
+		 <table border=1 width='95%'>
+			  <th width='45%'> Name</th>
+			  <th width='45%'>Mac</th>
+			  <th width='45%'>Ipaddar</th>
+			  <th width='45%'>Hostname</th>  ";
 		           foreach($changeRecord as $query){
 					   
 			       $change .= "<tr><td align='center'>".$query['name']."</td>
@@ -75,12 +75,12 @@ class RecordCommand extends CConsoleCommand {
 				   $change .= "</table>";
 				   //echo $change;
 		$deleteRecord = $this->_deleteRecord();
-		$delete = "<strong>Deleted Records:</strong>\n;\n;
-		 <table border=1 width='50%'>
-			  <th> Name</th>
-			  <th>Mac</th>
-			  <th>Ipaddar</th>
-			  <th>Hostname</th>  ";
+		$delete = "<strong>Deleted Records:</strong>\n\n
+		 <table border=1 width='95%'>
+			  <th width='45%'> Name</th>
+			  <th width='45%'>Mac</th>
+			  <th width='45%'>Ipaddar</th>
+			  <th width='45%'>Hostname</th>  ";
 		           foreach($deleteRecord as $query){
 					   
 			       $delete .= "<tr><td align='center'>".$query['name']."</td>
@@ -109,7 +109,7 @@ class RecordCommand extends CConsoleCommand {
 		exit();*/
 		$current_date = date('Y-m-d');
 		$subject = "Today's Import Report [".$current_date."].";
-		$body = $new. $change.$delete;
+		$body = $new. $change.$delete.$footer;
 		$to = $cc = $bcc = array();
 		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
 		$record_data = array(
