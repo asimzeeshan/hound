@@ -156,7 +156,7 @@ class Devices extends AZActiveRecord
 					      <td align='center'>". $query->ip_address."</td>
 					      <td align='center'>". $query->hostname."</td></tr>";
 				}
-				 echo   $no_emp_id .= "</table>";
+				   $no_emp_id .= "</table>";
 				   return $no_emp_id;
 	}
 	/**

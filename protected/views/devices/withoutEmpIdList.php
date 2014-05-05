@@ -22,19 +22,20 @@ $('.search-form form').submit(function(){
 ?>
 <p><?php echo CHtml::link('Back', array('/devices/admin'))?> </p>
 <h1>Employees without ID </h1>
-<?php if(Yii::app()->user->hasFlash('withoutEmpIdList')): ?>
+
  
 <div class="flash-success">
-    <?php echo Yii::app()->user->getFlash('withoutEmpIdList'); ?>
+    
 </div>
  
-<?php endif; ?>
+
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
@@ -48,6 +49,17 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
+<?php 
+echo "<br/>";
+$this->widget('zii.widgets.jui.CJuiButton', array(
+		'name'=>'button1',
+		'caption'=>'Send Email',
+		'value'=>'asd1',
+		'htmlOptions'=>array('class'=>'btn btn-primary'),));
+?>
+<?php if(Yii::app()->user->hasFlash('withoutEmpIdList')): ?>
+<?php echo Yii::app()->user->getFlash('withoutEmpIdList'); ?>
+<?php endif; ?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'devices-grid',
 	'dataProvider'=>$model->searchlistWithoutEmpId(),
@@ -84,5 +96,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 ));
 	
  ?>
- <?php echo CHtml::submitButton('Send');?>
+ <?php 
+ $this->widget('zii.widgets.jui.CJuiButton', array(
+		'name'=>'button1',
+		'caption'=>'Send Email',
+		'value'=>'asd1',
+		'htmlOptions'=>array('class'=>'btn btn-primary'),));
+ //echo CHtml::submitButton('caption');?>
 <?php $this->endWidget();?>
