@@ -21,8 +21,14 @@ $('.search-form form').submit(function(){
 ");
 ?>
 <p><?php echo CHtml::link('Back', array('/devices/admin'))?> </p>
-<h1>Employees with out ID </h1>
-
+<h1>Employees without ID </h1>
+<?php if(Yii::app()->user->hasFlash('withoutEmpIdList')): ?>
+ 
+<div class="flash-success">
+    <?php echo Yii::app()->user->getFlash('withoutEmpIdList'); ?>
+</div>
+ 
+<?php endif; ?>
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.

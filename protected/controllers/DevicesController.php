@@ -145,19 +145,18 @@ class DevicesController extends Controller
 	
 	public function actionWithoutEmpIdList()
 	{	
+	Yii::app()->user->setFlash('withoutEmpIdList','Message has been sent!');
+	
+		$body = "";
 	// this funcion is used for display the  marked list of  employees whose have no emp_id 
 		if(isset($_POST['checkbox']))
 		{
 			$checkbox = $_POST['checkbox'];
-			foreach ($checkbox as $check)
-			{
-				$device = Devices::getListWithoutEmpId($check);
-				//echo $device;
-			}
+			if(!empty($checkbox) && is_array($checkbox))
+				$body .= Devices::getListWithoutEmpId($checkbox);
 		
 			$current_date = date('Y-m-d');
 			$subject = "Employee Listing without Employee ID [".$current_date."].";
-			$body = $device;
 			$to = $cc = $bcc = array();
 			$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
 			$record_data = array(
@@ -168,7 +167,7 @@ class DevicesController extends Controller
 						'body'		=> $body,
 						'user_id'	=> 1,
 					);
-			Controller::sendMail($record_data);
+			$this->sendMail($record_data);
 		}
 			$model=new Devices('search');
 			$model->unsetAttributes();  // clear any default values
