@@ -36,7 +36,7 @@ class DevicesController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','withoutEmpIdList'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -141,6 +141,42 @@ class DevicesController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function actionWithoutEmpIdList()
+	{	
+	// this funcion is used for display the  marked list of  employees whose have no emp_id 
+		if(isset($_POST['checkbox']))
+		{
+			$checkbox = $_POST['checkbox'];
+			foreach ($checkbox as $check)
+			{
+				$device = Devices::getListWithoutEmpId($check);
+				//echo $device;
+			}
+		
+			$current_date = date('Y-m-d');
+			$subject = "Today's Without Emp_Id List Report [".$current_date."].";
+			$body = $device;
+			$to = $cc = $bcc = array();
+			$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
+			$record_data = array(
+						'address'	=> $to,
+						'ccaddress'	=> $cc,
+						'bccaddress'=> $bcc,
+						'subject'	=> $subject,
+						'body'		=> $body,
+						'user_id'	=> 1,
+					);
+			Controller::sendMail($record_data);
+		}
+			$model=new Devices('search');
+			$model->unsetAttributes();  // clear any default values
+			if(isset($_GET['Devices']))
+				$model->attributes=$_GET['Devices'];
+			$this->render('withoutEmpIdList',array(
+				'model'=>$model,
+			));
 	}
 
 	/**

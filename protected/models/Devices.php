@@ -123,7 +123,42 @@ class Devices extends AZActiveRecord
 			'pagination'=>array('pageSize'=>25,),
 		));
 	}
+	
+	public function searchlistWithoutEmpId()
+	{
+		// this funcion is used for getting the list of  employees whose have no emp_id .
 
+		$criteria=new CDbCriteria;
+		$criteria->condition = "emp_id = ''";
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'pagination'=>array('pageSize'=>300,),
+		));
+	}
+	
+	public function getListWithoutEmpId($checkbox)
+	{
+		// this funcion is used for return the  marked list of  employees whose have no emp_id .
+		    $Criteria = new CDbCriteria();
+			$Criteria->condition = "id = '$checkbox'";
+			$Criteria->select = "name, mac_address, ip_address, hostname ";
+			$Devices =Devices:: model()->findAll($Criteria);
+			$no_emp_id = "<br /><strong>Changed Records</strong>:<br /> <br />
+		      <table border=1 width='95%'>
+			  <th width='45%'> Name</th>
+			  <th width='16%'>Mac</th>
+			  <th width='16%'>Ipaddar</th>
+			  <th width='16%'>Hostname</th>  ";
+		           foreach($Devices as $query){
+					   
+			       $no_emp_id .= "<tr><td align='center'>".$query['name']."</td>
+					      <td align='center'>". $query['mac_address']."</td>
+					      <td align='center'>". $query['ip_address']."</td>
+					      <td align='center'>". $query['hostname']."</td></tr>";
+				}
+				   $no_emp_id .= "</table>";
+				   return $no_emp_id;
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
