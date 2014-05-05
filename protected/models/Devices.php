@@ -143,7 +143,7 @@ class Devices extends AZActiveRecord
 			$Criteria->condition = "id = '$checkbox'";
 			$Criteria->select = "name, mac_address, ip_address, hostname ";
 			$Devices =Devices:: model()->findAll($Criteria);
-			$no_emp_id = "<br /><strong>Changed Records</strong>:<br /> <br />
+			$no_emp_id = "<br /><strong>Without EmpLoyee Id List </strong>:<br /> <br />
 		      <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
 			  <th width='16%'>Mac</th>

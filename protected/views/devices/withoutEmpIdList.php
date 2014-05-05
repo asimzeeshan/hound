@@ -20,7 +20,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-<p><?php echo CHtml::link('Back', 'admin')?> </p>
+<p><?php echo CHtml::link('Back', '/devices/admin')?> </p>
 <h1>Employees with out ID </h1>
 
 <p>

@@ -20,7 +20,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-<p><?php echo CHtml::link('Employees with out ID List', 'withoutEmpIdList')?> </p>
+<p><?php echo CHtml::link('Employees with out ID List', '/devices/withoutEmpIdList')?> </p>
 <h1>Manage Devices</h1>
 
 <p>
