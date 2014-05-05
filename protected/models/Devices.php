@@ -150,7 +150,7 @@ class Devices extends AZActiveRecord
 			  <th width='16%'>Ipaddar</th>
 			  <th width='16%'>Hostname</th>  ";
 		           foreach($Devices as $query){
-					   $userLink = Chtml::link($query['name'],array("devices/update","id"=>$query['id']));
+					   $userLink = CHtml::link($query['name'],array("devices/update","id"=>$query['id']));
 			       $no_emp_id .= "<tr><td align='center'>".$userLink."</td>
 					      <td align='center'>". $query['mac_address']."</td>
 					      <td align='center'>". $query['ip_address']."</td>
