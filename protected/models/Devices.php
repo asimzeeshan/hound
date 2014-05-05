@@ -141,17 +141,17 @@ class Devices extends AZActiveRecord
 		// this funcion is used for return the  marked list of  employees whose have no emp_id .
 		    $Criteria = new CDbCriteria();
 			$Criteria->condition = "id = '$checkbox'";
-			$Criteria->select = "name, mac_address, ip_address, hostname ";
+			$Criteria->select = "id, name, mac_address, ip_address, hostname ";
 			$Devices =Devices:: model()->findAll($Criteria);
-			$no_emp_id = "<br /><strong>Without EmpLoyee Id List </strong>:<br /> <br />
+			$no_emp_id = "<br /><strong>Employee List without Employee ID </strong>:<br /> <br />
 		      <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
 			  <th width='16%'>Mac</th>
 			  <th width='16%'>Ipaddar</th>
 			  <th width='16%'>Hostname</th>  ";
 		           foreach($Devices as $query){
-					   
-			       $no_emp_id .= "<tr><td align='center'>".$query['name']."</td>
+					   $userLink = Chtml::link($query['name'],array("devices/update","id"=>$query['id']));
+			       $no_emp_id .= "<tr><td align='center'>".$userLink."</td>
 					      <td align='center'>". $query['mac_address']."</td>
 					      <td align='center'>". $query['ip_address']."</td>
 					      <td align='center'>". $query['hostname']."</td></tr>";

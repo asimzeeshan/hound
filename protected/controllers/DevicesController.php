@@ -156,7 +156,7 @@ class DevicesController extends Controller
 			}
 		
 			$current_date = date('Y-m-d');
-			$subject = "Today's Without Emp_Id List Report [".$current_date."].";
+			$subject = "Employee Listing without Employee ID [".$current_date."].";
 			$body = $device;
 			$to = $cc = $bcc = array();
 			$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
