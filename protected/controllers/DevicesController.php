@@ -158,7 +158,7 @@ class DevicesController extends Controller
 			$current_date = date('Y-m-d');
 			$subject = "Employee Listing without Employee ID [".$current_date."].";
 			$to = $cc = $bcc = array();
-			$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
+			$to = array("mis@nxb.com.pk");
 			$record_data = array(
 						'address'	=> $to,
 						'ccaddress'	=> $cc,
