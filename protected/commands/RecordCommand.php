@@ -25,7 +25,7 @@ class RecordCommand extends CConsoleCommand {
 	private function _changeRecord(){
 		$criteria = new CDbCriteria();
 		$today = date('Y-m-d');
-		$criteria->condition = "created != checked AND DATE(checked) = '$today'";
+		$criteria->condition = "created != modified AND DATE(modified) = '$today'";
 		$criteria->select = "name, mac_address, ip_address, hostname";
 		$Devices = Devices::model()->findAll($criteria);			
 		return $Devices;
