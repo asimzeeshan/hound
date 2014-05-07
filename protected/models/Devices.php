@@ -41,11 +41,11 @@ class Devices extends AZActiveRecord
 			array('name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'required'),
 			array('id', 'length', 'max'=>20),
 			array('emp_id, name, ip_address, mac_address, hostname, description, line_manager, location, hall', 'length', 'max'=>255),
-			array('opt', 'length', 'max'=>256),
+			array('opt','deleted','checked', 'length', 'max'=>256),
 			array('created_by, modified_by', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, emp_id, name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
+			array('id, emp_id, name, deleted, checked, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,6 +81,8 @@ class Devices extends AZActiveRecord
 			'created_by' => 'Created By',
 			'modified' => 'Modified',
 			'modified_by' => 'Modified By',
+			'deleted'=>'Deleted',
+			'checked'=>'Checked',
 		);
 	}
 

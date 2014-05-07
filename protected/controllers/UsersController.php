@@ -73,7 +73,11 @@ class UsersController extends Controller
 			$_POST['Users']['password'] = md5($_POST['Users']['password']);
 
 			$model->attributes=$_POST['Users'];
-			if($model->save()) {
+			$model->email = $_POST['email'];
+			$email = $model->email;
+			if($model->save()){
+				
+				
 				// send welcome email
 				$et = new EmailTemplates;
 				$data = $et->getData(7);
@@ -97,6 +101,8 @@ class UsersController extends Controller
 
 				// save the email as well	
 				$this->saveEmailLog(7, $email_data);
+				 $Criteria = new CDbCriteria();
+				 
 							
 				$this->redirect(array('view','id'=>$model->id));
 			}

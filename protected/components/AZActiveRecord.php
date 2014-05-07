@@ -22,32 +22,18 @@ class AZActiveRecord extends CActiveRecord {
 			$this->created 		= new CDbExpression('NOW()');
 			$this->created_by 	= (!isset($this->created_by)) ? Yii::app()->user->id : 1 ;
 		}
-		
-		$this->modified 	= new CDbExpression('NOW()');
-		$this->modified_by 	= (!isset($this->modified_by)) ? Yii::app()->user->id : 1 ;
-
+		if($this->getScenario() != 'not_update'){
+			$this->modified 	= new CDbExpression('NOW()');
+			$this->modified_by 	= (!isset($this->modified_by)) ? Yii::app()->user->id : 1 ;
+		}
 		return parent::beforeValidate();
     }
 	
-	/**
-	 * @return array beforeSave
-	 */	
-	public function beforeSave() {
-		if ($this->isNewRecord) {
-			$this->created 		= new CDbExpression('NOW()');
-			$this->created_by 	= (!isset($this->created_by)) ? Yii::app()->user->id : 1 ;
-		}
-		
-		$this->modified 	= new CDbExpression('NOW()');
-		$this->modified_by 	= (!isset($this->modified_by)) ? Yii::app()->user->id : 1 ;
-
-		return parent::beforeSave();
-	}
 	
 	/**
 	 * @return array afterFind
 	 */
-	protected function afterFind() {
+	/*protected function afterFind() {
 		foreach($this->metadata->tableSchema->columns as $columnName => $column) {           
 			if (!strlen($this->$columnName)) continue;
 	 
@@ -71,6 +57,6 @@ class AZActiveRecord extends CActiveRecord {
 		}
 		
 		return parent::afterFind();
-	}
+	}*/
 }
 ?>

@@ -130,15 +130,31 @@ class ImportdataCommand extends CConsoleCommand {
 			$this->log->Info($checkResult." device(s) found so UPDATING RECORD");
 
 			$device 				= Devices::model()->find('mac_address=:mac AND opt=:opt', array(':mac'=>$data['mac'], ':opt'=>$data['opt']));
-			$device->emp_id			= $data['emp_id'];
-			$device->name			= ($data['name'] != "") ? $data['name'] : "";
-			$device->mac_address	= $data['mac'];
-			$device->ip_address		= $data['ipaddr'];
-			$device->hostname		= $data['hostname'];
-			$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
-			$device->modified_by	= 1;
-			$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
-	
+			if(
+				$device->ip_address != $data['ipaddr'] || 
+				$device->emp_id != $data['emp_id'] ||
+				$device->hostname != $data['hostname'] ||
+				$device->description != $data['descr'] ||
+				$device->name != $data['name'] 
+				
+				){
+				
+					$device->emp_id			= $data['emp_id'];
+					$device->name			= ($data['name'] != "") ? $data['name'] : "";
+					$device->mac_address	= $data['mac'];
+					$device->ip_address		= $data['ipaddr'];
+					$device->hostname		= $data['hostname'];
+					$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
+					$device->modified_by	= 1;
+					$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
+					$device->checked		= new CDbExpression('NOW()');
+					//echo "updating ...\n";
+			}
+			else{
+				$device->setScenario('not_update');
+				//echo "not updating ...\n";
+				$device->checked		= new CDbExpression('NOW()');
+			}
 			if ($device->save()) {
 				$this->log->Info("UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
 				return true;

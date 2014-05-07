@@ -13,31 +13,31 @@ class RecordCommand extends CConsoleCommand {
 	}
 	// this function is used for display all new records...
 	private function _newRecord(){
-		$Criteria = new CDbCriteria();
+		$criteria = new CDbCriteria();
 		$today = date('Y-m-d');
-		$Criteria->condition = "created = modified AND DATE(created) = '$today' AND DATE(modified) = '$today'";
-		$Criteria->select = "name, mac_address, ip_address, hostname ";
-		$Devices = Devices::model()->findAll($Criteria);		
+		$criteria->condition = "created = modified AND DATE(created) = '$today' AND DATE(modified) = '$today'";
+		$criteria->select = "name, mac_address, ip_address, hostname ";
+		$Devices = Devices::model()->findAll($criteria);		
 		return $Devices;
 	}
 	
 	// this function is used for display all changed records...
 	private function _changeRecord(){
-		$Criteria = new CDbCriteria();
+		$criteria = new CDbCriteria();
 		$today = date('Y-m-d');
-		$Criteria->condition = "created != modified AND DATE(modified) = '$today'";
-		$Criteria->select = "name, mac_address, ip_address, hostname";
-		$Devices = Devices::model()->findAll($Criteria);			
+		$criteria->condition = "created != checked AND DATE(checked) = '$today'";
+		$criteria->select = "name, mac_address, ip_address, hostname";
+		$Devices = Devices::model()->findAll($criteria);			
 		return $Devices;
 	}
 	
 	// this function is used for display all deleted records...
 	private function _deleteRecord(){
-		$Devices = Devices::model()->updateAll(array("deleted"=>1),"DATEDIFF(NOW(),modified)>= 2");	
-		$Criteria = new CDbCriteria();
-		$Criteria->condition = "deleted = 1";
-		$Criteria->select = "name, mac_address, ip_address, hostname";
-		$Devices = Devices::model()->findAll($Criteria);
+		$Devices = Devices::model()->updateAll(array("deleted"=>1),"DATEDIFF(NOW(),checked)>= 2");	
+		$criteria = new CDbCriteria();
+		$criteria->condition = "deleted = 1";
+		$criteria->select = "name, mac_address, ip_address, hostname";
+		$Devices = Devices::model()->findAll($criteria);
 		return ($Devices);
 	}
 	// this function is used to dispaly all records...

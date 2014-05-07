@@ -19,6 +19,7 @@
  */
 class Users extends AZActiveRecord
 {
+	
 	/**
 	 * @return string the associated database table name
 	 */
