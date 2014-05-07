@@ -148,7 +148,7 @@ class ImportdataCommand extends CConsoleCommand {
 					$device->modified_by	= 1;
 					$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
 					$device->checked		= new CDbExpression('NOW()');
-					//echo "updating ...\n";
+					//echo "updating ...\nd";
 			}
 			else{
 				$device->setScenario('not_update');
