@@ -14,13 +14,13 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.helpers.phpmailer.*',
-		'application.helpers.logging.*', 
+		'application.helpers.logging.*',
 	),
 
 	// application components
 	'components'=>array(
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=abusereporter',
+			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
 			'emulatePrepare' => true,
 			'username' => 'abusereportr',
 			'password' => 'T9wHWVGSeYBuMrSX',
