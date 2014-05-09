@@ -14,7 +14,9 @@ $this->menu=array(
 	array('label'=>'Delete System User', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this system user?')),
 );
 ?>
-
+<?php if(Yii::app()->user->hasFlash('view')): ?>
+<?php echo Yii::app()->user->getFlash('view'); ?>
+<?php endif;?>
 <h1>View System User #<?php echo $model->id; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
@@ -26,7 +28,11 @@ $this->menu=array(
 		'username',
 		'password',
 		'email',
-		'status',
+		//'status',
+		array(
+		'name'=>'status',
+		'value'=>CHtml::encode($model->getStatusText())
+			),
 		'last_login',
 		'created',
 		array(

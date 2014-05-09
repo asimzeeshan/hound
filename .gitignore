@@ -5,6 +5,7 @@ assets/*
 protected/runtime/*
 tmp/*
 yii/demos/*
+protected/config/*
 
 #################
 ## PHP Storm

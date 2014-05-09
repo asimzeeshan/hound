@@ -41,7 +41,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'emp_id',
+		array(  
+            'name'=>'emp_id',
+			'type' => 'raw',
+            'value'=>array($this,'gridMisNotifyColumn'),
+        ),
+
 		'name',
 		'ip_address',
 		'mac_address',
@@ -61,4 +66,12 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'class'=>'CButtonColumn',
 		),
 	),
-)); ?>
+)); 
+
+echo CHtml::ajaxLink("warrior", "DevicesController.php?r=admin/devices/ajaxupdate", array(
+             "data"=>array(
+                   "id"=>23,
+             ),
+             "update"=>"#devices-grid",
+        ));
+?>

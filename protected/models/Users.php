@@ -19,6 +19,31 @@
  */
 class Users extends AZActiveRecord
 {
+	    const ENABLE=1;
+		const DISABLE=0;
+		
+		const ADMIN= 'admin';
+		const MANAGER='manager';
+		const GUEST='guest';
+	
+	public function getStatusOptions()
+	{
+		// display status value in drop down list
+		return array(
+			self::ENABLE=>'Enable',
+			self::DISABLE=>'Disable',
+					);
+	}
+	public function getRolesOptions()
+	{
+		// display the roles for users in drop down list
+		return array(
+			self::ADMIN=>'Admin',
+			self::MANAGER=>'Manager',
+			self::GUEST=>'Guest',
+					);
+	}
+	
 	
 	/**
 	 * @return string the associated database table name
@@ -38,16 +63,44 @@ class Users extends AZActiveRecord
 		return array(
 			array('first_name, last_name, username, password, email, last_login, created_by, modified, modified_by', 'required'),
 			array('status', 'numerical', 'integerOnly'=>true),
+			array('status', 'in', 'range'=>self::getStatusRange()), // check status in range
+			array('roles', 'in', 'range'=>self::getRolesRange()),	// check roles in range
 			array('first_name, last_name, username, email', 'length', 'max'=>75),
 			array('password', 'length', 'max'=>255),
 			array('created_by, modified_by', 'length', 'max'=>11),
 			array('created', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, first_name, last_name, username, password, email, status, last_login, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
+			array('id, first_name, last_name, username, password, email, status, roles, last_login, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
 		);
 	}
-
+	
+	public static function getStatusRange()
+	{
+		// check the value of status in range
+			return array(
+			self::ENABLE,
+			self::DISABLE,
+			);
+	}
+	
+	public static function getRolesRange()
+	{
+		// check the roles for users are in range
+			return array(
+			self::ADMIN,
+			self::MANAGER,
+			self::GUEST,
+			);
+	}
+  
+	public function getStatusText()
+	{
+		//this is used for display status text
+		$statusOptions=$this->statusOptions;
+		return isset($statusOptions[$this->status]) ?
+		$statusOptions[$this->status] : "unknown status ({$this->status})";
+	}
 	/**
 	 * @return array relational rules.
 	 */
@@ -83,6 +136,7 @@ class Users extends AZActiveRecord
 			'password' => 'Password',
 			'email' => 'Email',
 			'status' => 'Status',
+			'roles'=>'Roles',
 			'last_login' => 'Last Login',
 			'created' => 'Created',
 			'created_by' => 'Created By',
@@ -127,7 +181,32 @@ class Users extends AZActiveRecord
 			'pagination'=>array('pageSize'=>25,),
 		));
 	}
-
+	
+	public function getUserLofinInfo($email)
+	{
+		
+		    $criteria = new CDbCriteria();
+			$criteria->condition = "email = '$email'";
+			$criteria->select = "first_name, last_name, username, password, email ";
+			$Devices =Users:: model()->findAll($criteria);
+			$login_data = "<br /><strong>User Login Information </strong>:<br /> <br />
+		      <table border=1 width='95%'>
+			  <th width='45%'> First Name</th>
+			  <th width='16%'>Last Name</th>
+			  <th width='16%'>Username</th>
+			  <th width='16%'>Password</th>
+			  <th width='16%'>Email</th>  ";
+		           foreach($Devices as $query){
+					//$userLink = CHtml::link($query->name,array("devices/update","id"=>$query->id));
+			       	$login_data .= "<tr><td align='center'>".$query->first_name."</td>
+					      <td align='center'>". $query->last_name."</td>
+					      <td align='center'>". $query->username."</td>
+					      <td align='center'>". $query->password."</td>
+						  <td align='center'>". $query->email."</td></tr>";
+				}
+				   $login_data .= "</table>";
+				   return $login_data;
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

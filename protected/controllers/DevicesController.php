@@ -19,7 +19,37 @@ class DevicesController extends Controller
 			 
 		);
 	}
+	 
+	protected function gridMisNotifyColumn($data,$row)
+    {
+		// this is used for display a image in cgridview based upon mis_notify value in db.
+       $image = $data->mis_notify == 1 ? '/images/check.png' : '/images/not_check.png';      
+	   
+		$image = CHtml::image(Yii::app()->baseUrl . $image,'nothing');
+			
+       return $data->emp_id > 0 ? $data->emp_id : CHtml::ajaxLink($image, CHtml::normalizeUrl(array("/devices/ajaxupdate")),array(
+             "type"=>"POST",
+			 "data"=>array(
+                   "id"=>$data->id,
+             ),
+			 "success"=>"js:function(){
+				  $.fn.yiiGridView.update('devices-grid');
+				 }"
+        )) ;  
+    } 
 	
+	public function actionAjaxUpdate()
+	{
+		// this is used for saved the value of mis_notify field by clicking on  image in cgridview
+        if(isset($_POST['id']))
+        {
+			echo $_POST['id'];
+                $model=$this->loadModel($_POST['id']);
+                $model->mis_notify = $model->mis_notify == 1 ? '0' : '1';
+                $model->update();
+        }
+		die('ok');
+	}   
 
 	/**
 	 * Specifies the access control rules.
@@ -38,7 +68,7 @@ class DevicesController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','withoutEmpIdList'),
+				'actions'=>array('admin','delete','withoutEmpIdList','ajaxUpdate'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users

@@ -48,10 +48,15 @@
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>75)); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
-
+	<div class="row">
+		<?php echo $form->labelEx($model,'roles'); ?>
+		<?php echo $form->dropDownList($model,'roles', $model->getRolesOptions()); ?>
+		<?php echo $form->error($model,'roles'); ?>
+	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->checkBox($model,'status'); ?>
+		<?php //echo $form->checkBox($model,'status');
+			   echo $form->dropDownList($model,'status', $model->getStatusOptions()); ?>
 		<?php echo $form->error($model,'status'); ?>
 	</div>
     

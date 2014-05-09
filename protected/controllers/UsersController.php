@@ -38,6 +38,7 @@ class UsersController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('@'),
+				//'roles'=>array('admin','manager'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -73,10 +74,27 @@ class UsersController extends Controller
 			$_POST['Users']['password'] = md5($_POST['Users']['password']);
 
 			$model->attributes=$_POST['Users'];
-			$model->email = $_POST['email'];
+			$model->email = $_POST['Users']['email'];
 			$email = $model->email;
+			$body = "";
 			if($model->save()){
-				
+				if(!empty($email)){
+				     $body .= Users::getUserLofinInfo($email);
+				}
+				     $current_date = date('Y-m-d');
+					 $subject = "User Login Information [".$current_date."].";
+					 $to = $cc = $bcc = array();
+					 $to = $email;
+					 $login_data = array(
+								'address'	=> $to,
+								'ccaddress'	=> $cc,
+								'bccaddress'=> $bcc,
+								'subject'	=> $subject,
+								'body'		=> $body,
+								'user_id'	=> 1,
+							);
+					$this->sendMail($login_data);
+					Yii::app()->user->setFlash('view','<div align="center" style="color:green;"><strong><h1>Message has been sent to '.$email.'</h1></strong>');
 				
 				// send welcome email
 				$et = new EmailTemplates;
