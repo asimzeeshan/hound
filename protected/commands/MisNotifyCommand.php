@@ -50,7 +50,7 @@ class MisNotifyCommand extends CConsoleCommand {
 				
 				// parse Body
 				$search = array('{Manager_Name}', '{Employee_List_Table}');
-				$replace = array($model->name(), $body);
+				$replace = array("Mis Manger", $body);
 				$body = str_ireplace($search, $replace, $data->body);
 				// ends parse Body
 				
