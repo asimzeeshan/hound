@@ -39,28 +39,31 @@ class MisNotifyCommand extends CConsoleCommand {
 				   $new .= "</table>
 				  <br /><br /><br />
 				  ";
-				  echo $new;
-			$footer = '<div dir="ltr"><span style="font-family:courier new,monospace"><span style="color:rgb(153,153,153)"><span style="font-size:11px">Kind regards,<br>
-        <br><b>Noc Team</b><br>
-        <b>Nextbridge Pvt ltd.</b><br>
-        <br>
-        Let’s connect.<br>Call me @ +9xx-xxx-xxxx-6<br>
-        Skype me @ asim.vteams<br>
-        email us @ <a target="_blank" href="mailto:noc@nxvt.com">noc@nxvt.com</a><b><br></b>Web @ <a target="_blank" href="http://www.nextbridge.pk">http://www.nextbridge.pk</a> <b><br></b></span></span></span></div>';	  
+			
+			
 		$current_date = date('Y-m-d');
 		$subject = "Today's Import Report [".$current_date."].";
-		$body = $new.$footer;
-		$to = $cc = $bcc = array();
-		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
-		$record_data = array(
-					'address'	=> $to,
-					'ccaddress'	=> $cc,
-					'bccaddress'=> $bcc,
-					'subject'	=> $subject,
-					'body'		=> $body,
-					'user_id'	=> 1,
+		$body = $new;
+		// send welcome email
+				$et = new EmailTemplates;
+				$data = $et->getData(8);
+				
+				// parse Body
+				$search = array('{Manager_Name}', '{Employee_List_Table}');
+				$replace = array($model->name(), $body);
+				$body = str_ireplace($search, $replace, $data->body);
+				// ends parse Body
+				
+				$email_data = array(
+					'body'=> $body,
+					'address'=> $model->email,
+					'ccaddress'=> '',
+					'bccaddress'=> '',
+					'subject' => $data->subject
 				);
-		Controller::sendMail($record_data);
+
+				// send the email
+				Controller::sendMail($email_data);
 	}	
 }
 ?>
