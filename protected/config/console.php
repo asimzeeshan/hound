@@ -14,7 +14,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.helpers.phpmailer.*',
-		'application.helpers.logging.*',
+		'application.helpers.logging.*', 
 	),
 
 	// application components
