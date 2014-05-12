@@ -23,7 +23,7 @@ class MisNotifyCommand extends CConsoleCommand {
 	// this function is used to dispaly all records...
 	public function run(){
 		$misRecord = $this->_misRecord();
-		$new = "<strong>MIS Devices Report:</strong><br /> <br />
+		$new = "<br /> <br />
 		 <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
 			  <th width='16%'>Mac</th>
@@ -44,7 +44,7 @@ class MisNotifyCommand extends CConsoleCommand {
 			
 			
 		$current_date = date('Y-m-d');
-		$subject = "Today's Import MIS Devices Report [".$current_date."].";
+		$subject = "Today's Import Devices Report [".$current_date."].";
 		$body = $new;
 		// send welcome email
 				$et = new EmailTemplates;
@@ -52,7 +52,7 @@ class MisNotifyCommand extends CConsoleCommand {
 				
 				// parse Body
 				$search = array('{Manager_Name}', '{Employee_List_Table}');
-				$replace = array("Mis Manger", $body);
+				$replace = array("MIS Manger", $body);
 				$body = str_ireplace($search, $replace, $data->body);
 				// ends parse Body
 
