@@ -31,6 +31,10 @@ class UsersController extends Controller
 				'actions'=>array('index','view'),
 				'users'=>array('@'),
 			),
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view','settings'),
+				'users'=>array('@'),
+			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
 				'users'=>array('@'),
@@ -50,6 +54,12 @@ class UsersController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
+	public function actionSettings()
+	{
+		$this->render('settings')
+		;
+	}
+	
 	public function actionView($id)
 	{
 		$this->render('view',array(

@@ -25,10 +25,12 @@
                         'items'=>array(
 							array('label'=>'All Employees', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Managers', 'url'=>array('/managers/admin'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'All Employess Without ID', 'url'=>array('/devices/withoutEmpIdList'), 'visible'=>!Yii::app()->user->isGuest),
                         )),
 						
 						array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'System Settings', 'url'=>array('/users/settings'), 'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'abound menu <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
