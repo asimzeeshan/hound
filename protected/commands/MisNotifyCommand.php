@@ -15,7 +15,7 @@ class MisNotifyCommand extends CConsoleCommand {
 	private function _misRecord(){
 		$criteria = new CDbCriteria();
 		$criteria->condition = "mis_notify = '1'";
-		$criteria->select = "name, mac_address, ip_address, hostname ";
+		$criteria->select = "name, mac_address, ip_address, hostname, opt";
 		$Devices = Devices::model()->findAll($criteria);		
 		return $Devices;
 	}
