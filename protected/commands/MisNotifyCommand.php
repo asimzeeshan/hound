@@ -4,7 +4,7 @@ class MisNotifyCommand extends CConsoleCommand {
 	private $log;
 
 	public function getHelp(){
-		echo "Process the Device Management.";
+		echo "Process the MIS Devices Report.";
 	}
 	
 	public function init(){
@@ -23,18 +23,20 @@ class MisNotifyCommand extends CConsoleCommand {
 	// this function is used to dispaly all records...
 	public function run(){
 		$misRecord = $this->_misRecord();
-		$new = "<strong>Mis Records:</strong><br /> <br />
+		$new = "<strong>MIS Devices Report:</strong><br /> <br />
 		 <table border=1 width='95%'>
 			  <th width='45%'> Name</th>
 			  <th width='16%'>Mac</th>
 			  <th width='16%'>Ipaddar</th>
-			  <th width='16%'>Hostname</th>  ";
+			  <th width='16%'>Hostname</th>
+			  <th width='16%'>Opt</th>  ";
 		           foreach($misRecord as $query){
 					   
 			      $new .= "<tr><td align='center'>".$query->name."</td>
 					      <td align='center'>". $query->mac_address."</td>
 					      <td align='center'>". $query->ip_address."</td>
-					      <td align='center'>". $query->hostname."</td></tr>";
+					      <td align='center'>". $query->hostname."</td>
+						  <td align='center'>". $query->opt."</td></tr>";
 				}
 				   $new .= "</table>
 				  <br /><br /><br />
@@ -42,7 +44,7 @@ class MisNotifyCommand extends CConsoleCommand {
 			
 			
 		$current_date = date('Y-m-d');
-		$subject = "Today's Import Report [".$current_date."].";
+		$subject = "Today's Import MIS Devices Report [".$current_date."].";
 		$body = $new;
 		// send welcome email
 				$et = new EmailTemplates;
@@ -54,7 +56,7 @@ class MisNotifyCommand extends CConsoleCommand {
 				$body = str_ireplace($search, $replace, $data->body);
 				// ends parse Body
 
-				$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
+				$to = array("asim.sarwar@nxb.com.pk");
 				$email_data = array(
 					'body'=> $body,
 					'address'=> $to,
