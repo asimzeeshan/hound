@@ -56,7 +56,7 @@ class MisNotifyCommand extends CConsoleCommand {
 				$body = str_ireplace($search, $replace, $data->body);
 				// ends parse Body
 
-				$to = array("asim.sarwar@nxb.com.pk");
+				$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
 				$email_data = array(
 					'body'=> $body,
 					'address'=> $to,
