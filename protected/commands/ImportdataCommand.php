@@ -147,13 +147,13 @@ class ImportdataCommand extends CConsoleCommand {
 					$device->description	= ($data['descr'] != "") ? $data['descr'] : "";
 					$device->modified_by	= 1;
 					$device->opt			= ($data['opt'] != "") ? $data['opt'] : "opt";
-					$device->checked		= new CDbExpression('NOW()');
+					$device->last_checked		= new CDbExpression('NOW()');
 					//echo "updating ...\nd";
 			}
 			else{
 				$device->setScenario('not_update');
 				//echo "not updating ...\n";
-				$device->checked		= new CDbExpression('NOW()');
+				$device->last_checked		= new CDbExpression('NOW()');
 			}
 			if ($device->save()) {
 				$this->log->Info("UPDATED MAC=".$data['mac']." / SEGMENT=".$data['opt']." record!");
