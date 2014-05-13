@@ -15,7 +15,7 @@ class WebUser extends CWebUser
             return false;
         }
         $role = $this->getState("roles");
-        if ($role === 'admin') {
+        if ($role === 'superadmin') {
             return true; // admin role has access to everything
         }
         // allow access if the operation request is the current user's role

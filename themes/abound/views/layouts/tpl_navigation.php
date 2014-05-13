@@ -19,19 +19,35 @@
                     'items'=>array(
                         array('label'=>'Dashboard', 'url'=>array('/site/index')),
 						array('label'=>'Whois', 'url'=>array('/whois/index'), 'visible'=>!Yii::app()->user->isGuest),
-						array('label'=>'Devices', 'url'=>array('/devices/admin'), 'visible'=>!Yii::app()->user->isGuest),
+
+						array('label'=>'Devices <span class="caret"></span>', 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                        'items'=>array(
+							array('label'=>'Devices', 'url'=>array('/devices/admin'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Devices w/o EmpID', 'url'=>array('/devices/withoutEmpIdList'), 'visible'=>!Yii::app()->user->isGuest),
+                        )),
 						
-						array('label'=>'Data? <span class="caret"></span>', 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+						array('label'=>'Employees & Managers <span class="caret"></span>', 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
 							array('label'=>'All Employees', 'url'=>array('/employees/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Managers', 'url'=>array('/managers/admin'), 'visible'=>!Yii::app()->user->isGuest),
-							array('label'=>'All Employess Without ID', 'url'=>array('/devices/withoutEmpIdList'), 'visible'=>!Yii::app()->user->isGuest),
+							 )),
+						
+//<<<<<<< HEAD
+						//array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						//array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						//array('label'=>'System Settings', 'url'=>array('/users/settings'), 'visible'=>!Yii::app()->user->isGuest),
+						//array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
+//=======
+						array('label'=>'System <span class="caret"></span>', 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                        'items'=>array(
+							array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Configurations', 'url'=>array('/system/configurations'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Change Password', 'url'=>array('/users/changePassword'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>Yii::app()->user->checkAccess('superadmin')),
                         )),
 						
-						array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
-						array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
-						array('label'=>'System Settings', 'url'=>array('/users/settings'), 'visible'=>!Yii::app()->user->isGuest),
-						array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
+//>>>>>>> 930a53584c35c38abca77c6eb340cbae5ab65575
 						array('label'=>'abound menu <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
 							array('label'=>'Graphs & Charts', 'url'=>array('/site/page', 'view'=>'graphs')),

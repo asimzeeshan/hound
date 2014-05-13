@@ -19,9 +19,12 @@
  */
 class Users extends AZActiveRecord
 {
+	
+	
 	    const ENABLE=1;
 		const DISABLE=0;
 		
+		const SUPER_ADMIN = 'superadmin';
 		const ADMIN= 'admin';
 		const MANAGER='manager';
 		const GUEST='guest';
@@ -38,6 +41,7 @@ class Users extends AZActiveRecord
 	{
 		// display the roles for users in drop down list
 		return array(
+			self::SUPER_ADMIN=>'Super Admin',
 			self::ADMIN=>'Admin',
 			self::MANAGER=>'Manager',
 			self::GUEST=>'Guest',
@@ -62,6 +66,8 @@ class Users extends AZActiveRecord
 		// will receive user inputs.
 		return array(
 			array('first_name, last_name, username, password, email, last_login, created_by, modified, modified_by', 'required'),
+			array('email, username', 'unique'),
+			array('email', 'email'),
 			array('status', 'numerical', 'integerOnly'=>true),
 			array('status', 'in', 'range'=>self::getStatusRange()), // check status in range
 			array('roles', 'in', 'range'=>self::getRolesRange()),	// check roles in range
@@ -88,6 +94,7 @@ class Users extends AZActiveRecord
 	{
 		// check the roles for users are in range
 			return array(
+			self::SUPER_ADMIN,
 			self::ADMIN,
 			self::MANAGER,
 			self::GUEST,
@@ -182,13 +189,13 @@ class Users extends AZActiveRecord
 		));
 	}
 	
-	public function getUserLofinInfo($email)
+	public function getUserLoginInfo($email)
 	{
-		
+		// this is used for getting information of create user and send his/her credientials 
 		    $criteria = new CDbCriteria();
 			$criteria->condition = "email = '$email'";
 			$criteria->select = "first_name, last_name, username, password, email ";
-			$Devices =Users:: model()->findAll($criteria);
+			$user =Users:: model()->findAll($criteria);
 			$login_data = "<br /><strong>User Login Information </strong>:<br /> <br />
 		      <table border=1 width='95%'>
 			  <th width='45%'> First Name</th>
@@ -196,8 +203,7 @@ class Users extends AZActiveRecord
 			  <th width='16%'>Username</th>
 			  <th width='16%'>Password</th>
 			  <th width='16%'>Email</th>  ";
-		           foreach($Devices as $query){
-					//$userLink = CHtml::link($query->name,array("devices/update","id"=>$query->id));
+		           foreach($user as $query){
 			       	$login_data .= "<tr><td align='center'>".$query->first_name."</td>
 					      <td align='center'>". $query->last_name."</td>
 					      <td align='center'>". $query->username."</td>
@@ -225,6 +231,8 @@ class Users extends AZActiveRecord
 	
 	// return the full name (first_name & last_name)
 	public function name() {
-		return $this->first_name." ".$this->last_name; 	
+		return $this->first_name." ".$this->last_name; 
+		//$user =Users:: model()->find(Yii::app()->user->id);
+		//return $user->first_name." ".$user->last_name;	
 	}
 }

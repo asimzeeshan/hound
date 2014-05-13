@@ -32,7 +32,7 @@ class UsersController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','settings'),
+				'actions'=>array('index','view','changePassword'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -42,7 +42,8 @@ class UsersController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('@'),
-				//'roles'=>array('admin','manager'),
+				//'roles'=>array('superadmin','admin'),
+				'expression'=>'isset($user->roles) && ($user->roles==="superadmin") || ($user->roles==="admin")'
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -50,15 +51,23 @@ class UsersController extends Controller
 		);
 	}
 
+	public function actionChangePassword()
+	{
+    	$model=new ChangePasswordForm();
+    	if (isset($_POST['ChangePasswordForm'])) {
+        	$model->setAttributes($_POST['ChangePasswordForm']);
+        		if ($model->validate()) {
+            			$model->save();
+            // you can redirect here
+        					}
+    		}
+
+    	$this->render('changePassword', array('model'=>$model));
+	}
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionSettings()
-	{
-		$this->render('settings')
-		;
-	}
 	
 	public function actionView($id)
 	{
@@ -89,7 +98,7 @@ class UsersController extends Controller
 			$body = "";
 			if($model->save()){
 				if(!empty($email)){
-				     $body .= Users::getUserLofinInfo($email);
+				     $body .= Users::getUserLoginInfo($email);
 				}
 				     $current_date = date('Y-m-d');
 					 $subject = "User Login Information [".$current_date."].";
@@ -156,6 +165,7 @@ class UsersController extends Controller
 		if(isset($_POST['Users']))
 		{
 			$model->attributes=$_POST['Users'];
+			$model->password = md5($_POST['Users']['password']);		
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
