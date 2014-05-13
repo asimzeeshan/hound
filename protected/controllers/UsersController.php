@@ -43,7 +43,7 @@ class UsersController extends Controller
 				'actions'=>array('admin','delete'),
 				'users'=>array('@'),
 				//'roles'=>array('superadmin','admin'),
-				'expression'=>'isset($user->roles) && ($user->roles==="superadmin") || ($user->roles==="admin")'
+				//'expression'=>'isset($user->roles) && ($user->roles==="superadmin") || ($user->roles==="admin")'
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
