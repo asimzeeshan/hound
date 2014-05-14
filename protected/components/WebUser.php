@@ -8,18 +8,61 @@ class WebUser extends CWebUser
      * @param mixed $params (opt) Parameters for this operation, usually the object to access.
      * @return bool Permission granted?
      */
-    public function checkAccess($operation, $params=array())
-    {
-        if (empty($this->id)) {
-            // Not identified => no rights
-            return false;
-        }
-        $role = $this->getState("roles");
-        if ($role === 'superadmin') {
-            return true; // admin role has access to everything
-        }
-        // allow access if the operation request is the current user's role
-        return ($operation === $role);
-    }
+   // Store model to not repeat query.
+ 	 private $_model;
+
+  
+  // This is a function that checks the field 'role'
+  // in the User model to be equal to 1, that means it's admin
+  // access it by Yii::app()->user->isAdmin()
+	 public function isAdmin(){
+		if(!Yii::app()->user->isGuest){
+			$user = $this->loadUser(Yii::app()->user->id);
+			return $user->roles == "admin";
+		}
+		else{
+			return false;
+		}
+	  }
+  
+	 public function isManager(){
+		   if(!Yii::app()->user->isGuest){
+				$user = $this->loadUser(Yii::app()->user->id);
+				return ( $user->roles == "manager");
+			}
+			else{
+				return false;
+			}
+	  }
+	
+	  public function isSuperAdmin(){
+		   if(!Yii::app()->user->isGuest){
+			$user = $this->loadUser(Yii::app()->user->id);
+			return $user->roles == "superadmin";
+		}
+		else{
+			return false;
+		}
+	  }
+	
+	
+	 public function getRole(){
+		  $user = $this->loadUser(Yii::app()->user->id);
+		  return $user->roles;
+	  }
+	
+	  // Load user model.
+	  protected function loadUser($id=null)
+		{
+		  if($id==null)
+			  throw new CHttpException(400, 'You are not authorized to access this module');
+			if($this->_model===null)
+			{
+				if($id!==null)
+					$this->_model=Users::model()->findByPk($id);
+			}
+	
+			return $this->_model;
+		}
 }
 ?>

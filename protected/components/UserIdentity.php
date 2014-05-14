@@ -42,8 +42,7 @@ class UserIdentity extends CUserIdentity
         else
         {
             $this->id=$user->id;
-			$user->updateLastLogin($this->id);
-            $this->setState('roles', $user->roles);            
+			$user->updateLastLogin($this->id);            
             $this->errorCode=self::ERROR_NONE;
         }
         return !$this->errorCode;
@@ -52,4 +51,5 @@ class UserIdentity extends CUserIdentity
     public function getId(){
         return $this->id;
     }
+
 }
