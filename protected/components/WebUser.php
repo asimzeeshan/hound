@@ -45,7 +45,7 @@ class WebUser extends CWebUser
 		}
 	  }
 	
-	
+	 
 	 public function getRole(){
 		  $user = $this->loadUser(Yii::app()->user->id);
 		  return $user->roles;
