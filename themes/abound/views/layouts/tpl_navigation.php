@@ -46,7 +46,7 @@
 							array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Configurations', 'url'=>array('/system/configurations'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Change Password', 'url'=>array('/users/changePassword'), 'visible'=>!Yii::app()->user->isGuest),	
-						    array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest),
+						    array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>Yii::app()->user->isSuperAdmin()),
 					                        )),
 						
 						
