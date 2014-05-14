@@ -44,6 +44,16 @@ class WebUser extends CWebUser
 			return false;
 		}
 	  }
+	  
+	   public function isGuest(){
+		   if(!Yii::app()->user->isGuest){
+			$user = $this->loadUser(Yii::app()->user->id);
+			return $user->roles == "guest";
+		}
+		else{
+			return false;
+		}
+	  }
 	
 	 
 	 public function getRole(){
