@@ -108,7 +108,6 @@ class UsersController extends Controller
 			$model->attributes=$_POST['Users'];
 			$model->email = $_POST['Users']['email'];
 			$email = $model->email;
-			$body = "";
 			if($model->save()){
 				// send welcome email
 				$et = new EmailTemplates;
