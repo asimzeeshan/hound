@@ -38,8 +38,7 @@
 							array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Configurations', 'url'=>array('/system/configurations'), 'visible'=>!Yii::app()->user->isGuest),
-							array('label'=>'Change Password', 'url'=>array('/users/changePassword'), 'visible'=>!Yii::app()->user->isGuest),	
-						    array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest && Yii::app()->user->isSuperAdmin()),
+							array('label'=>'Change Password', 'url'=>array('/users/changePassword'), 'visible'=>!Yii::app()->user->isGuest),
 							 )),
 						
 
@@ -54,11 +53,7 @@
                         /*array('label'=>'Gii generated', 'url'=>array('customer/index')),*/
                         array('label'=>'My Account <span class="caret"></span>', 'url'=>'#', 'visible'=>!Yii::app()->user->isGuest, 'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                         'items'=>array(
-                            array('label'=>'My Messages <span class="badge badge-warning pull-right">26</span>', 'url'=>'#'),
-							array('label'=>'My Tasks <span class="badge badge-important pull-right">112</span>', 'url'=>'#'),
-							array('label'=>'My Invoices <span class="badge badge-info pull-right">12</span>', 'url'=>'#'),
-							array('label'=>'Separated link', 'url'=>'#'),
-							array('label'=>'One more separated link', 'url'=>'#'),
+                            array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest && Yii::app()->user->isSuperAdmin()),
 							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                         )),
                         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
