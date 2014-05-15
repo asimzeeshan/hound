@@ -189,30 +189,7 @@ class Users extends AZActiveRecord
 		));
 	}
 	
-	public function getUserLoginInfo($email)
-	{
-		// this is used for getting information of create user and send his/her credientials 
-		    $criteria = new CDbCriteria();
-			$criteria->condition = "email = '$email'";
-			$criteria->select = "first_name, last_name, username, password, email ";
-			$user =Users:: model()->findAll($criteria);
-			$login_data = "<br /><strong>User Login Information </strong>:<br /> <br />
-		      <table border=1 width='95%'>
-			  <th width='45%'> First Name</th>
-			  <th width='16%'>Last Name</th>
-			  <th width='16%'>Username</th>
-			  <th width='16%'>Password</th>
-			  <th width='16%'>Email</th>  ";
-		           foreach($user as $query){
-			       	$login_data .= "<tr><td align='center'>".$query->first_name."</td>
-					      <td align='center'>". $query->last_name."</td>
-					      <td align='center'>". $query->username."</td>
-					      <td align='center'>". $query->password."</td>
-						  <td align='center'>". $query->email."</td></tr>";
-				}
-				   $login_data .= "</table>";
-				   return $login_data;
-	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

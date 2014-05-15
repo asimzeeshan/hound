@@ -110,24 +110,6 @@ class UsersController extends Controller
 			$email = $model->email;
 			$body = "";
 			if($model->save()){
-				if(!empty($email)){
-				     $body .= Users::getUserLoginInfo($email);
-				}
-				     $current_date = date('Y-m-d');
-					 $subject = "User Login Information [".$current_date."].";
-					 $to = $cc = $bcc = array();
-					 $to = $email;
-					 $login_data = array(
-								'address'	=> $to,
-								'ccaddress'	=> $cc,
-								'bccaddress'=> $bcc,
-								'subject'	=> $subject,
-								'body'		=> $body,
-								'user_id'	=> 1,
-							);
-					$this->sendMail($login_data);
-					Yii::app()->user->setFlash('view','<div align="center" style="color:green;"><strong><h1>Message has been sent to '.$email.'</h1></strong></div>');
-				
 				// send welcome email
 				$et = new EmailTemplates;
 				$data = $et->getData(7);
@@ -148,7 +130,7 @@ class UsersController extends Controller
 
 				// send the email
 				$this->sendMail($email_data);
-
+				Yii::app()->user->setFlash('view','<div align="center" style="color:green;"><strong><h1>Message has been sent to '.$model->email.'</h1></strong></div>');
 				// save the email as well	
 				$this->saveEmailLog(7, $email_data);
 				 $Criteria = new CDbCriteria();
