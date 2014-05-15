@@ -19,5 +19,11 @@ return array(
         'bizRule'=>'',
         'data'=>''
    ),
+    'guest' => array (
+        'type'=>CAuthItem::TYPE_ROLE,
+        'description'=>'guest user',
+        'bizRule'=>'',
+        'data'=>''
+   ),
 );
 

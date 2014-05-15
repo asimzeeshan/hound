@@ -1,4 +1,4 @@
-<?php 
+<?php
 return array (
   'superadmin' => 
   array (
@@ -15,12 +15,20 @@ return array (
       ),
     ),
   ),
-  'aduser' => 
+  'manager' => 
   array (
     'type' => 2,
-    'description' => 'AdUser',
+    'description' => 'Manager',
     'bizRule' => '',
     'data' => '',
+    'assignments' => 
+    array (
+      10 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'admin' => 
   array (
@@ -28,10 +36,6 @@ return array (
     'description' => 'Can perform all actions',
     'bizRule' => '',
     'data' => '',
-    'children' => 
-    array (
-      0 => 'usersAdmin',
-    ),
     'assignments' => 
     array (
       24 => 
@@ -41,11 +45,19 @@ return array (
       ),
     ),
   ),
-  'usersAdmin' => 
+  'guest' => 
   array (
-    'type' => 0,
-    'description' => 'read a post',
-    'bizRule' => NULL,
-    'data' => NULL,
+    'type' => 2,
+    'description' => 'guest user',
+    'bizRule' => '',
+    'data' => '',
+    'assignments' => 
+    array (
+      10 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
 );
