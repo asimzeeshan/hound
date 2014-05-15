@@ -61,7 +61,6 @@
 	</div>
     
     <?php if (!$model->isNewRecord) { ?>
-
     <div class="row">
         <?php echo $form->labelEx($model,'last_login'); ?>
         <?php echo $model->last_login; ?>

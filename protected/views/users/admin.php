@@ -59,6 +59,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 			'name'=>'status',
 			'value'=>'$data->status==1 ? "Active" : "Inactive"'
 		),
+		'roles',
 		'last_login',
 		/*
 		'created',

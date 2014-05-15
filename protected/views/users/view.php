@@ -38,6 +38,7 @@ $this->menu=array(
 		array(
 				'name'=>'created_by',
 				'value'=>$model->CreatedBy->name(),
+				
 				),
 		'modified',
 		array(

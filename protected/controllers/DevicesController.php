@@ -27,7 +27,7 @@ class DevicesController extends Controller
 	   
 		$image = CHtml::image(Yii::app()->baseUrl . $image,'nothing');
 			
-       return $data->emp_id > 0 ? $data->emp_id : CHtml::ajaxLink($image, CHtml::normalizeUrl(array("/devices/ajaxupdate")),array(
+       return $data->emp_id > 0 ? $data->emp_id : CHtml::ajaxLink($image,CHtml::normalizeUrl(array("/devices/ajaxupdate")),array(
              "type"=>"POST",
 			 "data"=>array(
                    "id"=>$data->id,
@@ -35,7 +35,7 @@ class DevicesController extends Controller
 			 "success"=>"js:function(){
 				  $.fn.yiiGridView.update('devices-grid');
 				 }"
-        )) ;  
+        ));
     } 
 	
 	public function actionAjaxUpdate()

@@ -18,6 +18,7 @@ class UsersController extends Controller
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
+	
 
 	/**
 	 * Specifies the access control rules.
@@ -26,9 +27,14 @@ class UsersController extends Controller
 	 */
 	public function accessRules()
 	{
+		
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
+				'users'=>array('@'),
+			),
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view','changePassword'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -38,7 +44,7 @@ class UsersController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('@'),
-				//'roles'=>array('admin','manager'),
+				'roles'=>array('superadmin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -46,10 +52,36 @@ class UsersController extends Controller
 		);
 	}
 
+	public function actionChangePassword()
+	{ 
+        $model=new ChangePasswordForm;
+		// if it is ajax validation request
+		if(isset($_POST['ajax']) && $_POST['ajax']==='changepassword-form')
+		{
+			echo CFormModel::validate($model);
+			Yii::app()->end();
+		}
+
+        // collect user input data
+		if(isset($_POST['ChangePasswordForm']))
+		{
+			$model->attributes=$_POST['ChangePasswordForm'];
+			// validate user input and redirect to the previous page if valid
+			if($model->validate() && $model->changePassword())
+			{
+				Yii::app()->user->setFlash('changePassword',"<div align=\"center\" style=\"color:green;\"><h3>Password has been changed successfully.</h3></div>");
+				$this->refresh();
+            }
+		}
+		
+		// display the form for change password
+		$this->render('changePassword',array('model'=>$model));
+	}
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
+	
 	public function actionView($id)
 	{
 		$this->render('view',array(
@@ -79,7 +111,7 @@ class UsersController extends Controller
 			$body = "";
 			if($model->save()){
 				if(!empty($email)){
-				     $body .= Users::getUserLofinInfo($email);
+				     $body .= Users::getUserLoginInfo($email);
 				}
 				     $current_date = date('Y-m-d');
 					 $subject = "User Login Information [".$current_date."].";
@@ -94,7 +126,7 @@ class UsersController extends Controller
 								'user_id'	=> 1,
 							);
 					$this->sendMail($login_data);
-					Yii::app()->user->setFlash('view','<div align="center" style="color:green;"><strong><h1>Message has been sent to '.$email.'</h1></strong>');
+					Yii::app()->user->setFlash('view','<div align="center" style="color:green;"><strong><h1>Message has been sent to '.$email.'</h1></strong></div>');
 				
 				// send welcome email
 				$et = new EmailTemplates;
@@ -146,6 +178,7 @@ class UsersController extends Controller
 		if(isset($_POST['Users']))
 		{
 			$model->attributes=$_POST['Users'];
+			$model->password = md5($_POST['Users']['password']);		
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

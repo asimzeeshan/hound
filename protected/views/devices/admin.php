@@ -20,7 +20,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-<p><?php echo CHtml::link('Employees with out ID List', array('/devices/withoutEmpIdList'))?> </p>
+<p><?php //echo CHtml::link('Employees with out ID List', array('/devices/withoutEmpIdList'))?> </p>
 <h1>Manage Devices</h1>
 
 <p>
@@ -37,6 +37,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'devices-grid',
+	'ajaxUpdate'=>false,
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
@@ -44,7 +45,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		array(  
             'name'=>'emp_id',
 			'type' => 'raw',
-            'value'=>array($this,'gridMisNotifyColumn'),
+            'value'=>array($this,'gridMisNotifyColumn')
         ),
 
 		'name',
@@ -68,10 +69,5 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	),
 )); 
 
-echo CHtml::ajaxLink("warrior", "DevicesController.php?r=admin/devices/ajaxupdate", array(
-             "data"=>array(
-                   "id"=>23,
-             ),
-             "update"=>"#devices-grid",
-        ));
+
 ?>

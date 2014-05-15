@@ -45,7 +45,7 @@ class Devices extends AZActiveRecord
 			array('created_by, modified_by', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, emp_id, name, deleted, checked, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
+			array('id, emp_id, name, deleted_flag, last_checked, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, mis_notify, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,12 +77,13 @@ class Devices extends AZActiveRecord
 			'location' => 'Location',
 			'hall' => 'Hall',
 			'opt' => 'Opt',
+			'deleted_flag'=>'Deleted_Flag',
+			'last_checked'=>'Last_Checked',
+			'mis_notify'=>'Mis_notify',
 			'created' => 'Created',
 			'created_by' => 'Created By',
 			'modified' => 'Modified',
 			'modified_by' => 'Modified By',
-			'deleted'=>'Deleted',
-			'checked'=>'Checked',
 		);
 	}
 
@@ -115,6 +116,7 @@ class Devices extends AZActiveRecord
 		$criteria->compare('location',$this->location,true);
 		$criteria->compare('hall',$this->hall,true);
 		$criteria->compare('opt',$this->opt,true);
+		$criteria->compare('mis_notify',$this->mis_notify,true);
 		$criteria->compare('created',$this->created,true);
 		$criteria->compare('created_by',$this->created_by,true);
 		$criteria->compare('modified',$this->modified,true);
@@ -134,7 +136,7 @@ class Devices extends AZActiveRecord
 		$criteria->condition = "emp_id = ''";
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>300,),
+			'pagination'=>array('pageSize'=>25,),
 		));
 	}
 	
@@ -143,7 +145,7 @@ class Devices extends AZActiveRecord
 		// this funcion is used for return the  marked list of  employees whose have no emp_id .
 		    $Criteria = new CDbCriteria();
 			$Criteria->addInCondition("id", $checkbox);
-			$Criteria->select = "id, name, mac_address, ip_address, hostname ";
+			$Criteria->select = "id, name, mac_address, ip_address, hostname, opt ";
 			$Devices =Devices:: model()->findAll($Criteria);
 			$no_emp_id = "<br /><strong>Employee List without Employee ID </strong>:<br /> <br />
 		      <table border=1 width='95%'>
@@ -156,7 +158,8 @@ class Devices extends AZActiveRecord
 			       	$no_emp_id .= "<tr><td align='center'>".$userLink."</td>
 					      <td align='center'>". $query->mac_address."</td>
 					      <td align='center'>". $query->ip_address."</td>
-					      <td align='center'>". $query->hostname."</td></tr>";
+					      <td align='center'>". $query->hostname."</td>
+						  <td align='center'>". $query->opt."</td></tr>";
 				}
 				   $no_emp_id .= "</table>";
 				   return $no_emp_id;

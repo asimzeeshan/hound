@@ -33,9 +33,9 @@ class RecordCommand extends CConsoleCommand {
 	
 	// this function is used for display all deleted records...
 	private function _deleteRecord(){
-		$Devices = Devices::model()->updateAll(array("deleted"=>1),"DATEDIFF(NOW(),checked)>= 2");	
+		$Devices = Devices::model()->updateAll(array("deleted_flag"=>1),"DATEDIFF(NOW(),last_checked)>= 2");	
 		$criteria = new CDbCriteria();
-		$criteria->condition = "deleted = 1";
+		$criteria->condition = "deleted_flag = 1";
 		$criteria->select = "name, mac_address, ip_address, hostname";
 		$Devices = Devices::model()->findAll($criteria);
 		return ($Devices);
@@ -51,10 +51,10 @@ class RecordCommand extends CConsoleCommand {
 			  <th width='16%'>Hostname</th>  ";
 		           foreach($newRecord as $query){
 					   
-			      $new .= "<tr><td align='center'>".$query['name']."</td>
-					      <td align='center'>". $query['mac_address']."</td>
-					      <td align='center'>". $query['ip_address']."</td>
-					      <td align='center'>". $query['hostname']."</td></tr>";
+			      $new .= "<tr><td align='center'>".$query->name."</td>
+					      <td align='center'>". $query->mac_address."</td>
+					      <td align='center'>". $query->ip_address."</td>
+					      <td align='center'>".$query->hostname."</td></tr>";
 				}
 				   $new .= "</table>";
 				   //echo $new;
@@ -67,10 +67,10 @@ class RecordCommand extends CConsoleCommand {
 			  <th width='16%'>Hostname</th>  ";
 		           foreach($changeRecord as $query){
 					   
-			       $change .= "<tr><td align='center'>".$query['name']."</td>
-					      <td align='center'>". $query['mac_address']."</td>
-					      <td align='center'>". $query['ip_address']."</td>
-					      <td align='center'>". $query['hostname']."</td></tr>";
+			       $change .= "<tr><td align='center'>".$query->name."</td>
+					      <td align='center'>". $query->mac_address."</td>
+					      <td align='center'>". $query->ip_address."</td>
+					      <td align='center'>".$query->hostname."</td></tr>";
 				}
 				   $change .= "</table>";
 				   //echo $change;
@@ -83,10 +83,10 @@ class RecordCommand extends CConsoleCommand {
 			  <th width='16%'>Hostname</th>  ";
 		           foreach($deleteRecord as $query){
 					   
-			       $delete .= "<tr><td align='center'>".$query['name']."</td>
-					      <td align='center'>". $query['mac_address']."</td>
-					      <td align='center'>". $query['ip_address']."</td>
-					      <td align='center'>". $query['hostname']."</td></tr>";
+			       $delete .= "<tr><td align='center'>".$query->name."</td>
+					      <td align='center'>". $query->mac_address."</td>
+					      <td align='center'>". $query->ip_address."</td>
+					      <td align='center'>".$query->hostname."</td></tr>";
 				}
 				  $delete .= "</table>
 				  
