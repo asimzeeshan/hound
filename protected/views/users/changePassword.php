@@ -18,8 +18,8 @@ $this->breadcrumbs=array(
 	);
 	?>
 
-	<p>All fields are required.</p>
-
+	<p>Fields with * are required.</p>
+		
 	<div>
 		<?php echo $form->labelEx($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password'); ?>

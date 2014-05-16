@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="page-header">
-	<h1>Configurations</h1>
+	
 </div>
 
 <div class="row-fluid">
@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
   
 <?php
 	$this->beginWidget('zii.widgets.CPortlet', array(
-		'title'=>"Text fields for configurations",
+		'title'=>"<h1>Configurations</h1>",
 	));
 	
 ?>

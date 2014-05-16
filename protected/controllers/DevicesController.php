@@ -200,7 +200,7 @@ class DevicesController extends Controller
 						'user_id'	=> 1,
 					);
 			$this->sendMail($record_data);
-			Yii::app()->user->setFlash('withoutEmpIdList','<div align="center" style="color:green;"><strong><h1>Message has been sent!</h1></strong>');
+			Yii::app()->user->setFlash('withoutEmpIdList','<div align="center" style="color:green;"><strong><h1>Message has been sent!</h1></strong></div>');
 		}
 			$model=new Devices('search');
 			$model->unsetAttributes();  // clear any default values

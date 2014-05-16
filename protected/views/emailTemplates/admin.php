@@ -26,7 +26,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Email Templates</h1>
+
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -39,9 +39,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-
+<?php
+		$this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>"<h1>Manage Email Templates</h1>",
+		));
+		
+	?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'email-templates-grid',
+	'itemsCssClass'=>'table table-striped table-bordered table-hover',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
@@ -63,3 +69,4 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		),
 	),
 )); ?>
+<?php $this->endWidget();?>
