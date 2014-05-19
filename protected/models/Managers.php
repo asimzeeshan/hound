@@ -103,9 +103,13 @@ class Managers extends AZActiveRecord
 		$criteria->compare('modified',$this->modified,true);
 		$criteria->compare('modified_by',$this->modified_by,true);
 
+		$records_per_page = new CDbCriteria;	// this criteria is used for getting the pagination size from cofigurations table in show record per page according this getting size
+		$records_per_page->select = "records_per_page";
+		$Configurations = Configurations::model()->find($records_per_page);
+		$records_per_page = $Configurations['records_per_page'];
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>25,),
+			'pagination'=>array('pageSize'=>$records_per_page),
 		));
 	}
 
