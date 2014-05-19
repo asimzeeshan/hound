@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 <?php if(Yii::app()->user->hasFlash('changePassword')): ?>
 <?php echo Yii::app()->user->getFlash('changePassword'); ?>
 <?php endif;?>
-<h1>Change Password</h1>
+
 	<?php
 	$form = $this->beginWidget(
 		'CActiveForm',
@@ -17,7 +17,12 @@ $this->breadcrumbs=array(
 		)
 	);
 	?>
-
+<?php
+	$this->beginWidget('zii.widgets.CPortlet', array(
+		'title'=>"<h1>Change Password</h1>",
+	));
+	
+?>
 	<p>Fields with * are required.</p>
 		
 	<div>
@@ -42,8 +47,9 @@ $this->breadcrumbs=array(
 		'name'=>'button1',
 		'caption'=>'Change Password',
 		//'value'=>'asd1',
-		'htmlOptions'=>array('class'=>'btn btn-primary'),));
+		'htmlOptions'=>array('class'=>'btn btn-info'),));
 ?>
+<?php $this->endWidget();?>
 <?php $this->endWidget();?>
 	</div>
 

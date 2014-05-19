@@ -21,7 +21,7 @@ class Users extends AZActiveRecord
 {
 	
 	
-	    const ENABLE=1;
+        const ENABLE=1;
 		const DISABLE=0;
 		
 		const SUPER_ADMIN = 'superadmin';

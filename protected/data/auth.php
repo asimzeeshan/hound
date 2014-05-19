@@ -1,4 +1,4 @@
-<?php
+<?php 
 return array (
   'superadmin' => 
   array (
@@ -60,7 +60,7 @@ return array (
     array (
       10 => 
       array (
-        'bizRule' => NULL,
+        'bizRule' =>  NULL,
         'data' => NULL,
       ),
     ),
