@@ -37,7 +37,7 @@
 						'items'=>array(
 							array('label'=>'Email Logs', 'url'=>array('/emailLogs/admin'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'Email Templates', 'url'=>array('/emailTemplates/admin'), 'visible'=>!Yii::app()->user->isGuest),
-							array('label'=>'Configurations', 'url'=>array('/configurations/update/15'), 'visible'=>!Yii::app()->user->isGuest),
+							array('label'=>'Configurations', 'url'=>array('/configurations/update/1'), 'visible'=>!Yii::app()->user->isGuest),
 							array('label'=>'System Users', 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest && Yii::app()->user->isSuperAdmin()),
 							 )),
 						
