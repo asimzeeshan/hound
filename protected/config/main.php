@@ -22,6 +22,7 @@ return array(
 		'application.components.*',
 		'application.helpers.phpmailer.*',
 		'application.helpers.logging.*',
+		
 	),
 
 	'modules'=>array(
@@ -32,16 +33,22 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','10.28.79.15','::1'),
 		),
+		
+		
 	),
 
 	// application components
 	'components'=>array(
 		'user'=>array(
 			// enable cookie-based authentication
-			'allowAutoLogin'=>true,    
+			'allowAutoLogin'=>true,
+			'class' => 'WebUser',
 		),
+		'authManager'=>array(
+            'class'=>'CPhpAuthManager',
+            ),
 		'urlManager'=>array(
-			//'urlFormat'=>'path',
+			'urlFormat'=>'path',
 			//'showScriptName'=>false,
 			//'caseSensitive'=>false,
 			'rules'=>array(
@@ -53,13 +60,20 @@ return array(
 		),
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
-			'emulatePrepare' => true,
+			'emulatePrepare' => true, 
 			'username' => 'abusereportr',
 			'password' => 'T9wHWVGSeYBuMrSX',
 			'charset' => 'utf8',
 		),
+            /*'db'=>array(
+			'connectionString' => 'mysql:host=localhost;dbname=abusereporter',
+			'emulatePrepare' => true, 
+			'username' => 'root',
+			'password' => '',
+			'charset' => 'utf8',
+		),*/
 		'errorHandler'=>array(
-			// use 'site/error' action to display errors
+			// use 'site/error' action to display errors  asdfsad fsad f
 			'errorAction'=>'site/error',
 		),
 		'log'=>array(

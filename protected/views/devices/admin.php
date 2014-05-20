@@ -21,7 +21,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 <p><?php //echo CHtml::link('Employees with out ID List', array('/devices/withoutEmpIdList'))?> </p>
-<h1>Manage Devices</h1>
+
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -34,9 +34,16 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
+<?php
+		$this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>"<h1>Manage Devices</h1>",
+		));
+		
+	?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'devices-grid',
+	'itemsCssClass'=>'table table-striped table-bordered table-hover',
 	'ajaxUpdate'=>false,
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
@@ -71,3 +78,4 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 
 ?>
+<?php $this->endWidget();?>

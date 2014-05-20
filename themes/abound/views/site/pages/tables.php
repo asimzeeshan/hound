@@ -30,7 +30,7 @@ $gridDataProvider = new CArrayDataProvider(array(
 			/*'type'=>'striped bordered condensed',*/
 			'itemsCssClass'=>'table table-hover',
 			'dataProvider'=>$gridDataProvider,
-			'template'=>"{items}",
+			//'template'=>"{items}",
 			'columns'=>array(
 				array('name'=>'id', 'header'=>'#'),
 				array('name'=>'firstName', 'header'=>'First name'),

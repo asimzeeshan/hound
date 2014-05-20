@@ -41,7 +41,7 @@ class Devices extends AZActiveRecord
 			array('name, ip_address, mac_address, hostname, description, line_manager, location, hall, opt, created, created_by, modified, modified_by', 'required'),
 			array('id', 'length', 'max'=>20),
 			array('emp_id, name, ip_address, mac_address, hostname, description, line_manager, location, hall', 'length', 'max'=>255),
-			array('opt, deleted, checked', 'length', 'max'=>256),
+			array('opt, deleted_flag, last_checked', 'length', 'max'=>256),
 			array('created_by, modified_by', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -121,22 +121,31 @@ class Devices extends AZActiveRecord
 		$criteria->compare('created_by',$this->created_by,true);
 		$criteria->compare('modified',$this->modified,true);
 		$criteria->compare('modified_by',$this->modified_by,true);
-
+		
+		$records_per_page = new CDbCriteria;	// this criteria is used for getting the pagination size from cofigurations table in show record per page according this getting size
+		$records_per_page->select = "records_per_page";
+		$Configurations = Configurations::model()->find($records_per_page);
+		$records_per_page = $Configurations['records_per_page'];
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>25,),
+			'pagination'=>array('pageSize'=>$records_per_page),
 		));
 	}
 	
 	public function searchlistWithoutEmpId()
 	{
 		// this funcion is used for getting the list of  employees whose have no emp_id .
-
+		
+		$records_per_page = new CDbCriteria;  // this criteria is used for getting the pagination size from cofigurations table in show record per page according this getting size
+		$records_per_page->select = "records_per_page";
+		$Configurations = Configurations::model()->find($records_per_page);
+		$records_per_page = $Configurations['records_per_page'];
 		$criteria=new CDbCriteria;
+		
 		$criteria->condition = "emp_id = ''";
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>25,),
+			'pagination'=>array('pageSize'=>$records_per_page),
 		));
 	}
 	

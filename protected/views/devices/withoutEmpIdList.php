@@ -21,7 +21,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 <p><?php //echo CHtml::link('Back', array('/devices/admin'))?> </p>
-<h1>Employees without ID </h1>
+
 
  
 <div class="flash-success">
@@ -55,13 +55,20 @@ $this->widget('zii.widgets.jui.CJuiButton', array(
 		'name'=>'button1',
 		'caption'=>'Send Email',
 		'value'=>'asd1',
-		'htmlOptions'=>array('class'=>'btn btn-primary'),));
+		'htmlOptions'=>array('class'=>'btn btn-info'),));	
 ?>
 <?php if(Yii::app()->user->hasFlash('withoutEmpIdList')): ?>
 <?php echo Yii::app()->user->getFlash('withoutEmpIdList'); ?>
-<?php endif; ?>
+<?php endif;  ?>
+<?php
+		$this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>"<h1>Employees without ID </h1>",
+		));
+		
+	?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'devices-grid',
+	'itemsCssClass'=>'table table-striped table-bordered table-hover',
 	'dataProvider'=>$model->searchlistWithoutEmpId(),
 	'filter'=>$model,
 	'columns'=>array(
@@ -96,11 +103,13 @@ $this->widget('zii.widgets.jui.CJuiButton', array(
 ));
 	
  ?>
+ <?php $this->endWidget();?>
  <?php 
  $this->widget('zii.widgets.jui.CJuiButton', array(
 		'name'=>'button1',
 		'caption'=>'Send Email',
 		'value'=>'asd1',
-		'htmlOptions'=>array('class'=>'btn btn-primary'),));
- //echo CHtml::submitButton('caption');?>
+		'htmlOptions'=>array('class'=>'btn btn-info'),
+		));
+?>
 <?php $this->endWidget();?>

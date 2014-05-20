@@ -9,6 +9,4 @@ $this->breadcrumbs=array(
 
 ?>
 
-<h1>Create Devices</h1>
-
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

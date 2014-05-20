@@ -21,7 +21,7 @@ class Users extends AZActiveRecord
 {
 	
 	
-	    const ENABLE=1;
+        const ENABLE=1;
 		const DISABLE=0;
 		
 		const SUPER_ADMIN = 'superadmin';
@@ -182,37 +182,17 @@ class Users extends AZActiveRecord
 		$criteria->compare('created_by',$this->created_by,true);
 		$criteria->compare('modified',$this->modified,true);
 		$criteria->compare('modified_by',$this->modified_by,true);
-
+		
+		$records_per_page = new CDbCriteria;	// this criteria is used for getting the pagination size from cofigurations table in show record per page according this getting size
+		$records_per_page->select = "records_per_page";
+		$Configurations = Configurations::model()->find($records_per_page);
+		$records_per_page = $Configurations['records_per_page'];
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>25,),
+			'pagination'=>array('pageSize'=>$records_per_page),
 		));
 	}
 	
-	public function getUserLoginInfo($email)
-	{
-		// this is used for getting information of create user and send his/her credientials 
-		    $criteria = new CDbCriteria();
-			$criteria->condition = "email = '$email'";
-			$criteria->select = "first_name, last_name, username, password, email ";
-			$user =Users:: model()->findAll($criteria);
-			$login_data = "<br /><strong>User Login Information </strong>:<br /> <br />
-		      <table border=1 width='95%'>
-			  <th width='45%'> First Name</th>
-			  <th width='16%'>Last Name</th>
-			  <th width='16%'>Username</th>
-			  <th width='16%'>Password</th>
-			  <th width='16%'>Email</th>  ";
-		           foreach($user as $query){
-			       	$login_data .= "<tr><td align='center'>".$query->first_name."</td>
-					      <td align='center'>". $query->last_name."</td>
-					      <td align='center'>". $query->username."</td>
-					      <td align='center'>". $query->password."</td>
-						  <td align='center'>". $query->email."</td></tr>";
-				}
-				   $login_data .= "</table>";
-				   return $login_data;
-	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

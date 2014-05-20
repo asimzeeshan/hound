@@ -1,15 +1,15 @@
 <?php
-/* @var $this EmailLogsController */
-/* @var $model EmailLogs */
+/* @var $this ConfigurationsController */
+/* @var $model Configurations */
 
 $this->breadcrumbs=array(
-	'Email Logs'=>array('index'),
+	'Configurations'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'List EmailLogs', 'url'=>array('index')),
-	array('label'=>'Create EmailLogs', 'url'=>array('create')),
+	array('label'=>'List Configurations', 'url'=>array('index')),
+	array('label'=>'Create Configurations', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -18,7 +18,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$('#email-logs-grid').yiiGridView('update', {
+	$('#configurations-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -26,6 +26,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
+<h1>Manage Configurations</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -38,24 +39,20 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
- <?php
-		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>"<h1>Manage Email Logs</h1>",
-		));
-		
-	?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'email-logs-grid',
-	'itemsCssClass'=>'table table-striped table-bordered table-hover',
+	'id'=>'configurations-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'template_id',
-		'email_to',
-		'email_cc',
-		'subject',
+		'title',
+		'from_name',
+		'from_email',
+		'bcc',
+		'notify_email',
 		/*
+		'records_per_page',
 		'created',
 		'created_by',
 		'modified',
@@ -66,4 +63,3 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		),
 	),
 )); ?>
-<?php $this->endWidget();?>

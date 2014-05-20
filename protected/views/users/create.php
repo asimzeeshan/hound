@@ -13,6 +13,6 @@ $this->menu=array(
 ?>
 
 <h5><?php echo CHtml::link('Back', array('/users/admin'))?> </h5>
-<h1>Create System User</h1>
+
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

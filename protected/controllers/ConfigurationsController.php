@@ -1,6 +1,6 @@
 <?php
 
-class UsersController extends Controller
+class ConfigurationsController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -18,7 +18,6 @@ class UsersController extends Controller
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
-	
 
 	/**
 	 * Specifies the access control rules.
@@ -27,14 +26,9 @@ class UsersController extends Controller
 	 */
 	public function accessRules()
 	{
-		
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
-				'users'=>array('@'),
-			),
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','changePassword'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -44,7 +38,6 @@ class UsersController extends Controller
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
 				'users'=>array('@'),
-				'roles'=>array('superadmin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -52,36 +45,10 @@ class UsersController extends Controller
 		);
 	}
 
-	public function actionChangePassword()
-	{ 
-        $model=new ChangePasswordForm;
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='changepassword-form')
-		{
-			echo CFormModel::validate($model);
-			Yii::app()->end();
-		}
-
-        // collect user input data
-		if(isset($_POST['ChangePasswordForm']))
-		{
-			$model->attributes=$_POST['ChangePasswordForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->changePassword())
-			{
-				Yii::app()->user->setFlash('changePassword',"<div align=\"center\" style=\"color:green;\"><h3>Password has been changed successfully.</h3></div>");
-				$this->refresh();
-            }
-		}
-		
-		// display the form for change password
-		$this->render('changePassword',array('model'=>$model));
-	}
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	
 	public function actionView($id)
 	{
 		$this->render('view',array(
@@ -95,48 +62,16 @@ class UsersController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Users;
+		$model=new Configurations;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Users']))
+		if(isset($_POST['Configurations']))
 		{
-			$unencryted_pass = $_POST['Users']['password'];
-			$_POST['Users']['password'] = md5($_POST['Users']['password']);
-
-			$model->attributes=$_POST['Users'];
-			$model->email = $_POST['Users']['email'];
-			$email = $model->email;
-			if($model->save()){
-				// send welcome email
-				$et = new EmailTemplates;
-				$data = $et->getData(7);
-				
-				// parse Body
-				$search = array('{name}', '{username}', '{password}');
-				$replace = array($model->name(), $model->username, $unencryted_pass);
-				$body = str_ireplace($search, $replace, $data->body);
-				// ends parse Body
-				
-				$email_data = array(
-					'body'=> $body,
-					'address'=> $model->email,
-					'ccaddress'=> '',
-					'bccaddress'=> '',
-					'subject' => $data->subject
-				);
-
-				// send the email
-				$this->sendMail($email_data);
-				Yii::app()->user->setFlash('view','<div align="center" style="color:green;"><strong><h1>Message has been sent to '.$model->email.'</h1></strong></div>');
-				// save the email as well	
-				$this->saveEmailLog(7, $email_data);
-				 $Criteria = new CDbCriteria();
-				 
-							
+			$model->attributes=$_POST['Configurations'];
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
-			}
 		}
 
 		$this->render('create',array(
@@ -156,10 +91,9 @@ class UsersController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Users']))
+		if(isset($_POST['Configurations']))
 		{
-			$model->attributes=$_POST['Users'];
-			$model->password = md5($_POST['Users']['password']);		
+			$model->attributes=$_POST['Configurations'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -176,11 +110,7 @@ class UsersController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		if ($id > 3) {
-			$this->loadModel($id)->delete();
-		} else {
-			Yii::app()->user->setFlash('failed','Cannot delete the administrators');
-		}
+		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -192,7 +122,7 @@ class UsersController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Users');
+		$dataProvider=new CActiveDataProvider('Configurations');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -203,10 +133,10 @@ class UsersController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Users('search');
+		$model=new Configurations('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Users']))
-			$model->attributes=$_GET['Users'];
+		if(isset($_GET['Configurations']))
+			$model->attributes=$_GET['Configurations'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -217,12 +147,12 @@ class UsersController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Users the loaded model
+	 * @return Configurations the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Users::model()->findByPk($id);
+		$model=Configurations::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -230,15 +160,14 @@ class UsersController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Users $model the model to be validated
+	 * @param Configurations $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='users-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='configurations-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
-
 }
