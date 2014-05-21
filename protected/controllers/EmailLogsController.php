@@ -100,6 +100,7 @@ class EmailLogsController extends Controller
 
 		if(count($employeeDataArray) != 0){
 			$employeeData = $employeeDataArray[0];
+		
 		}
 		
 		if(isset($_POST['EmailTemplates']))

@@ -58,7 +58,7 @@ $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_
 			'htmlOptions'=>array('class'=>'btn btn-info'),
 		));
 			
-		echo CHtml::label('Search in', 'type');
+		echo CHtml::label('Search in','type');
 		echo CHtml::radioButtonList('type', $selected, array('ip_addr'=>'IP Address','emp_id'=>'Employee ID'),array(
 		    'labelOptions'=>array('style'=>'display:inline'), // add this code
 		    'separator'=>'&nbsp;&nbsp;&nbsp;&nbsp;',
@@ -71,12 +71,16 @@ $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_
 </div><!-- form -->
 <?php
 $emp_id = '';
-if(count($userdata) > 0) {
+
+if(count($userdata) > 0 ) {
 	foreach ($userdata as $key => $value) {
 		if($value['emp_id'] != '')
 		{
 			$emp_id = $value['emp_id'];
 		}
+	
+	
+
 ?>
 <div class="view">
   <?php
@@ -119,6 +123,16 @@ if(count($userdata) > 0) {
       <td><?php echo $value['description']; ?></td>
     </tr>
     <tr>
+      <td>Employee Photo</td>
+      <td><?php 
+		  $model = new Employees;
+		  $empPic = $model->getEmpPic($emp_id);
+		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
+		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
+		  echo CHtml::link(CHtml::image($empPic['pic'],'alt',array('width'=>'100px')),$empPic['pic'], array('class'=>'colorbox'));
+	  ?></td>
+    </tr>
+    <tr>
       <td>Manager Name</td>
       <td><?php echo $value['line_manager']; ?></td>
     </tr>
@@ -130,6 +144,16 @@ if(count($userdata) > 0) {
       <td>Sitting Hall</td>
       <td><?php echo $value['hall']; ?></td>
     </tr>
+    <tr>
+      <td>Employee Workspace Location</td>
+      <td><?php 
+		  $model = new Employees;
+		  $empl_location_pic = $model->getEmpPic($emp_id);
+		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
+		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
+		  echo CHtml::link(CHtml::image($empl_location_pic['location_pic'],'alt',array('width'=>'400px')),$empl_location_pic['location_pic'], array('class'=>'colorbox'));
+	  ?></td>
+    </tr>
    </tbody>
   </table>
     <?php $this->endWidget();?>
@@ -137,4 +161,5 @@ if(count($userdata) > 0) {
 <?php
 	}
 }
+	
 ?>

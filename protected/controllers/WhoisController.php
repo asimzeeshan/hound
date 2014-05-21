@@ -64,6 +64,7 @@ class WhoisController extends Controller
 					foreach( $users_details as $details ) {
 						$arraynew[] = $details->attributes;
 					}
+					
 				}
 			} else {
 				Yii::app()->user->setFlash('whois_failed', "Please enter what you want to search!");

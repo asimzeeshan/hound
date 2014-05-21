@@ -65,8 +65,8 @@ return array(
 			'password' => 'T9wHWVGSeYBuMrSX',
 			'charset' => 'utf8',
 		),
-            /*'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=abusereporter',
+           /*'db'=>array(
+			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
 			'emulatePrepare' => true, 
 			'username' => 'root',
 			'password' => '',

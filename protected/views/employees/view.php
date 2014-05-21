@@ -15,7 +15,10 @@ $this->menu=array(
 	array('label'=>'Manage Employees', 'url'=>array('admin')),
 );
 ?>
-
+<?php
+$colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
+$colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
+?>
 <h1>View Employees #<?php echo $model->id; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
@@ -28,23 +31,23 @@ $this->menu=array(
 		array(
 				'name'=>'Photo',
 				'type'=>'raw',
-				'value'=>CHtml::link(CHtml::image($model->pic,'alt',array('width'=>'100px')),$model->pic, array('target'=>'_blank')),
+				'value'=>CHtml::link(CHtml::image($model->pic,'alt',array('width'=>'150px')),$model->pic, array('class'=>'colorbox')),$model->pic, array('target'=>'_blank'),
 				),
 		'joining_date',
 		'location',
 		array(
 				'name'=>'Workspace Location',
 				'type'=>'raw',
-				'value'=>CHtml::link(CHtml::image($model->location_pic,'alt',array('width'=>'750px')),$model->location_pic, array('target'=>'_blank')),
+				'value'=>CHtml::link(CHtml::image($model->location_pic,'alt',array('width'=>'750px')),$model->location_pic, array('class'=>'colorbox')),$model->pic, array('target'=>'_blank'),
 				),
 		'hall',
 		array(
 				'name'=>'manager1_id',
-				'value'=>$model->manager1_id==NULL ? "n/a" : $model->manager1->details(),
+				//'value'=>$model->manager1_id==NULL ? "n/a" : $model->manager1->details(),
 				),
 		array(
 				'name'=>'manager2_id',
-				'value'=>$model->manager2_id==NULL ? "n/a" : $model->manager2->details(),
+				//'value'=>$model->manager2_id==NULL ? "n/a" : $model->manager2->details(),
 				),
 		'created',
 		array(
@@ -58,3 +61,6 @@ $this->menu=array(
 				),
 	),
 )); ?>
+<?php
+
+?>
