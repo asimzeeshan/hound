@@ -25,6 +25,8 @@ class Devices extends AZActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+	
+	#public $picture = null; 
 	public function tableName()
 	{
 		return 'devices';
@@ -56,7 +58,12 @@ class Devices extends AZActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
+		//$new_relations = array(
+			//'_employee' => array(self::HAS_MANY, 'Employees', 'emp_id'),
+		//);
+		
 		$relations = parent::relations();
+		//$relations = array_merge($relations, $new_relations);
 		return $relations;
 	}
 
@@ -84,6 +91,7 @@ class Devices extends AZActiveRecord
 			'created_by' => 'Created By',
 			'modified' => 'Modified',
 			'modified_by' => 'Modified By',
+			//'picture' => 'Employee Picture',
 		);
 	}
 
@@ -229,6 +237,18 @@ class Devices extends AZActiveRecord
         );
         return $users_details;
     }
+	
+	/**
+	* Returns the Employee image and his/her location image
+	*/
+	public function getPicture(){
+		$criteria = new CDbCriteria();
+		$criteria->condition = "emp_id = :EMPID";
+		$criteria->params[':EMPID'] = $this->emp_id;
+		$criteria->select = "pic,location_pic";
+		$empl_pic = Employees::model()->find($criteria);
+		return 	$empl_pic;
+	}
 	
 	public function searchBySegMAC($mac, $opt){ // search by MAC in Segment
 		if($opt == NULL) {

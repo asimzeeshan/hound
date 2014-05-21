@@ -20,6 +20,16 @@ $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_
 	color:#8a1f11;
 	border-color:#FBC2C4;
 }
+.border{
+	width:150px;
+	border:3px solid #D7D7D7;
+	
+}
+.border1{
+	width:340px;
+	border:3px solid #D7D7D7;
+	
+}
 </style>
 
 
@@ -74,12 +84,11 @@ $emp_id = '';
 
 if(count($userdata) > 0 ) {
 	foreach ($userdata as $key => $value) {
+		
 		if($value['emp_id'] != '')
 		{
 			$emp_id = $value['emp_id'];
 		}
-	
-	
 
 ?>
 <div class="view">
@@ -105,55 +114,48 @@ if(count($userdata) > 0 ) {
       <td width="200">Employee ID</td>
       <td><?php echo $value['emp_id']; ?> <?php if($value['emp_id'] != ''){ ?>
       <?php } else { ?><font class="notice">MISSING EMPLOYEE ID</font><?php } ?></td>
+      
+      <td rowspan="8" align="center" valign="middle" style="padding:4px; width:120px; vertical-align:middle; text-align:center"><?php 
+		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
+		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
+		  if(isset($value['picture']))
+		  echo CHtml::link(CHtml::image($value['picture']->pic,'alt',array('class'=>'border')),$value['picture']->pic, array('class'=>'colorbox'));
+	  ?></td>
+      <td rowspan="8" style="padding:4px; vertical-align:middle; text-align:center"><?php 
+		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
+		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
+		  if(isset($value['picture']))
+		  echo CHtml::link(CHtml::image($value['picture']->location_pic,'alt',array('class'=>'border1')),$value['picture']->location_pic, array('class'=>'colorbox'));
+	  ?></td>
     </tr>
     <tr>
       <td width="200">IP Address</td>
       <td><?php echo $value['ip_address']; ?></td>
-    </tr>
+      </tr>
     <tr>
       <td bgcolor="#FFFF00">LAN Segment</td>
       <td bgcolor="#FFFF00"><?php echo strtoupper($value['opt']); if (strstr($value['opt'], "c1")) { ?> <font color="#FF0000"><b>WARNING: THIS RECORD MAY BE OLD</b></font><?php } ?></td>
-    </tr>
+      </tr>
     <tr>
       <td>HostName</td>
       <td><?php echo $value['hostname']; ?></td>
-    </tr>
+      </tr>
     <tr>
       <td>Description / Employee Name</td>
       <td><?php echo $value['description']; ?></td>
-    </tr>
-    <tr>
-      <td>Employee Photo</td>
-      <td><?php 
-		  $model = new Employees;
-		  $empPic = $model->getEmpPic($emp_id);
-		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
-		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
-		  echo CHtml::link(CHtml::image($empPic['pic'],'alt',array('width'=>'100px')),$empPic['pic'], array('class'=>'colorbox'));
-	  ?></td>
-    </tr>
+      </tr>
     <tr>
       <td>Manager Name</td>
       <td><?php echo $value['line_manager']; ?></td>
-    </tr>
+      </tr>
     <tr>
       <td>Employee Location</td>
       <td><?php echo $value['location']; ?></td>
-    </tr>
+      </tr>
     <tr>
       <td>Sitting Hall</td>
       <td><?php echo $value['hall']; ?></td>
-    </tr>
-    <tr>
-      <td>Employee Workspace Location</td>
-      <td><?php 
-		  $model = new Employees;
-		  $empl_location_pic = $model->getEmpPic($emp_id);
-		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
-		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
-		  echo CHtml::link(CHtml::image($empl_location_pic['location_pic'],'alt',array('width'=>'400px')),$empl_location_pic['location_pic'], array('class'=>'colorbox'));
-	  ?></td>
-    </tr>
+      </tr>
    </tbody>
   </table>
     <?php $this->endWidget();?>

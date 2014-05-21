@@ -148,17 +148,5 @@ class Employees extends AZActiveRecord
     public function countByEmpID($emp_id){
         return $this->count('emp_id=:emp_id', array(':emp_id' => $emp_id));
     }
-	/**
-	* Returns the Employee image and his/her workspace location image. 
-	*/
-	public function getEmpPic($emp_id)
-	{
-		$criteria = new CDbCriteria();
-		$criteria->condition = "emp_id = '$emp_id'";
-		$criteria->select = "pic,location_pic";
-		$empl_pic = $this->model()->find($criteria);
-		return 	$empl_pic;
-		
-	}
 	
 }

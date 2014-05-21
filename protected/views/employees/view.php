@@ -45,6 +45,7 @@ $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%')
 				'name'=>'manager1_id',
 				//'value'=>$model->manager1_id==NULL ? "n/a" : $model->manager1->details(),
 				),
+				
 		array(
 				'name'=>'manager2_id',
 				//'value'=>$model->manager2_id==NULL ? "n/a" : $model->manager2->details(),

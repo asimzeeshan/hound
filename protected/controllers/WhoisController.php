@@ -55,14 +55,20 @@ class WhoisController extends Controller
 					$users_details = $model->searchByEmpID( $_REQUEST['search'] );
 					$arraynew = array();
 					foreach( $users_details as $details ) {
-						$arraynew[] = $details->attributes;
+						$detail = $details->attributes;
+						$detail['picture'] = $details->picture;
+						$arraynew[] = $detail;
+						
 					}
 				} elseif ($_REQUEST['type'] == 'ip_addr') {
 					$model = new Devices;
 					$users_details = $model->searchByIP( $_REQUEST['search'] );
 					$arraynew = array();
 					foreach( $users_details as $details ) {
-						$arraynew[] = $details->attributes;
+						$detail = $details->attributes;
+						$detail['picture'] = $details->picture;
+						$arraynew[] = $detail;
+
 					}
 					
 				}

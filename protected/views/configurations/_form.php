@@ -97,7 +97,7 @@
 		}else {
 			$this->widget('zii.widgets.jui.CJuiButton', array(
 			'name'=>'button1',
-			'caption'=>'Save',
+			'caption'=>'Save Changes',
 			'value'=>'asd1',
 			'htmlOptions'=>array('class'=>'btn btn-info'),
 			));
