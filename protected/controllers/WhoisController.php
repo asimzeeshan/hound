@@ -1,5 +1,4 @@
 <?php
-
 class WhoisController extends Controller
 {
 	/**

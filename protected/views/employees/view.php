@@ -15,6 +15,18 @@ $this->menu=array(
 	array('label'=>'Manage Employees', 'url'=>array('admin')),
 );
 ?>
+<style type="text/css">
+.border{
+	width:150px;
+	border:3px solid #D7D7D7;
+	
+}
+.border1{
+	width:340px;
+	border:3px solid #D7D7D7;
+	
+}
+</style>
 <?php
 $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
 $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
@@ -31,24 +43,24 @@ $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%')
 		array(
 				'name'=>'Photo',
 				'type'=>'raw',
-				'value'=>CHtml::link(CHtml::image($model->pic,'alt',array('width'=>'150px')),$model->pic, array('class'=>'colorbox')),$model->pic, array('target'=>'_blank'),
+				'value'=>CHtml::link(CHtml::image($model->pic,'alt',array('class'=>'border')),$model->pic, array('class'=>'colorbox')),$model->pic, array('target'=>'_blank'),
 				),
 		'joining_date',
 		'location',
 		array(
 				'name'=>'Workspace Location',
 				'type'=>'raw',
-				'value'=>CHtml::link(CHtml::image($model->location_pic,'alt',array('width'=>'750px')),$model->location_pic, array('class'=>'colorbox')),$model->pic, array('target'=>'_blank'),
+				'value'=>CHtml::link(CHtml::image($model->location_pic,'alt',array('class'=>'border1')),$model->location_pic, array('class'=>'colorbox')),$model->pic, array('target'=>'_blank'),
 				),
 		'hall',
 		array(
 				'name'=>'manager1_id',
-				//'value'=>$model->manager1_id==NULL ? "n/a" : $model->manager1->details(),
+				'value'=>$model->manager1_id==NULL ? "n/a" : $model->managerId($model->manager1_id),
 				),
 				
 		array(
 				'name'=>'manager2_id',
-				//'value'=>$model->manager2_id==NULL ? "n/a" : $model->manager2->details(),
+				'value'=>$model->manager2_id==NULL ? "n/a" : $model->managerId($model->manager2_id),
 				),
 		'created',
 		array(
@@ -58,7 +70,7 @@ $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%')
 		'modified',
 		array(
 				'name'=>'modified_by',
-				'value'=>$model->CreatedBy->name(),
+				'value'=>$model->ModifiedBy->name(),
 				),
 	),
 )); ?>

@@ -148,5 +148,15 @@ class Employees extends AZActiveRecord
     public function countByEmpID($emp_id){
         return $this->count('emp_id=:emp_id', array(':emp_id' => $emp_id));
     }
+	/**
+	* Return the Employees manager name
+	*/
+	public function managerId($mangerid){
+		$criteria = new CDbCriteria();
+		$criteria->condition = "id = '$mangerid'";
+		$criteria->select = "name";
+		$manager_name = Managers::model()->find($criteria);
+		return 	$manager_name['name'];
+	}
 	
 }
