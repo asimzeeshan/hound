@@ -97,10 +97,9 @@ class EmailLogsController extends Controller
 		$employeeDataAPIresponse = simplexml_load_file('http://nexthrm.vteamslabs.com/web-service/?auth=7eedf192b67b0b15dee3491b286babc9&method=getSitting&userName=noc@nexthrm.com&empId='.$emp_id.'&empName=');
 		
 		$employeeDataArray = json_decode($employeeDataAPIresponse->getSitting->response);
-
+		
 		if(count($employeeDataArray) != 0){
 			$employeeData = $employeeDataArray[0];
-		
 		}
 		
 		if(isset($_POST['EmailTemplates']))
@@ -127,7 +126,6 @@ class EmailLogsController extends Controller
 				$to = explode(",",$_POST['EmailTemplates']['to']);
 				$cc = explode(",",$_POST['EmailTemplates']['cc']);
 				$bcc = explode(",",$_POST['EmailTemplates']['bcc']);
-	
 				// save the mail contents
 				$email_data = array(
 					'address'	=> $to,
@@ -137,7 +135,6 @@ class EmailLogsController extends Controller
 					'body'		=> $parsed_body,
 					'user_id'	=> Yii::app()->user->id,
 				);
-				
 				// save the email
 				$template_id = (int)$model->id;
 				$this->saveEmailLog($template_id, $email_data);
@@ -145,7 +142,7 @@ class EmailLogsController extends Controller
 				// now send the email
 				$this->sendMail($email_data);
 	
-				Yii::app()->user->setFlash('success', "The email has been sent to concerned line-managers ($to & $cc)");	
+				Yii::app()->user->setFlash('success','The email has been sent to concerned line-managers ('.$to[0].' &'.$cc[0].','.$cc[1].' )');	
 				$this->refresh();
 			}
 		}

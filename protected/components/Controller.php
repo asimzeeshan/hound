@@ -54,7 +54,7 @@ class Controller extends CController
 			if(!$mail->Send()) {
 				die("Mailer Error: " . $mail->ErrorInfo);
 			} else {
-				echo "Message sent!";
+				echo "Message has been sent!";
 			}
 	}
 	

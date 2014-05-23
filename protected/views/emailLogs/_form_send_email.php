@@ -59,7 +59,8 @@ function updateFields(data){
 		//Style: CController::createUrl('currentController/methodToCall')
 		//'data'=>'js:{template_id_test:1}'
 		//leave out the data key to pass all form values through
-		))); 
+		)));
+		 
 		?>
 		<?php echo $form->error($model,'template_id'); ?>
 	</div>
