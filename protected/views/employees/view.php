@@ -19,11 +19,13 @@ $this->menu=array(
 .border{
 	width:150px;
 	border:3px solid #D7D7D7;
+	border-radius: 5px;
 	
 }
 .border1{
 	width:340px;
 	border:3px solid #D7D7D7;
+	border-radius: 5px;
 	
 }
 </style>
@@ -55,12 +57,14 @@ $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%')
 		'hall',
 		array(
 				'name'=>'manager1_id',
-				'value'=>$model->manager1_id==NULL ? "n/a" : $model->managerId($model->manager1_id),
+				'type'=>'raw',
+				'value'=>$model->manager1_id==0 ? "n/a" : CHtml::link($model->managerId($model->manager1_id),array('managers/view','id'=>$model->manager1_id)),
 				),
 				
 		array(
 				'name'=>'manager2_id',
-				'value'=>$model->manager2_id==NULL ? "n/a" : $model->managerId($model->manager2_id),
+				'type'=>'raw',
+				'value'=>$model->manager2_id==0 ? "n/a" : CHtml::link($model->managerId($model->manager2_id),array('managers/view','id'=>$model->manager2_id)),
 				),
 		'created',
 		array(

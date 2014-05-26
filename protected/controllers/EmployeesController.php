@@ -137,6 +137,7 @@ class EmployeesController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Employees']))
 			$model->attributes=$_GET['Employees'];
+			
 
 		$this->render('admin',array(
 			'model'=>$model,

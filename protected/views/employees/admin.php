@@ -59,14 +59,25 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'joining_date',
 		'location',
 		'hall',
-		/*
-		'manager1_id',
-		'manager2_id',
-		'created',
-		'created_by',
-		'modified',
-		'modified_by',
-		*/
+		array(
+		'name'=>'manager1_id',
+		'type'=>'raw',
+		'filter'=>$model->managersList(),
+		'value'=>'$data->managerId($data->manager1_id)',
+		),
+		array(
+		'name'=>'manager2_id',
+		'type'=>'raw',
+		'filter'=>$model->managersList(),
+		'value'=>'$data->managerId($data->manager2_id)',
+		),
+		//'manager1_id',
+		//'manager2_id',
+		//'created',
+		//'created_by',
+		//'modified',
+		//'modified_by',
+		
 		array(
 			'class'=>'CButtonColumn',
 		),

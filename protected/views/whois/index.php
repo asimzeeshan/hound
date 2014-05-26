@@ -23,11 +23,13 @@ $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_
 .border{
 	width:150px;
 	border:3px solid #D7D7D7;
+	border-radius: 5px;
 	
 }
 .border1{
 	width:340px;
 	border:3px solid #D7D7D7;
+	border-radius: 5px;
 	
 }
 </style>
