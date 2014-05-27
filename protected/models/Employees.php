@@ -63,6 +63,7 @@ class Employees extends AZActiveRecord
 			'manager1' => array(self::BELONGS_TO, 'Managers', 'manager1_id'),
 		);
 		
+		
 		$relations = parent::relations();
 		$relations = array_merge($relations, $new_relations);
 		
