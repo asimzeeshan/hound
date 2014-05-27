@@ -33,7 +33,13 @@ class SiteController extends Controller
 			Yii::app()->user->setFlash('error','Please login first before using the application!<br />Contact <a href="http://www.asim.pk/" target="_blank"><b>Asim Zeeshan</b></a>, should you encounter an issue.');
 			$this->redirect(array('login'));
 		}
-		$this->render('index');
+		$model=new Employees('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Employees']))
+			$model->attributes=$_GET['Employees'];
+		$this->render('index',array(
+		'model'=>$model,
+		));
 	}
 
 	/**

@@ -65,13 +65,13 @@ return array(
 			'password' => 'T9wHWVGSeYBuMrSX',
 			'charset' => 'utf8',
 		),
-           /*'db'=>array(
+          'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
 			'emulatePrepare' => true, 
 			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
-		),*/
+		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors  asdfsad fsad f
 			'errorAction'=>'site/error',

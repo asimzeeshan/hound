@@ -411,13 +411,13 @@ $(document).ready(function() {
     if (divElement.hasClass('simple-pie')) {
 	$(function () {
 		var data = [
-		    { label: "USA",  data: 38, color: "#88bbc8"},
-		    { label: "Brazil",  data: 23, color: "#ed7a53"},
-		    { label: "India",  data: 15, color: "#9FC569"},
-		    { label: "Turkey",  data: 9, color: "#bbdce3"},
-		    { label: "France",  data: 7, color: "#9a3b1b"},
-		    { label: "China",  data: 5, color: "#5a8022"},
-		    { label: "Germany",  data: 3, color: "#2c7282"}
+		    { label: "Devices",  data: 59.8, color: "#88bbc8"},
+		    { label: "Employees",  data: 32.1, color: "#ed7a53"},
+		    { label: "Managers",  data: 12, color: "#9FC569"},
+		    { label: "System Users",  data: 6, color: "#bbdce3"},
+		    //{ label: "France",  data: 7, color: "#9a3b1b"},
+		    //{ label: "China",  data: 5, color: "#5a8022"},
+		    //{ label: "Germany",  data: 3, color: "#2c7282"}
 		];
 
 	    $.plot($(".simple-pie"), data, 
@@ -435,7 +435,7 @@ $(document).ready(function() {
 					},
 					startAngle: 2,
 				    combine: {
-	                    color: '#353535',
+	                    color: 'pink',
 	                    threshold: 0.05
 	                },
 	                label: {

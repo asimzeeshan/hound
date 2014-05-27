@@ -76,37 +76,57 @@ $gridDataProvider = new CArrayDataProvider(array(
           		<span class="summary-icon">
                 	<img src="<?php echo $baseUrl ;?>/img/credit.png" width="36" height="36" alt="Monthly Income">
                 </span>
-                <span class="summary-number">$78,245</span>
-                <span class="summary-title"> Monthly Income</span>
+                <span class="summary-number"><?php 
+					$devices_query = Yii::app()->db->createCommand()
+   								 ->select('count(*) as count')
+    							 ->from('Devices')
+    							 ->queryRow();
+	 							echo $devices_query['count'];
+				?></span>
+                <span class="summary-title"><a href="/abuse_reportr/index.php/devices/index">Total Devices</a> </span>
             </li>
             <li>
             	<span class="summary-icon">
-                	<img src="<?php echo $baseUrl ;?>/img/page_white_edit.png" width="36" height="36" alt="Open Invoices">
+                	<img src="<?php echo $baseUrl ;?>/img/group.png" width="36" height="36" alt="Open Invoices">
                 </span>
-                <span class="summary-number">125</span>
-                <span class="summary-title"> Open Invoices</span>
+                <span class="summary-number"><?php 
+					$employees_query = Yii::app()->db->createCommand()
+   								 ->select('count(*) as count')
+    							 ->from('employees')
+    							 ->queryRow();
+	 							echo $employees_query['count'];
+				?></span>
+                <span class="summary-title"><a href="/abuse_reportr/index.php/employees/index"> Total Employees</a></span>
             </li>
             <li>
             	<span class="summary-icon">
-                	<img src="<?php echo $baseUrl ;?>/img/page_white_excel.png" width="36" height="36" alt="Open Quotes<">
+                	<img src="<?php echo $baseUrl ;?>/img/group.png" width="36" height="36" alt="Open Quotes<">
                 </span>
-                <span class="summary-number">53</span>
-                <span class="summary-title"> Open Quotes</span>
+                <span class="summary-number"><?php 
+					$managers_query = Yii::app()->db->createCommand()
+   								 ->select('count(*) as count')
+    							 ->from('managers')
+    							 ->queryRow();
+	 							echo $managers_query['count'];
+				?></span>
+                <span class="summary-title"> <a href="/abuse_reportr/index.php/managers/index">Total Managers</a></span>
             </li>
             <li>
             	<span class="summary-icon">
                 	<img src="<?php echo $baseUrl ;?>/img/group.png" width="36" height="36" alt="Active Members">
                 </span>
-                <span class="summary-number">654,321</span>
-                <span class="summary-title"> Active Members</span>
+                <span class="summary-number"><?php 
+					$users_query = Yii::app()->db->createCommand()
+   								 ->select('count(*) as count')
+    							 ->from('users')
+								 //->join('tbl_profile p', 'u.id=p.user_id')
+   								 ->where('status=:id', array(':id'=>1))
+    							 ->queryRow();
+	 							echo $users_query['count'];
+				?></span>
+                <span class="summary-title"><a href="/abuse_reportr/index.php/users/index">Active Users</a></span>
             </li>
             <li>
-            	<span class="summary-icon">
-                	<img src="<?php echo $baseUrl ;?>/img/folder_page.png" width="36" height="36" alt="Recent Conversions">
-                </span>
-                <span class="summary-number">630</span>
-                <span class="summary-title"> Recent Conversions</span></li>
-        
           </ul>
         </div>
 
@@ -116,24 +136,51 @@ $gridDataProvider = new CArrayDataProvider(array(
 
 <div class="row-fluid">
 	<div class="span6">
-	  <?php $this->widget('zii.widgets.grid.CGridView', array(
-			/*'type'=>'striped bordered condensed',*/
-			'htmlOptions'=>array('class'=>'table table-striped table-bordered table-condensed'),
-			'dataProvider'=>$gridDataProvider,
-			'template'=>"{items}",
-			'columns'=>array(
-				array('name'=>'id', 'header'=>'#'),
-				array('name'=>'firstName', 'header'=>'First name'),
-				array('name'=>'lastName', 'header'=>'Last name'),
-				array('name'=>'language', 'header'=>'Language'),
-				array('name'=>'usage', 'header'=>'Usage', 'type'=>'raw'),
-				
-			),
-		)); ?>
+	  <?php
+		$this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>"All Employees",
+		));
+		
+	?>
+<?php
+	   //$model = new Employees;
+	   $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'employees-grid',
+	//'htmlOptions'=>array('class'=>'table table-striped table-bordered table-condensed'),
+	'htmlOptions'=>array('style'=>'height:450px;'),
+	'itemsCssClass'=>'table table-striped table-bordered table-condensed',
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
+	'columns'=>array(
+		'id',
+		'emp_id',
+		array(
+		'name'=>'name',
+		'htmlOptions' => array('style' => 'width:1000px;'),
+		),
+		'email',
+		'joining_date',
+		'location',
+		'hall',
+		array(
+		'name'=>'manager1_id',
+		'type'=>'text',
+		'filter'=>$model->managersList(),
+		'value'=>'isset($data->manager1) ? $data->manager1->name: "n/a"',
+		),
+		array(
+		'name'=>'manager2_id',
+		'type'=>'raw',
+		'filter'=>$model->managersList(),
+		'value'=>'isset($data->manager2) ? $data->manager2->name : "n/a"',
+		),
+	),
+));?>
+<?php $this->endWidget();?>
 	</div><!--/span-->
 	<div class="span6">
-		 <?php $this->widget('zii.widgets.grid.CGridView', array(
-			/*'type'=>'striped bordered condensed',*/
+		 <?php /*$this->widget('zii.widgets.grid.CGridView', array(
+			//'type'=>'striped bordered condensed',
 			'htmlOptions'=>array('class'=>'table table-striped table-bordered table-condensed'),
 			'dataProvider'=>$gridDataProvider,
 			'template'=>"{items}",
@@ -145,7 +192,33 @@ $gridDataProvider = new CArrayDataProvider(array(
 				array('name'=>'usage', 'header'=>'Usage', 'type'=>'raw'),
 				
 			),
-		)); ?>
+		)); */?>
+        <?php
+		$this->beginWidget('zii.widgets.CPortlet', array(
+			'title'=>"All Managers",
+			
+		));
+		
+	?>
+
+<?php 
+	$model = new Managers;
+	$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'managers-grid',
+	'itemsCssClass'=>'table table-striped table-bordered table-hover',
+	'htmlOptions'=>array('style'=>'height:450px'),
+	//'htmlOptions'=>array('style'=>'height:50px'),
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
+	'columns'=>array(
+		'id',
+		'name',
+		'email',
+		//'created',
+		//'modified',
+	),
+)); ?>
+<?php $this->endWidget();?>
         	
 	</div><!--/span-->
 </div><!--/row-->
@@ -166,14 +239,22 @@ $gridDataProvider = new CArrayDataProvider(array(
     <div class="span6">
     	<?php
 		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>'<span class="icon-th-list"></span> Visitors Chart',
-			'titleCssClass'=>''
+			'title'=>"<i class='icon-tint'></i> Pie Charts",
 		));
-		?>
-        
-        <div class="pieStats" style="height: 230px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
-        
-        <?php $this->endWidget(); ?>
+	?>
+    		<?php
+            $query = Yii::app()->db->createCommand()
+   								 ->select('count(name) as count')
+    							 ->from('employees')
+								 //->join('managers m', 'e.manager1_id=m.id')
+   								 ->where('manager1_id=:id', array(':id'=>1))
+    							 ->queryRow();
+	 							echo $query['count'];
+			
+			
+			?>
+  		<div class="simple-pie" style="height: 250px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
+	<?php $this->endWidget();?>
     </div>
 	<!--<div class="span2">
     	<input class="knob" data-width="100" data-displayInput=false data-fgColor="#5EB95E" value="35">

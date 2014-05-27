@@ -2,7 +2,24 @@
 /* @var $this EmployeesController */
 /* @var $data Employees */
 ?>
-
+<style type="text/css">
+.border{
+	width:100px;
+	border:3px solid #D7D7D7;
+	border-radius: 5px;
+	
+}
+.border1{
+	width:350px;
+	border:3px solid #D7D7D7;
+	border-radius: 5px;
+	
+}
+</style>
+<?php
+$colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
+$colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
+?>
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
@@ -22,7 +39,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('pic')); ?>:</b>
-	<?php echo CHtml::link(CHtml::image($data->pic,'alt',array('width'=>'100px')),$data->pic, array('target'=>'_blank')); ?>
+	<?php echo CHtml::link(CHtml::image($data->pic,'alt',array('class'=>'border')),$data->pic, array('class'=>'colorbox'),$data->pic, array('target'=>'_blank')); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('joining_date')); ?>:</b>
@@ -34,7 +51,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('location_pic')); ?>:</b>
-	<?php echo CHtml::link(CHtml::image($data->location_pic,'alt',array('width'=>'750px')),$data->location_pic, array('target'=>'_blank')); ?>
+	<?php echo CHtml::link(CHtml::image($data->location_pic,'alt',array('class'=>'border1')),$data->location_pic, array('class'=>'colorbox'),$data->location_pic, array('target'=>'_blank')); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('hall')); ?>:</b>
