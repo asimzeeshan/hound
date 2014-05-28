@@ -35,10 +35,15 @@ class SiteController extends Controller
 		}
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Employees']))
+		if(isset($_GET['Employees'])){
 			$model->attributes=$_GET['Employees'];
+		}
+		$num_employees = new Managers;
+		$num_employees = $num_employees->totalEmployees();
+		
 		$this->render('index',array(
 		'model'=>$model,
+		'num_employees'=>$num_employees,
 		));
 	}
 

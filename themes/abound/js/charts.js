@@ -408,7 +408,7 @@ $(document).ready(function() {
 	}//end if
 
 	//Pie simple chart
-    if (divElement.hasClass('simple-pie')) {
+    if (divElement.hasClass('simple-pie')) {/*
 	$(function () {
 		var data = [
 		    { label: "Devices",  data: 59.8, color: "#88bbc8"},
@@ -463,7 +463,7 @@ $(document).ready(function() {
 			}
 		});
 	});
-	}//end if
+	*/}//end if
 
 
 	//Ordered bars chart

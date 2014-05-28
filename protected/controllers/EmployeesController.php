@@ -28,7 +28,7 @@ class EmployeesController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','report'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -55,6 +55,16 @@ class EmployeesController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+	/**
+	* Return the employees data in pdf format
+	*/
+	 public function actionReport(){
+		 $model = new Employees;
+		 $model = $model->employeesList();
+		 $this->renderPartial("reportview",array(
+		   'model'=>$model,
+		   ));
+  	}
 
 	/**
 	 * Creates a new model.
@@ -127,7 +137,6 @@ class EmployeesController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
-
 	/**
 	 * Manages all models.
 	 */

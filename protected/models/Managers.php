@@ -54,12 +54,16 @@ class Managers extends AZActiveRecord
 			'manager2' => array(self::HAS_MANY, 'Employees', 'manager2_id'),
 			'manager1' => array(self::HAS_MANY, 'Employees', 'manager1_id'),
 		);
+		$new = array(
+		'_numEmployees'=>array(self::STAT, 'Employees', 'manager1_id'),
+		);
 		
 		$relations = parent::relations();
-		$relations = array_merge($relations, $new_relations);
+		$relations = array_merge($relations, $new_relations,$new);
 		
 		return $relations;
 	}
+	
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -136,5 +140,13 @@ class Managers extends AZActiveRecord
 	// return the name and email
 	public function details() {
 		return $this->name." (".$this->email.")";
+	}
+	/**
+	* Return the total numbers of employees under ever manager.
+	*/
+	public function totalEmployees()
+	{
+		$num_employees = Managers::model()->with('_numEmployees')->findAll();
+		return $num_employees;
 	}
 }

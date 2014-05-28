@@ -172,4 +172,14 @@ class Employees extends AZActiveRecord
 		}
 		return $array;
 	}
+	/**
+	* Return the list of all employees.
+	*/
+	public function employeesList()
+	{
+		 $criteria = new CDbCriteria();
+		 $criteria->select = "id, emp_id, name, email,joining_date,location,hall ";
+		 $employees = Employees::model()->findAll($criteria);
+		 return $employees;
+	}
 }

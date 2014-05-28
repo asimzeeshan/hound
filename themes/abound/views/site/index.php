@@ -231,6 +231,153 @@ $gridDataProvider = new CArrayDataProvider(array(
 			'titleCssClass'=>''
 		));
 		?>
+        		<?php
+
+			$cs = Yii::app()->clientScript;
+			
+
+			$dataJs = "data = new Array();";
+			$d1 = '[[1, 3+randNum()], [2, 6+randNum()], [3, 9+randNum()], [4, 12+randNum()],[5, 15+randNum()],[6, 18+randNum()],[7, 21+randNum()],[8, 15+randNum()],[9, 18+randNum()],[10, 21+randNum()],[11, 24+randNum()],[12, 27+randNum()],[13, 30+randNum()],[14, 33+randNum()],[15, 24+randNum()],[16, 27+randNum()],[17, 30+randNum()],[18, 33+randNum()],[19, 36+randNum()],[20, 39+randNum()],[21, 42+randNum()],[22, 45+randNum()],[23, 36+randNum()],[24, 39+randNum()],[25, 42+randNum()],[26, 45+randNum()],[27,38+randNum()],[28, 51+randNum()],[29, 55+randNum()], [30, 60+randNum()]]';
+		 $d2 = '[[1, randNum()-5], [2, randNum()-4], [3, randNum()-4], [4, randNum()],[5, 4+randNum()],[6, 4+randNum()],[7, 5+randNum()],[8, 5+randNum()],[9, 6+randNum()],[10, 6+randNum()],[11, 6+randNum()],[12, 2+randNum()],[13, 3+randNum()],[14, 4+randNum()],[15, 4+randNum()],[16, 4+randNum()],[17, 5+randNum()],[18, 5+randNum()],[19, 2+randNum()],[20, 2+randNum()],[21, 3+randNum()],[22, 3+randNum()],[23, 3+randNum()],[24, 2+randNum()],[25, 4+randNum()],[26, 4+randNum()],[27,5+randNum()],[28, 2+randNum()],[29, 2+randNum()], [30, 3+randNum()]]';
+		  $placeholder = '$(".visitors-chart");';
+		  $options = '{
+				grid: {
+					show: true,
+				    aboveData: true,
+				    color: "#3f3f3f" ,
+				    labelMargin: 5,
+				    axisMargin: 0, 
+				    borderWidth: 0,
+				    borderColor:null,
+				    minBorderMargin: 5 ,
+				    clickable: true, 
+				    hoverable: true,
+				    autoHighlight: true,
+				    mouseActiveRadius: 20
+				},
+		        series: {
+		        	grow: {
+		        		active: false,
+		        		stepMode: "linear",
+		        		steps: 50,
+		        		stepDelay: true
+		        	},
+		            lines: {
+	            		show: true,
+	            		fill: true,
+	            		lineWidth: 4,
+	            		steps: false
+		            	},
+		            points: {
+		            	show:true,
+		            	radius: 5,
+		            	symbol: "circle",
+		            	fill: true,
+		            	borderColor: "#fff"
+		            }
+		        },
+		        legend: { 
+		        	position: "ne", 
+		        	margin: [0,-25], 
+		        	noColumns: 0,
+		        	labelBoxBorderColor: null,
+		        	labelFormatter: function(label, series) {
+					    // just add some space to labes
+					    return label+"&nbsp;&nbsp;";
+					 }
+		    	},
+		        yaxis: { min: 0 },
+		        xaxis: {ticks:11, tickDecimals: 0},
+		        colors: chartColours,
+		        shadowSize:1,
+		        tooltip: true, //activate tooltip
+				tooltipOpts: {
+					content: "%s : %y.0",
+					shifts: {
+						x: -30,
+						y: -50
+					}
+				}
+		    };';
+			$dataJs ="$.plot(".$placeholder.", [ 
+
+        		{
+					
+        			label: 'Visits', 
+        			data: ".$d1.",
+        			lines: {fillColor: '#f2f7f9'},
+        			points: {fillColor: '#88bbc8'}
+        		}, 
+        		{	
+        			label: 'Unique Visits', 
+        			data: ".$d2.",
+        			lines: {fillColor: '#fff8f2'},
+        			points: {fillColor: '#ed7a53'}
+        		} 
+
+        	], options);
+	        
+    });";   
+			foreach($num_employees as $k => $v){
+				$color = str_pad( dechex( mt_rand( 0, 255 ) ), 3, '0', STR_PAD_LEFT);
+				$dataJs .= "data[{$k}] = { label: '{$v->name}',  data: {$v->_numEmployees}, color: '#{$color}'};";
+			}
+			$dataJs .= '$.plot($(".simple-pie"), data, 
+		{
+			series: {
+				pie: { 
+					show: true,
+					highlight: {
+						opacity: 0.1
+					},
+					radius: 1,
+					stroke: {
+						color: "#fff",
+						width: 2
+					},
+					startAngle: 2,
+				    combine: {
+	                    color: "pink",
+	                    threshold: 0.05
+	                },
+	                label: {
+	                    show: true,
+	                    radius: 1,
+	                    formatter: function(label, series){
+	                        return "<div class=\"pie-chart-label\">"+label+"&nbsp;"+Math.round(series.percent)+"%</div>";
+	                    }
+	                }
+				},
+				grow: {	active: false}
+			},
+			legend:{show:false},
+			grid: {
+	            hoverable: true,
+	            clickable: true
+	        },
+	        tooltip: true, //activate tooltip
+			tooltipOpts: {
+				content: "%s : %y.1"+"%",
+				shifts: {
+					x: -30,
+					y: -50
+				}
+			}
+		});
+	';
+			$cs->registerScript('chart_js', $dataJs);
+			//echo "<pre>";
+			//print_r ($model); die;
+            /*$query = Yii::app()->db->createCommand()
+   								 ->select('count(name) as count')
+    							 ->from('employees')
+								 //->join('managers m', 'e.manager1_id=m.id')
+   								 ->where('manager1_id=:id', array(':id'=>1))
+    							 ->queryRow();
+	 							echo $query['count'];*/
+			
+			
+			?>
         
         <div class="visitors-chart" style="height: 230px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
         
@@ -243,13 +390,65 @@ $gridDataProvider = new CArrayDataProvider(array(
 		));
 	?>
     		<?php
-            $query = Yii::app()->db->createCommand()
+			$cs = Yii::app()->clientScript;
+			$dataJs = "data = new Array();";
+			foreach($num_employees as $k => $v){
+				$color = str_pad( dechex( mt_rand( 0, 255 ) ), 3, '0', STR_PAD_LEFT);
+				$dataJs .= "data[{$k}] = { label: '{$v->name}',  data: {$v->_numEmployees}, color: '#{$color}'};";
+			}
+			$dataJs .= '$.plot($(".simple-pie"), data, 
+		{
+			series: {
+				pie: { 
+					show: true,
+					highlight: {
+						opacity: 0.1
+					},
+					radius: 1,
+					stroke: {
+						color: "#fff",
+						width: 2
+					},
+					startAngle: 2,
+				    combine: {
+	                    color: "pink",
+	                    threshold: 0.05
+	                },
+	                label: {
+	                    show: true,
+	                    radius: 1,
+	                    formatter: function(label, series){
+	                        return "<div class=\"pie-chart-label\">"+label+"&nbsp;"+Math.round(series.percent)+"%</div>";
+	                    }
+	                }
+				},
+				grow: {	active: false}
+			},
+			legend:{show:false},
+			grid: {
+	            hoverable: true,
+	            clickable: true
+	        },
+	        tooltip: true, //activate tooltip
+			tooltipOpts: {
+				content: "%s : %y.1"+"%",
+				shifts: {
+					x: -30,
+					y: -50
+				}
+			}
+		});
+	';
+			$cs->registerScript('chart_js', $dataJs);
+			//echo "<pre>";
+			//print_r ($model); die;
+            /*$query = Yii::app()->db->createCommand()
    								 ->select('count(name) as count')
     							 ->from('employees')
 								 //->join('managers m', 'e.manager1_id=m.id')
    								 ->where('manager1_id=:id', array(':id'=>1))
     							 ->queryRow();
-	 							echo $query['count'];
+	 							echo $query['count'];*/
 			
 			
 			?>
