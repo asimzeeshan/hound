@@ -1,5 +1,5 @@
 <?php
-    // get the HTML
+    // get the Html
     ob_start();
    	$employees = "<div style='color:black;background-color:#CCCCCC;' align='center' border=1>
 					<h1>Employees Records</h1>
@@ -27,7 +27,7 @@
 				   echo $employees;			
     $content = ob_get_clean();
  
-    // convert in PDF
+    // after getting html to  convert in Pdf format.
     Yii::import('application.extensions.tcpdf.HTML2PDF');
     try
     {
