@@ -141,8 +141,15 @@ class EmailLogsController extends Controller
 				
 				// now send the email
 				$this->sendMail($email_data);
-	
-				Yii::app()->user->setFlash('success','The email has been sent to concerned line-managers ('.$to[0].' &'.$cc[0].','.$cc[1].' )');	
+
+                // convert arrays to readable lists
+                if (count($to)>0)
+                    $to_list = implode(", ", $to);
+
+                if (count($cc)>0)
+                    $cc_list = implode(", ", $cc);
+
+				Yii::app()->user->setFlash('success','The email has been sent to concerned line-managers (<b>TO</b> '.$to_list.' & <b>CC</b> '.$cc_list.')');
 				$this->refresh();
 			}
 		}
