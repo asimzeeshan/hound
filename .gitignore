@@ -3,7 +3,7 @@
 #################
 assets/*
 protected/runtime/*
-protected/config/*
+protected/config/main.php
 tmp/*
 yii/demos/*
 
@@ -22,6 +22,7 @@ _notes/
 ## NetBeans specific files
 #################
 .nbproject/
+nbproject/
 
 #############
 ## Windows detritus
