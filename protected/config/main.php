@@ -12,7 +12,7 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-	
+
 	// active theme
 	'theme'=>'abound',
 
@@ -22,7 +22,7 @@ return array(
 		'application.components.*',
 		'application.helpers.phpmailer.*',
 		'application.helpers.logging.*',
-		
+
 	),
 
 	'modules'=>array(
@@ -33,8 +33,7 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','10.28.79.15','::1'),
 		),
-		
-		
+
 	),
 
 	// application components
@@ -59,19 +58,12 @@ return array(
 			),
 		),
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
-			'emulatePrepare' => true, 
-			'username' => 'abusereportr',
-			'password' => 'T9wHWVGSeYBuMrSX',
+			'connectionString' => 'mysql:host=localhost;dbname=ardev_db',
+			'emulatePrepare' => true,
+			'username' => 'ardev',
+			'password' => 'uMqNPLjrVa8h9KCt',
 			'charset' => 'utf8',
 		),
-        /*'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
-			'emulatePrepare' => true, 
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),*/
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors  asdfsad fsad f
 			'errorAction'=>'site/error',
