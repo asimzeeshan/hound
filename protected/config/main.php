@@ -44,8 +44,8 @@ return array(
 			'class' => 'WebUser',
 		),
 		'authManager'=>array(
-            'class'=>'CPhpAuthManager',
-            ),
+                        'class'=>'CPhpAuthManager',
+                ),
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName'=>false,
