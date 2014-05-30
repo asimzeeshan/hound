@@ -74,13 +74,7 @@ if(count($userdata) > 0 ) {
 	?>
   <table cellspacing="2" cellpadding="3" align="center" class="table table-striped" border="1" >
   <caption><?php
-		$this->widget('zii.widgets.jui.CJuiButton', array(
-			'name'=>'button-'.rand(),
-			'caption'=>'Report this?',
-			'buttonType'=>'link',
-			'htmlOptions'=>array('class'=>'btn btn-danger'),
-			'url'=>CController::createUrl('emailLogs/sendemail', array('emp_id' => $emp_id )),
-		));
+		
 		?></caption>
   <tbody>
     <tr>
@@ -88,18 +82,33 @@ if(count($userdata) > 0 ) {
       <td><?php echo $value['emp_id']; ?> <?php if($value['emp_id'] != ''){ ?>
       <?php } else { ?><font class="notice">MISSING EMPLOYEE ID</font><?php } ?></td>
       
-      <td rowspan="8" align="center" valign="middle" style="padding:4px; width:120px; vertical-align:middle; text-align:center"><?php 
+      <td rowspan="8" align="center" valign="middle" style="padding:4px; width:200px; vertical-align:middle; text-align:center"><?php 
 		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
 		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
 		  if(isset($value['picture']))
 		  echo CHtml::link(CHtml::image($value['picture']->pic,'alt',array('class'=>'border')),$value['picture']->pic, array('class'=>'colorbox'));
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'button',
+			'caption'=>'View Work Space Location',
+			'buttonType'=>'link',
+			'htmlOptions'=>array('class'=>'btn btn-success colorbox space'),
+			'url'=>$value['picture']->location_pic,
+		));
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'button-'.rand(),
+			'caption'=>'Report this?',
+			'buttonType'=>'link',
+			'htmlOptions'=>array('class'=>'btn btn-danger space'),
+			'url'=>CController::createUrl('emailLogs/sendemail', array('emp_id' => $emp_id )),
+		));
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+			'name'=>'button',
+			'caption'=>'Past Record',
+			'htmlOptions'=>array('class'=>'btn btn-info space'),
+		));
+		
 	  ?></td>
-      <td rowspan="8" style="padding:4px; vertical-align:middle; text-align:center"><?php 
-		  $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
-		  $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));
-		  if(isset($value['picture']))
-		  echo CHtml::link(CHtml::image($value['picture']->location_pic,'alt',array('class'=>'border1')),$value['picture']->location_pic, array('class'=>'colorbox'));
-	  ?></td>
+     
     </tr>
     <tr>
       <td width="200">IP Address</td>
