@@ -6,35 +6,6 @@ $this->breadcrumbs=array(
 );
 $selected = ((isset($_REQUEST['type']) && $_REQUEST['type'] == 'emp_id') ? 'emp_id' : 'ip_addr');
 ?>
-<style type="text/css">
-.foundit td {
-	font-weight: bold;
-	color: #090;
-}
-.notfound td {
-	font-weight: bold;
-	color: #F90;
-}
-.notice {
-	background:#FBE3E4;
-	color:#8a1f11;
-	border-color:#FBC2C4;
-}
-.border{
-	width:150px;
-	border:3px solid #D7D7D7;
-	border-radius: 5px;
-	
-}
-.border1{
-	width:340px;
-	border:3px solid #D7D7D7;
-	border-radius: 5px;
-	
-}
-</style>
-
-
 <h1>Whois</h1>
 
 <?php if(Yii::app()->user->hasFlash('whois_welcome')): ?>

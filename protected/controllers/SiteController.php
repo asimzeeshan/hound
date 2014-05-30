@@ -33,11 +33,21 @@ class SiteController extends Controller
 			Yii::app()->user->setFlash('error','Please login first before using the application!<br />Contact <a href="http://www.asim.pk/" target="_blank"><b>Asim Zeeshan</b></a>, should you encounter an issue.');
 			$this->redirect(array('login'));
 		}
-		$num_employees = new Managers;
-		$num_employees = $num_employees->totalEmployees();
-		
+		$managers = new Managers;
+		$employees = new Employees;
+		$devices = new Devices;
+		$users = new Users;
+		$num_employees = $managers->totalEmployees();
+		$total_employees = $employees->countAllEmployees();
+		$total_managers = $managers->countAllManagers();
+		$total_devices = $devices->countAllDevices();
+		$total_users = $users->countAllUsers();
 		$this->render('index',array(
 		'num_employees'=>$num_employees,
+		'total_employees'=>$total_employees,
+		'total_managers'=>$total_managers,
+		'total_devices'=>$total_devices,
+		'total_users'=>$total_users,
 		));
 	}
 

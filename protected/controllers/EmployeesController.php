@@ -144,12 +144,14 @@ class EmployeesController extends Controller
 	{
 		$model=new Employees('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Employees']))
+		if(isset($_GET['Employees'])){
 			$model->attributes=$_GET['Employees'];
-			
-
+		}
+		$managers = new Managers;
+		$managerslist = $managers->managersList(); 
 		$this->render('admin',array(
 			'model'=>$model,
+			'managerslist'=>$managerslist,
 		));
 	}
 

@@ -76,54 +76,29 @@ $gridDataProvider = new CArrayDataProvider(array(
           		<span class="summary-icon">
                 	<img src="<?php echo $baseUrl ;?>/img/credit.png" width="36" height="36" alt="Monthly Income">
                 </span>
-                <span class="summary-number"><?php 
-					$devices_query = Yii::app()->db->createCommand()
-   								 ->select('count(*) as count')
-    							 ->from('devices')
-    							 ->queryRow();
-	 							echo $devices_query['count'];
-				?></span>
-                <span class="summary-title"><a href="/abuse_reportr/index.php/devices/index">Total Devices</a> </span>
+                <span class="summary-number"><?php 	echo $total_devices; ?></span>
+                <span class="summary-title"><a href="../devices/index">Total Devices</a> </span>
             </li>
             <li>
             	<span class="summary-icon">
                 	<img src="<?php echo $baseUrl ;?>/img/group.png" width="36" height="36" alt="Open Invoices">
                 </span>
-                <span class="summary-number"><?php 
-					$employees_query = Yii::app()->db->createCommand()
-   								 ->select('count(*) as count')
-    							 ->from('employees')
-    							 ->queryRow();
-	 							echo $employees_query['count'];
-				?></span>
-                <span class="summary-title"><a href="/abuse_reportr/index.php/employees/index"> Total Employees</a></span>
+                <span class="summary-number"><?php 	echo $total_employees;	?></span>
+                <span class="summary-title"><a href="../employees/index"> Total Employees</a></span>
             </li>
             <li>
             	<span class="summary-icon">
                 	<img src="<?php echo $baseUrl ;?>/img/group.png" width="36" height="36" alt="Open Quotes<">
                 </span>
-                <span class="summary-number"><?php 
-					$managers_query = Yii::app()->db->createCommand()
-   								 ->select('count(*) as count')
-    							 ->from('managers')
-    							 ->queryRow();
-	 							echo $managers_query['count'];
-				?></span>
-                <span class="summary-title"> <a href="/abuse_reportr/index.php/managers/index">Total Managers</a></span>
+                <span class="summary-number"><?php echo $total_managers; ?></span>
+                <span class="summary-title"> <a href="../managers/index">Total Managers</a></span>
             </li>
             <li>
             	<span class="summary-icon">
                 	<img src="<?php echo $baseUrl ;?>/img/group.png" width="36" height="36" alt="Active Members">
                 </span>
-                <span class="summary-number"><?php 
-					$users_query = Yii::app()->db->createCommand()
-   								 ->select('count(*) as count')
-    							 ->from('users')
-   								 ->where('status=:id', array(':id'=>1))
-    							 ->queryRow();
-	 							echo $users_query['count'];
-				?></span>
-                <span class="summary-title"><a href="/abuse_reportr/index.php/users/index">Active Users</a></span>
+                <span class="summary-number"><?php 	echo $total_users;	?></span>
+                <span class="summary-title"><a href="../users/index">Active Users</a></span>
             </li>
             <li>
           </ul>
@@ -194,86 +169,6 @@ $gridDataProvider = new CArrayDataProvider(array(
 			'titleCssClass'=>''
 		));
 		?>
-        <?php
-			/*$cs = Yii::app()->clientScript;
-			$d1 = 'd1 = [[1, randNum()-5], [2, randNum()-4], [3, randNum()-4], [4, randNum()],[5, 4+randNum()],[6, 4+randNum()],[7, 5+randNum()],[8, 5+randNum()],[9, 6+randNum()],[10, 6+randNum()],[11, 6+randNum()],[12, 2+randNum()],[13, 3+randNum()],[14, 4+randNum()],[15, 4+randNum()],[16, 4+randNum()],[17, 5+randNum()],[18, 5+randNum()],[19, 2+randNum()],[20, 2+randNum()],[21, 3+randNum()],[22, 3+randNum()],[23, 3+randNum()],[24, 2+randNum()],[25, 4+randNum()],[26, 4+randNum()],[27,5+randNum()],[28, 2+randNum()],[29, 2+randNum()], [30, 3+randNum()]];';
-			$dataJs = "data = new Array();";
-			foreach($num_employees as $k => $v){
-				$color = str_pad( dechex( mt_rand( 0, 255 ) ), 3, '0', STR_PAD_LEFT);
-				$dataJs .= "data[{$k}] = { label: '{$v->name}',  data: {$v->_numEmployees},lines: {fillColor: '#{$color}'},points: {fillColor: '#{$color}'};";
-			}
-			//$dataJs .='options = ';
-			$dataJs .= '$.plot($(".visitors-chart"), 
-        			[ {
-        			label: "Visits", 
-        			data: '.$d1.',
-        			lines: {fillColor: "#f2f7f9"},
-        			points: {fillColor: "#88bbc8"}
-        		},
-					 {
-				grid: {
-					show: true,
-				    aboveData: true,
-				    color: "#3f3f3f" ,
-				    labelMargin: 5,
-				    axisMargin: 0, 
-				    borderWidth: 0,
-				    borderColor:null,
-				    minBorderMargin: 5 ,
-				    clickable: true, 
-				    hoverable: true,
-				    autoHighlight: true,
-				    mouseActiveRadius: 20
-				},
-		        series: {
-		        	grow: {
-		        		active: false,
-		        		stepMode: "linear",
-		        		steps: 50,
-		        		stepDelay: true
-		        	},
-		            lines: {
-	            		show: true,
-	            		fill: true,
-	            		lineWidth: 4,
-	            		steps: false
-		            	},
-		            points: {
-		            	show:true,
-		            	radius: 5,
-		            	symbol: "circle",
-		            	fill: true,
-		            	borderColor: "#fff"
-		            }
-		        },
-		        legend: { 
-		        	position: "ne", 
-		        	margin: [0,-25], 
-		        	noColumns: 0,
-		        	labelBoxBorderColor: null,
-		        	labelFormatter: function(label, series) {
-					    
-					    return label+"&nbsp;&nbsp;";
-					 }
-		    	},
-		        yaxis: { min: 0 },
-		        xaxis: {ticks:11, tickDecimals: 0},
-		        colors: chartColours,
-		        shadowSize:1,
-		        tooltip: true, //activate tooltip
-				tooltipOpts: {
-					content: "%s : %y.0",
-					shifts: {
-						x: -30,
-						y: -50
-					}
-				}
-		    });
-	        
-    ';
-			$cs->registerScript('chart_js', $dataJs);			
-*/			
-			?>
         
         <div class="visitors-chart" style="height: 230px;width:100%;margin-top:15px; margin-bottom:15px;"></div>
         
@@ -282,7 +177,7 @@ $gridDataProvider = new CArrayDataProvider(array(
     <div class="span6">
     	<?php
 		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>"<i class='icon-tint'></i> Pie Charts",
+			'title'=>"<i class='icon-tint'></i> Top Ten Managers with total employees",
 		));
 	?>
     		<?php
@@ -307,7 +202,7 @@ $gridDataProvider = new CArrayDataProvider(array(
 					},
 					startAngle: 2,
 				    combine: {
-	                    color: "pink",
+	                    color: "#FF69B4",
 	                    threshold: 0.05
 	                },
 	                label: {

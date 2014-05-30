@@ -142,11 +142,35 @@ class Managers extends AZActiveRecord
 		return $this->name." (".$this->email.")";
 	}
 	/**
+	* Return the all Manaagers list.
+	*/
+	public function managersList()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->select = "id,name";
+		$managers = Managers::model()->findAll($criteria);
+		foreach($managers as $value){
+			$array[$value->id] = $value->name;			
+		}
+			return $array;
+	
+	}
+	/**
 	* Return the total numbers of employees under ever manager.
 	*/
 	public function totalEmployees()
 	{
 		$num_employees = Managers::model()->with('_numEmployees')->findAll();
 		return $num_employees;
+	}
+	/**
+	* Return the integer which contains total number of managers in db table managers.
+	*/
+	public function countAllManagers()
+	{
+		 $criteria = new CDbCriteria();
+		 $criteria->select = '*';
+		 $managers = Managers::model()->findAll($criteria);
+		 return count($managers);
 	}
 }

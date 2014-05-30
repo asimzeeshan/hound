@@ -34,7 +34,7 @@ class AZActiveRecord extends CActiveRecord {
 	/**
 	 * @return array afterFind
 	 */
-	/*protected function afterFind() {
+	protected function afterFind() {
 		foreach($this->metadata->tableSchema->columns as $columnName => $column) {           
 			if (!strlen($this->$columnName)) continue;
 	 
@@ -58,6 +58,6 @@ class AZActiveRecord extends CActiveRecord {
 		}
 		
 		return parent::afterFind();
-	}*/
+	}
 }
 ?>

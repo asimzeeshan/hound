@@ -159,19 +159,7 @@ class Employees extends AZActiveRecord
 		$manager_name = Managers::model()->find($criteria);
 		return 	$manager_name['name'];
 	}
-	/**
-	* Return the all Manaagers list.
-	*/
-	public function managersList()
-	{
-		$criteria = new CDbCriteria();
-		$criteria->select = "id,name";
-		$managers = Managers::model()->findAll($criteria);
-		foreach($managers as $value){
-			$array[$value->id] = $value->name;			
-		}
-		return $array;
-	}
+	
 	/**
 	* Return the list of all employees.
 	*/
@@ -181,5 +169,15 @@ class Employees extends AZActiveRecord
 		 $criteria->select = "id, emp_id, name, email,joining_date,location,hall ";
 		 $employees = Employees::model()->findAll($criteria);
 		 return $employees;
+	}
+	/**
+	* Return the integer which contains total number of employees in db table employees.
+	*/
+	public function countAllEmployees()
+	{
+		 $criteria = new CDbCriteria();
+		 $criteria->select = '*';
+		 $employees = Employees::model()->findAll($criteria);
+		 return count($employees);
 	}
 }

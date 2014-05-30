@@ -15,20 +15,6 @@ $this->menu=array(
 	array('label'=>'Manage Employees', 'url'=>array('admin')),
 );
 ?>
-<style type="text/css">
-.border{
-	width:150px;
-	border:3px solid #D7D7D7;
-	border-radius: 5px;
-	
-}
-.border1{
-	width:340px;
-	border:3px solid #D7D7D7;
-	border-radius: 5px;
-	
-}
-</style>
 <?php
 $colorbox = $this->widget('application.extensions.colorpowered.JColorBox');
 $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%'));

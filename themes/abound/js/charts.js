@@ -433,7 +433,7 @@ $(document).ready(function() {
 					},
 					startAngle: 2,
 				    combine: {
-	                    color: 'pink',
+	                    color: '#FF69B4',
 	                    threshold: 0.05
 	                },
 	                label: {

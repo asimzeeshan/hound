@@ -39,6 +39,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
+	
 )); ?>
 </div><!-- search-form -->
 <?php
@@ -64,13 +65,13 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		array(
 		'name'=>'manager1_id',
 		'type'=>'raw',
-		'filter'=>$model->managersList(),
+		'filter'=>$managerslist,
 		'value'=>'isset($data->manager1) ? $data->manager1->name : "n/a"',
 		),
 		array(
 		'name'=>'manager2_id',
 		'type'=>'raw',
-		'filter'=>$model->managersList(),
+		'filter'=>$managerslist,
 		'value'=>'isset($data->manager2) ? $data->manager2->name : "n/a"',
 		),
 		//'manager1_id',

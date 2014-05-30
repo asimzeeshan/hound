@@ -215,4 +215,15 @@ class Users extends AZActiveRecord
 		//$user =Users:: model()->find(Yii::app()->user->id);
 		//return $user->first_name." ".$user->last_name;	
 	}
+	/**
+	* Return the integer which contains total number of users in db table users.
+		*/
+	public function countAllUsers()
+	{
+		 $criteria = new CDbCriteria();
+		 $criteria->select = '*';
+		 $users = Users::model()->findAll($criteria);
+		 return count($users);
+	}
+	
 }

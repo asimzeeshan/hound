@@ -264,4 +264,14 @@ class Devices extends AZActiveRecord
 		}
         return $users_details;
     }
+	/**
+	* Return the integer which contains total number of devices in db table devices.
+	*/
+	public function countAllDevices()
+	{
+		 $criteria = new CDbCriteria();
+		 $criteria->select = '*';
+		 $devices = Devices::model()->findAll($criteria);
+		 return count($devices);
+	}
 }
