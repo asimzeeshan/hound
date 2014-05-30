@@ -37,7 +37,7 @@ class EmailLogsController extends Controller
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
-			),
+			), 
 		);
 	}
 	

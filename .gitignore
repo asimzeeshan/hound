@@ -3,7 +3,7 @@
 #################
 assets/*
 protected/runtime/*
-protected/config/*
+protected/config/main.php
 tmp/*
 yii/demos/*
 
