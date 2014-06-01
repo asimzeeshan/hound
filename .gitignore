@@ -2,7 +2,9 @@
 ## YiiFramework
 #################
 assets/*
+!assets/.gitignore
 protected/runtime/*
+!protected/runtime.gitignore
 protected/config/main.php
 tmp/*
 yii/demos/*
