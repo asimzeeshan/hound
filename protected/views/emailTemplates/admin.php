@@ -54,16 +54,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'title',
 		'subject',
-		'body',
 		'created',
 		array(
 			'name'=>'created_by',
 			'value'=>'$data->CreatedBy ? $data->CreatedBy->name() : "Unknown"'
 		),
-		/*
-		'modified',
-		'modified_by',
-		*/
 		array(
 			'class'=>'CButtonColumn',
 		),
