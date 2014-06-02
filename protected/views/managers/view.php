@@ -34,5 +34,6 @@ $this->menu=array(
 				'name'=>'modified_by',
 				'value'=>$model->CreatedBy->name(),
 				),
-	),
+			),
+	
 )); ?>

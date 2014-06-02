@@ -44,13 +44,15 @@ $colorbox->addInstance('.colorbox', array('maxHeight'=>'90%', 'maxWidth'=>'90%')
 		array(
 				'name'=>'manager1_id',
 				'type'=>'raw',
-				'value'=>$model->manager1_id==0 ? "n/a" : CHtml::link($model->managerId($model->manager1_id),array('managers/view','id'=>$model->manager1_id)),
+				'value'=>$model->manager1_id==0 ? "n/a" : CHtml::link($model->manager1->name,array('managers/view','id'=>$model->manager1_id))."&nbsp; | &nbsp;".
+				CHtml::link('View Employee Profile',array('employees/view','id'=>$model->managerProfile($model->manager1->name))),
 				),
 				
 		array(
 				'name'=>'manager2_id',
 				'type'=>'raw',
-				'value'=>$model->manager2_id==0 ? "n/a" : CHtml::link($model->managerId($model->manager2_id),array('managers/view','id'=>$model->manager2_id)),
+				'value'=>$model->manager2_id==0 ? "n/a" : CHtml::link($model->manager2->name,array('managers/view','id'=>$model->manager2_id))."&nbsp; | &nbsp;".
+				CHtml::link('View Employee Profile',array('employees/view','id'=>$model->managerProfile($model->manager2->name))),
 				),
 		'created',
 		array(

@@ -51,6 +51,7 @@ class EmployeesController extends Controller
 	 */
 	public function actionView($id)
 	{
+	
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));

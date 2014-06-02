@@ -150,17 +150,6 @@ class Employees extends AZActiveRecord
         return $this->count('emp_id=:emp_id', array(':emp_id' => $emp_id));
     }
 	/**
-	* Return the Employees manager name
-	*/
-	public function managerId($mangerid){
-		$criteria = new CDbCriteria();
-		$criteria->condition = "id = '$mangerid'";
-		$criteria->select = "name";
-		$manager_name = Managers::model()->find($criteria);
-		return 	$manager_name['name'];
-	}
-	
-	/**
 	* Return the list of all employees.
 	*/
 	public function employeesList()
@@ -179,5 +168,18 @@ class Employees extends AZActiveRecord
 		 $criteria->select = '*';
 		 $employees = Employees::model()->findAll($criteria);
 		 return count($employees);
+	}
+	/**
+	* This function get the paremater from employees view page and commpare the
+	* manager name in employees table and return his/her id.
+	*/
+	public function managerProfile($name)
+	{
+		 $criteria = new CDbCriteria();
+		 $criteria->condition = "name = '$name'";
+		 $criteria->select = 'id';
+		 $employee_id = Employees::model()->findAll($criteria);
+		 return $employee_id[0]['id'];
+		
 	}
 }
