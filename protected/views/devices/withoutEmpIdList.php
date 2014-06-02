@@ -70,10 +70,15 @@ $this->widget('zii.widgets.jui.CJuiButton', array(
 	'id'=>'devices-grid',
 	'itemsCssClass'=>'table table-striped table-bordered table-hover',
 	'dataProvider'=>$model->searchlistWithoutEmpId(),
+	'ajaxUpdate'=>false,
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'emp_id',
+		array(  
+            'name'=>'emp_id',
+			'type' => 'raw',
+            'value'=>array($this,'gridMisNotifyColumn')
+        ),
 		'name',
 		'ip_address',
 		'mac_address',
@@ -84,18 +89,6 @@ $this->widget('zii.widgets.jui.CJuiButton', array(
         'selectableRows' => '10',
 		'name'=>'id'
     ),
-	
-		/*
-		'description',
-		'line_manager',
-		'location',
-		'hall',
-		'opt',
-		'created',
-		'created_by',
-		'modified',
-		'modified_by',
-		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

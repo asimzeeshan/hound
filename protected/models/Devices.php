@@ -148,8 +148,8 @@ class Devices extends AZActiveRecord
 		$records_per_page->select = "records_per_page";
 		$Configurations = Configurations::model()->find($records_per_page);
 		$records_per_page = $Configurations['records_per_page'];
-		$criteria=new CDbCriteria;
 		
+		$criteria=new CDbCriteria;
 		$criteria->condition = "emp_id = ''";
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
