@@ -7,15 +7,10 @@ $this->breadcrumbs=array(
 	$model->title=>array('view','id'=>$model->id),
 	'System Configurations',
 );
-
-$this->menu=array(
-	array('label'=>'List Configurations', 'url'=>array('index')),
-	array('label'=>'Create Configurations', 'url'=>array('create')),
-	array('label'=>'View Configurations', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Configurations', 'url'=>array('admin')),
-);
 ?>
-
+<?php if(Yii::app()->user->hasFlash('save')): ?>
+<?php echo Yii::app()->user->getFlash('save'); ?>
+<?php endif;?>
 <h1> <?php //echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

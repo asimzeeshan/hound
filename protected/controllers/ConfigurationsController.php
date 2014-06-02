@@ -49,11 +49,9 @@ class ConfigurationsController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		$this->render('view');
 	}
 
 	/**
@@ -62,6 +60,7 @@ class ConfigurationsController extends Controller
 	 */
 	public function actionCreate()
 	{
+	
 		$model=new Configurations;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -95,7 +94,9 @@ class ConfigurationsController extends Controller
 		{
 			$model->attributes=$_POST['Configurations'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				//$this->redirect(array('view','id'=>$model->id));
+				Yii::app()->user->setFlash('save',"<div align=\"center\" style=\"color:green;\"><h3>Successfully Saved.</h3></div>");
+				$this->refresh();
 		}
 
 		$this->render('update',array(
