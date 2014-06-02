@@ -18,12 +18,31 @@
  */
 class Configurations extends AZActiveRecord
 {
+	 const FIRST_RECORD=10;
+	 const SECOND_RECORD=20;
+	 const THIRD_RECORD=25;
+	 const FOURTH_RECORD=50;
+	 const FIFTH_RECORD=100;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
 		return 'configurations';
+	}
+	/*
+	* Return records per page as per your requirments in drop downl list.
+	*/
+	public function getRecordsOptions()
+	{
+		// display records per page value in drop down list
+		return array(
+			self::FIRST_RECORD=>'10',
+			self::SECOND_RECORD=>'20',
+			self::THIRD_RECORD=>'25',
+			self::FOURTH_RECORD=>'50',
+			self::FIFTH_RECORD=>'100',
+					);
 	}
 
 	/**
@@ -36,13 +55,27 @@ class Configurations extends AZActiveRecord
 		return array(
 			array('title, from_name, from_email, bcc, notify_email, created, created_by, modified, modified_by', 'required'),
 			array('records_per_page, created_by, modified_by', 'numerical', 'integerOnly'=>true),
+			array('records_per_page', 'in', 'range'=>self::getRecordsRange()), // check records per page vlaue in range
 			array('title, from_name, from_email, bcc, notify_email', 'length', 'max'=>75),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, title, from_name, from_email, bcc, notify_email, records_per_page, created, created_by, modified, modified_by', 'safe', 'on'=>'search'),
 		);
 	}
-
+	/*
+	* Check the value of records per page in range which your are define above.
+	*/
+	public static function getRecordsRange()
+	{
+		// check the value of record per page in range
+		return array(
+			self::FIRST_RECORD,
+			self::SECOND_RECORD,
+			self::THIRD_RECORD,
+			self::FOURTH_RECORD,
+			self::FIFTH_RECORD,
+					);
+	}
 	/**
 	 * @return array relational rules.
 	 */
@@ -61,7 +94,7 @@ class Configurations extends AZActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'Title',
+			'title' => 'Application Title',
 			'from_name' => 'From Name',
 			'from_email' => 'From Email',
 			'bcc' => 'Bcc',
@@ -125,6 +158,16 @@ class Configurations extends AZActiveRecord
 		return $this->first_name." ".$this->last_name; 
 		//$user =Users:: model()->find(Yii::app()->user->id);
 		//return $user->first_name." ".$user->last_name;	
+	}
+	/*
+	* Return title field 
+	*/
+	public function applicationsPagetitle()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->select = "title";
+		$applicationsPageTitle = configurations::model()->findAll($criteria);		
+		return $applicationsPageTitle[0]['title'];	
 	}
 	
 }

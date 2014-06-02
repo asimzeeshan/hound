@@ -1,6 +1,6 @@
 <?php
 /* @var $this WhoisController */
-
+$this->pageTitle=$this->pageTitle() . ' - Whois/index';
 $this->breadcrumbs=array(
 	'Whois'=>array('index'),
 );

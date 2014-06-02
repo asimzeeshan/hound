@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmployeesController */
 /* @var $model Employees */
-
+$this->pageTitle=$this->pageTitle() . ' - Admin';
 $this->breadcrumbs=array(
 	'Employees'=>array('admin'),
 	'Manage',

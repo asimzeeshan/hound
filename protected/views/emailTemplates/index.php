@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmailTemplatesController */
 /* @var $dataProvider CActiveDataProvider */
-
+$this->pageTitle=$this->pageTitle() . ' - EmailTemplates/index';
 $this->breadcrumbs=array(
 	'Email Templates',
 );

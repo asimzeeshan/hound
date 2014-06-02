@@ -1,7 +1,7 @@
 <?php
 /* @var $this UsersController */
 /* @var $model Users */
-
+$this->pageTitle=$this->pageTitle() . ' - Create';
 $this->breadcrumbs=array(
 	'Manage System Users'=>array('admin'),
 	'Create System User',

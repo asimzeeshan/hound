@@ -20,7 +20,7 @@
 	));
 	
 ?>
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note"> <span class="required"></span> </p>
 
 	<?php //echo $form->errorSummary($model); ?>
 
@@ -56,7 +56,7 @@
 <?php if (!$model->isNewRecord) { ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'records_per_page'); ?>
-		<?php echo $form->textField($model,'records_per_page'); ?>
+		<?php echo $form->dropDownList($model,'records_per_page',$model->getRecordsOptions()); ?>
 		<?php echo $form->error($model,'records_per_page',array('style'=>'color:red')); ?>
 	</div>
 

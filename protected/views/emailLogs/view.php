@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmailLogsController */
 /* @var $model EmailLogs */
-
+$this->pageTitle=$this->pageTitle() . ' - View';
 $this->breadcrumbs=array(
 	'Email Logs'=>array('index'),
 	$model->id,

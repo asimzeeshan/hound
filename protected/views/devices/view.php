@@ -1,7 +1,7 @@
 <?php
 /* @var $this DevicesController */
 /* @var $model Devices */
-
+$this->pageTitle=$this->pageTitle() . ' - View';
 $this->breadcrumbs=array(
 	'Devices'=>array('admin'),
 	$model->name,

@@ -1,7 +1,7 @@
 <?php
 /* @var $this UsersController */
 /* @var $model Users */
-
+$this->pageTitle=$this->pageTitle() . ' - Update';
 $this->breadcrumbs=array(
 	'System Users'=>array('admin'),
 	$model->id=>array('view','id'=>$model->id),

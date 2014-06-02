@@ -1,7 +1,8 @@
 <?php
 /* @var $this SiteController */
 
-$this->pageTitle=Yii::app()->name;
+$this->pageTitle=$this->pageTitle();
+
 $baseUrl = Yii::app()->theme->baseUrl; 
 ?>
 <?php

@@ -1,7 +1,7 @@
 <?php
 /* @var $this ConfigurationsController */
 /* @var $dataProvider CActiveDataProvider */
-
+$this->pageTitle=$this->pageTitle();
 $this->breadcrumbs=array(
 	'Configurations',
 );

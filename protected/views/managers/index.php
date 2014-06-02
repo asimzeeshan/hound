@@ -1,7 +1,7 @@
 <?php
 /* @var $this ManagersController */
 /* @var $dataProvider CActiveDataProvider */
-
+$this->pageTitle=$this->pageTitle() . ' - Managers/index';
 $this->breadcrumbs=array(
 	'Managers',
 );

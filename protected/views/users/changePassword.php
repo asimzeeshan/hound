@@ -1,5 +1,5 @@
 <?php
-$this->pageTitle = 'Change Password';
+$this->pageTitle=$this->pageTitle() . ' - ChangePassword';
 $this->breadcrumbs=array(
 	'Change Password',
 );

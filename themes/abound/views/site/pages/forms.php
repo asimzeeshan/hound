@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
-
-$this->pageTitle=Yii::app()->name . ' - Forms';
+$this->pageTitle=$this->pageTitle() . ' - Forms';
+//$this->pageTitle=Yii::app()->name . ' - Forms';
 $this->breadcrumbs=array(
 	'Forms',
 );

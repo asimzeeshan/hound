@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmailTemplatesController */
 /* @var $model EmailTemplates */
-
+$this->pageTitle=$this->pageTitle() . ' - Update';
 $this->breadcrumbs=array(
 	'Email Templates'=>array('index'),
 	$model->title=>array('view','id'=>$model->id),

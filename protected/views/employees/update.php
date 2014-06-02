@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmployeesController */
 /* @var $model Employees */
-
+$this->pageTitle=$this->pageTitle() . ' - Update';
 $this->breadcrumbs=array(
 	'Employees'=>array('index'),
 	$model->name=>array('view','id'=>$model->id),

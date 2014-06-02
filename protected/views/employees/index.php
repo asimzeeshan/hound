@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmployeesController */
 /* @var $dataProvider CActiveDataProvider */
-
+$this->pageTitle=$this->pageTitle() . ' - Employees/index';
 $this->breadcrumbs=array(
 	'Employees',
 );

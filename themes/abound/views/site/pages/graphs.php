@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
-
-$this->pageTitle=Yii::app()->name . ' - Graphs & Charts';
+$this->pageTitle=$this->pageTitle() . ' - Graphs & Charts';
+//$this->pageTitle=Yii::app()->name . ' - Graphs & Charts';
 $this->breadcrumbs=array(
 	'Graphs & Charts',
 );

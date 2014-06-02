@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmailTemplatesController */
 /* @var $model EmailTemplates */
-
+$this->pageTitle=$this->pageTitle() . ' - Admin';
 $this->breadcrumbs=array(
 	'Email Templates'=>array('index'),
 	'Manage',

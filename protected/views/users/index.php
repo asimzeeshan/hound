@@ -1,7 +1,7 @@
 <?php
 /* @var $this UsersController */
 /* @var $dataProvider CActiveDataProvider */
-
+$this->pageTitle=$this->pageTitle() . ' - Users/index';
 $this->breadcrumbs=array(
 	'System Users',
 );

@@ -1,7 +1,7 @@
 <?php
 /* @var $this AbuselistController */
 /* @var $model EmailTemplates */
-
+$this->pageTitle=$this->pageTitle() . ' - SendEmail';
 $this->breadcrumbs=array(
 	'Email Logs'=>array('index'),
 	'Send',

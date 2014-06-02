@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
-
-$this->pageTitle=Yii::app()->name . ' - Interface Elements';
+$this->pageTitle=$this->pageTitle() . ' - Interface Elements';
+//$this->pageTitle=Yii::app()->name . ' - Interface Elements';
 $this->breadcrumbs=array(
 	'Interface Elements',
 );

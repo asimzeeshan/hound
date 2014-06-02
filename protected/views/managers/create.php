@@ -1,7 +1,7 @@
 <?php
 /* @var $this ManagersController */
 /* @var $model Managers */
-
+$this->pageTitle=$this->pageTitle() . ' - Create';
 $this->breadcrumbs=array(
 	'Managers'=>array('index'),
 	'Create',

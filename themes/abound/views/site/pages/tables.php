@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
-
-$this->pageTitle=Yii::app()->name . ' - Tables - CGridview and HTML';
+$this->pageTitle=$this->pageTitle() . ' - Tables - CGridview and HTML';
+//$this->pageTitle=Yii::app()->name . ' - Tables - CGridview and HTML';
 $this->breadcrumbs=array(
 	'Tables - CGridview and HTML',
 );

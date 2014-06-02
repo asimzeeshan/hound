@@ -1,7 +1,7 @@
 <?php
 /* @var $this EmailLogsController */
 /* @var $dataProvider CActiveDataProvider */
-
+$this->pageTitle=$this->pageTitle() . ' - Emaillogs/index';
 $this->breadcrumbs=array(
 	'Email Logs',
 );

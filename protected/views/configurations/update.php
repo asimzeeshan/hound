@@ -1,7 +1,7 @@
 <?php
 /* @var $this ConfigurationsController */
 /* @var $model Configurations */
-
+$this->pageTitle=$this->pageTitle();
 $this->breadcrumbs=array(
 	'Configurations'=>array('index'),
 	$model->title=>array('view','id'=>$model->id),

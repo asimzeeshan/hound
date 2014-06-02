@@ -1,7 +1,7 @@
 <?php
 /* @var $this DevicesController */
 /* @var $dataProvider CActiveDataProvider */
-
+$this->pageTitle=$this->pageTitle() . ' - Devices/index';
 $this->breadcrumbs=array(
 	'Devices',
 );

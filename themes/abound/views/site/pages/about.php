@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
-
-$this->pageTitle=Yii::app()->name . ' - Grid';
+$this->pageTitle=$this->pageTitle() . ' - Grid';
+//$this->pageTitle=Yii::app()->name . ' - Grid';
 $this->breadcrumbs=array(
 	'Grid',
 );

@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
-
-$this->pageTitle=Yii::app()->name . ' - Typography';
+$this->pageTitle=$this->pageTitle() . ' - Typography';
+//$this->pageTitle=Yii::app()->name . ' - Typography';
 $this->breadcrumbs=array(
 	'Typography',
 );
