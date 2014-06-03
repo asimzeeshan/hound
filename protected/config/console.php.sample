@@ -20,19 +20,12 @@ return array(
 	// application components
 	'components'=>array(
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=abusereportr',
+			'connectionString' => 'mysql:host=localhost;dbname=abusereportr_db',
 			'emulatePrepare' => true,
 			'username' => 'abusereportr',
-			'password' => 'T9wHWVGSeYBuMrSX',
+			'password' => 'XFw0jGTJHnW4DBMk',
 			'charset' => 'utf8',
 		),
-		/*'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=abusereporter',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),*/
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -49,7 +42,7 @@ return array(
 					'class'=>'CEmailLogRoute',
 		            'levels'=>'error, warning',
 					'except'=>'system.db.*',
-					'emails'=>'asim@yho.me',
+					'emails'=>'asim@nxvt.com',
 				),
 				array(
 					'class'=>'CProfileLogRoute',
