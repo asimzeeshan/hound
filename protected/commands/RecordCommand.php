@@ -57,7 +57,6 @@ class RecordCommand extends CConsoleCommand {
 					      <td align='center'>".$query->hostname."</td></tr>";
 				}
 				   $new .= "</table>";
-				   //echo $new;
 		$changeRecord = $this->_changeRecord();
 		$change = "<br /><strong>Changed Records</strong>:<br /> <br />
 		 <table border=1 width='95%'>
@@ -73,7 +72,6 @@ class RecordCommand extends CConsoleCommand {
 					      <td align='center'>".$query->hostname."</td></tr>";
 				}
 				   $change .= "</table>";
-				   //echo $change;
 		$deleteRecord = $this->_deleteRecord();
 		$delete = "<br/><strong>Deleted Records:</strong><br /> <br />
 		 <table border=1 width='95%'>
@@ -88,30 +86,24 @@ class RecordCommand extends CConsoleCommand {
 					      <td align='center'>". $query->ip_address."</td>
 					      <td align='center'>".$query->hostname."</td></tr>";
 				}
-				  $delete .= "</table>
-				  
-				  
+				  $delete .= "</table>  
 				  <br /><br /><br />
 				  ";
-			$footer = '<div dir="ltr"><span style="font-family:courier new,monospace"><span style="color:rgb(153,153,153)"><span style="font-size:11px">Kind regards,<br>
+		$model_configurations = new Configurations;
+		$noc_email = $model_configurations->applicationsEmail();
+		$noc_email = $noc_email[0]['from_email'];
+		$footer = '<div dir="ltr"><span style="font-family:courier new,monospace"><span style="color:rgb(153,153,153)"><span style="font-size:11px">Kind regards,<br>
         <br><b>Noc Team</b><br>
         <b>Nextbridge Pvt ltd.</b><br>
         <br>
         Let’s connect.<br>Call me @ +9xx-xxx-xxxx-6<br>
         Skype me @ asim.vteams<br>
-        email us @ <a target="_blank" href="mailto:noc@nxvt.com">noc@nxvt.com</a><b><br></b>Web @ <a target="_blank" href="http://www.nextbridge.pk">http://www.nextbridge.pk</a> <b><br></b></span></span></span></div>';	  
-				   //echo $delete;		   		   
-		/*$fp = fopen('D:/test1.html', 'w') or die('error creating file');
-		fwrite($fp,$new) or die('error writing file');
-		fwrite($fp, $change)  or die('error writing file');
-		fwrite($fp,  $delete)  or die('error writing file');
-		fclose($fp);
-		exit();*/
+        email us @ <a target="_blank" href="mailto:'.$noc_email.'">'.$noc_email.'</a><b><br></b>Web @ <a target="_blank" href="http://www.nextbridge.pk">http://www.nextbridge.pk</a> <b><br></b></span></span></span></div>';	  
 		$current_date = date('Y-m-d');
 		$subject = "Today's Import Report [".$current_date."].";
 		$body = $new. $change.$delete.$footer;
 		$to = $cc = $bcc = array();
-		$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
+		$to = array($noc_email);
 		$record_data = array(
 					'address'	=> $to,
 					'ccaddress'	=> $cc,

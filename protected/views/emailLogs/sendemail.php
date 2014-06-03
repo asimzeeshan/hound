@@ -22,6 +22,7 @@ $this->menu=array(
 	<br/>
 <?php else: ?>
 
-<?php echo $this->renderPartial('_form_send_email', array('model'=>$model,'manager_email'=>$manager_email,'employee_data'=>$employee_data,'emp_id'=>$emp_id)); 
+<?php echo $this->renderPartial('_form_send_email', array('model'=>$model,'manager_email'=>$manager_email,'employee_data'=>$employee_data,'emp_id'=>$emp_id,'noc_email'=>$noc_email,
+'mis_email'=>$mis_email,)); 
 endif;
 ?>

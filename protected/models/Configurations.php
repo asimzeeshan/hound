@@ -53,7 +53,7 @@ class Configurations extends AZActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, from_name, from_email, bcc, notify_email, created, created_by, modified, modified_by', 'required'),
+			array('title, from_name, from_email, notify_email, created, created_by, modified, modified_by', 'required'),
 			array('records_per_page, created_by, modified_by', 'numerical', 'integerOnly'=>true),
 			array('records_per_page', 'in', 'range'=>self::getRecordsRange()), // check records per page vlaue in range
 			array('title, from_name, from_email, bcc, notify_email', 'length', 'max'=>75),
@@ -169,5 +169,16 @@ class Configurations extends AZActiveRecord
 		$applicationsPageTitle = configurations::model()->findAll($criteria);		
 		return $applicationsPageTitle[0]['title'];	
 	}
+	/*
+	* Return the from_email and notify_email from configurations table
+	*/
+	public function applicationsEmail()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->select = "from_email, notify_email";
+		$email = configurations::model()->findAll($criteria);		
+		return $email;	
+	}
+	
 	
 }

@@ -34,7 +34,7 @@ function updateFields(data){
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'cc'); ?>
-		<?php echo $form->textField($model,'cc',array('value'=>'noc@nxvt.com, mis@nxb.com.pk','size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'cc',array('value'=>$noc_email.','.$mis_email,'size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'cc'); ?>
 	</div>
 

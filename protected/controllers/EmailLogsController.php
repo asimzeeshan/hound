@@ -90,6 +90,10 @@ class EmailLogsController extends Controller
 	public function actionSendemail($emp_id){
 		$model=new EmailTemplates;
 		$model_nxb_managers =new Managers;
+		$model_nxb_configurations =new Configurations;
+		$model_nxb_configurations = $model_nxb_configurations->applicationsEmail();
+		$noc_email = $model_nxb_configurations[0]['from_email'];
+		$mis_email = $model_nxb_configurations[0]['notify_email'];
 
 		$employeeData = array();
 		$manager_email = '';
@@ -159,6 +163,8 @@ class EmailLogsController extends Controller
 			'manager_email'=>$manager_email,
 			'employee_data'=>$employeeData,
 			'emp_id'=>$emp_id,
+			'noc_email'=>$noc_email,
+			'mis_email'=>$mis_email,
 		));
 	}
 

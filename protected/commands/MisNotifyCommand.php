@@ -49,14 +49,16 @@ class MisNotifyCommand extends CConsoleCommand {
 		// send welcome email
 				$et = new EmailTemplates;
 				$data = $et->getData(8);
-				
+				$model_configurations = new Configurations;
+				$mis_email = $model_configurations->applicationsEmail();
+				$mis_email = $mis_email[0]['notify_email'];
 				// parse Body
 				$search = array('{Manager_Name}', '{Employee_List_Table}');
 				$replace = array("MIS Manger", $body);
 				$body = str_ireplace($search, $replace, $data->body);
 				// ends parse Body
 
-				$to = array("danish.na@nxvt.com", "asim.sarwar@nxb.com.pk","asim@nxvt.com");
+				$to = array($mis_email);
 				$email_data = array(
 					'body'=> $body,
 					'address'=> $to,
