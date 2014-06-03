@@ -53,7 +53,7 @@ class Configurations extends AZActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, from_name, from_email, notify_email, created, created_by, modified, modified_by', 'required'),
+			array('from_name, from_email, notify_email, created, created_by, modified, modified_by', 'required'),
 			array('records_per_page, created_by, modified_by', 'numerical', 'integerOnly'=>true),
 			array('records_per_page', 'in', 'range'=>self::getRecordsRange()), // check records per page vlaue in range
 			array('title, from_name, from_email, bcc, notify_email', 'length', 'max'=>75),
@@ -166,8 +166,12 @@ class Configurations extends AZActiveRecord
 	{
 		$criteria = new CDbCriteria();
 		$criteria->select = "title";
-		$applicationsPageTitle = configurations::model()->findAll($criteria);		
-		return $applicationsPageTitle[0]['title'];	
+		$applicationsPageTitle = configurations::model()->findAll($criteria);
+		$pageTitle = $applicationsPageTitle[0]['title'];		
+		if(!empty($pageTitle))
+		return $pageTitle;
+		else
+		return Yii::app()->name;	
 	}
 	/*
 	* Return the from_email and notify_email from configurations table
