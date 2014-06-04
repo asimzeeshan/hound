@@ -57,7 +57,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'created',
 		array(
 			'name'=>'created_by',
-			'value'=>'$data->CreatedBy ? $data->CreatedBy->name() : "Unknown"'
+			'value'=>'isset($data->CreatedBy) ? $data->CreatedBy->name() : "Sys Admin"'
 		),
 		array(
 			'class'=>'CButtonColumn',

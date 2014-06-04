@@ -12,7 +12,7 @@ return array(
 
 	// preloading 'log' component
 	'preload'=>array('log'),
-	
+
 	// active theme
 	'theme'=>'abound',
 
@@ -22,7 +22,6 @@ return array(
 		'application.components.*',
 		'application.helpers.phpmailer.*',
 		'application.helpers.logging.*',
-		
 	),
 
 	'modules'=>array(
@@ -49,7 +48,7 @@ return array(
         ),
 		'urlManager'=>array(
 			'urlFormat'=>'path',
-			//'showScriptName'=>false,
+			'showScriptName'=>false,
 			//'caseSensitive'=>false,
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
