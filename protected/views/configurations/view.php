@@ -1,17 +1,16 @@
 <?php
 /* @var $this ConfigurationsController */
 /* @var $model Configurations */
-$this->pageTitle=$this->pageTitle();
+$this->pageTitle=$this->pageTitle(). ' - View';
 $this->breadcrumbs=array(
 	'Configurations',
 );
 ?>
 
 <?php //echo $model->id;
-echo "Your request is invalid.";
  ?>
 
-<?php /*$this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
@@ -31,10 +30,5 @@ echo "Your request is invalid.";
                                     'name'=>'modified_by',
                                     'value'=>$model->ModifiedBy->name(),
                                     ),
-		//'records_per_page',
-		//'created',
-		//'created_by',
-		//'modified',
-		//'modified_by',
 	),
-)); */?>
+)); ?>

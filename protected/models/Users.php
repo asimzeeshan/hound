@@ -212,8 +212,6 @@ class Users extends AZActiveRecord
 	// return the full name (first_name & last_name)
 	public function name() {
 		return $this->first_name." ".$this->last_name; 
-		//$user =Users:: model()->find(Yii::app()->user->id);
-		//return $user->first_name." ".$user->last_name;	
 	}
 	/**
 	* Return the integer which contains total number of users in db table users.
