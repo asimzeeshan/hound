@@ -22,7 +22,6 @@ return array(
 		'application.components.*',
 		'application.helpers.phpmailer.*',
 		'application.helpers.logging.*',
-		
 	),
 
 	'modules'=>array(
