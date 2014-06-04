@@ -162,9 +162,9 @@ class Configurations extends AZActiveRecord
 		$applicationsPageTitle = configurations::model()->find($criteria);
 		$pageTitle = $applicationsPageTitle['title'];		
 		if(!empty($pageTitle))
-		return $pageTitle;
+                return $pageTitle;
 		else
-		return Yii::app()->name;
+                return Yii::app()->name;
 	}
 	/*
 	* Return the from_email and notify_email from configurations table
@@ -174,7 +174,7 @@ class Configurations extends AZActiveRecord
 		$criteria = new CDbCriteria();
 		$criteria->select = "from_email, notify_email";
 		$email = configurations::model()->findAll($criteria);		
-		return $email;	
+		return $email;
 	}
 	
 	
