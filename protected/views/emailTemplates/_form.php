@@ -57,7 +57,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model,'created_by'); ?>
-        <?php echo $model->CreatedBy ? $model->CreatedBy->name() : ''; ?>
+        <?php echo $model->CreatedBy ? $model->CreatedBy->name() : 'Sys Admin'; ?>
     </div>
 
     <div class="row">
@@ -67,7 +67,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model,'modified_by'); ?>
-        <?php echo $model->ModifiedBy ? $model->ModifiedBy->name(): ''; ?>
+        <?php echo $form->hiddenField($model,'modified_by',array('value'=>Yii::app()->user->id));  ?>
     </div>
 
 	<?php } ?>
