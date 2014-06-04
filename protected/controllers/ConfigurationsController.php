@@ -126,6 +126,13 @@ class ConfigurationsController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Configurations');
+		if(isset($_POST['Configurations']))
+		{	
+			$updateConfigurations = Configurations::model()->updateByPk($_POST['Configurations']['id'],$_POST['Configurations']);
+			if($updateConfigurations)
+				Yii::app()->user->setFlash('save',"<div align=\"center\" style=\"color:green;\"><h3>Successfully Saved.</h3></div>");
+				$this->refresh();
+		}
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
