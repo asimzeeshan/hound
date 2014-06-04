@@ -152,13 +152,6 @@ class Configurations extends AZActiveRecord
 	{
 		return parent::model($className);
 	}
-        
-        // return the full name (first_name & last_name) of user
-	public function name() {
-		return $this->first_name." ".$this->last_name; 
-		//$user =Users:: model()->find(Yii::app()->user->id);
-		//return $user->first_name." ".$user->last_name;	
-	}
 	/*
 	* Return title field 
 	*/
@@ -166,12 +159,12 @@ class Configurations extends AZActiveRecord
 	{
 		$criteria = new CDbCriteria();
 		$criteria->select = "title";
-		$applicationsPageTitle = configurations::model()->findAll($criteria);
-		$pageTitle = $applicationsPageTitle[0]['title'];		
+		$applicationsPageTitle = configurations::model()->find($criteria);
+		$pageTitle = $applicationsPageTitle['title'];		
 		if(!empty($pageTitle))
 		return $pageTitle;
 		else
-		return Yii::app()->name;	
+		return Yii::app()->name;
 	}
 	/*
 	* Return the from_email and notify_email from configurations table
