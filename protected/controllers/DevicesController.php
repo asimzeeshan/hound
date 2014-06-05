@@ -35,7 +35,7 @@ class DevicesController extends Controller
 			 "success"=>"js:function(){
 				  $.fn.yiiGridView.update('devices-grid');
 				 }"
-        ));
+        ),array("href"=>"javascript:void(0);"));
     } 
 	
 	public function actionAjaxUpdate()
