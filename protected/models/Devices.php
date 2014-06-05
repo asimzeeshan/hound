@@ -265,6 +265,28 @@ class Devices extends AZActiveRecord
         return $users_details;
     }
 	/**
+	* Return the list of all devices without EmpIds.
+	*/
+	public function withoutEmpIdList()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->condition = "emp_id = ''";
+		$criteria->select = "id, name, ip_address, mac_address, hostname ";
+		$Devices = Devices::model()->findAll($criteria);		
+		return $Devices;
+	}
+	/**
+	* Return the list of all devices where the value of mis_notify column is 1 .
+	*/
+	public function empListWithMisNotifyEnale()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->condition = "mis_notify = 1";
+		$criteria->select = "id, name, ip_address, mac_address, hostname ";
+		$Devices = Devices::model()->findAll($criteria);		
+		return $Devices;
+	}
+	/**
 	* Return the integer which contains total number of devices in db table devices.
 	*/
 	public function countAllDevices()

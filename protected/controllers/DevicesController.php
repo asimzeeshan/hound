@@ -60,7 +60,7 @@ class DevicesController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','report','pdfreport'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -244,4 +244,24 @@ class DevicesController extends Controller
 			Yii::app()->end();
 		}
 	}
+	/*
+	* Generate pdf record for devices w/o empId.
+	*/
+	public function actionReport(){
+		 $model = new Devices;
+		 $model = $model->withoutEmpIdList();
+		 $this->renderPartial("report",array(
+		   'model'=>$model,
+		   ));
+  	}
+	/*
+	* Generate pdf record for devices where mis_notify enable or have value 1 in db
+	*/
+	public function actionPdfreport(){
+		 $model = new Devices;
+		 $model = $model->empListWithMisNotifyEnale();
+		 $this->renderPartial("pdfreport",array(
+		   'model'=>$model,
+		   ));
+  	}
 }

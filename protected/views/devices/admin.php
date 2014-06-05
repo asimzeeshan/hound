@@ -6,6 +6,10 @@ $this->breadcrumbs=array(
 	'Devices'=>array('admin'),
 	'Manage',
 );
+$this->menu=array(
+	array('label'=>'View Devices W/O EmpId List as PDF', 'url'=>array('report')),
+	array('label'=>'View Devices List With Mis_Notify Enalbe as PDF', 'url'=>array('pdfreport')),
+);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
