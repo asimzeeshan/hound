@@ -173,7 +173,7 @@ class Configurations extends AZActiveRecord
 	{
 		$criteria = new CDbCriteria();
 		$criteria->select = "from_email, notify_email";
-		$email = configurations::model()->findAll($criteria);		
+		$email = configurations::model()->find($criteria);		
 		return $email;
 	}
 	

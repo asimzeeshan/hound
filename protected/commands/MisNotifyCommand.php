@@ -51,7 +51,7 @@ class MisNotifyCommand extends CConsoleCommand {
 				$data = $et->getData(8);
 				$model_configurations = new Configurations;
 				$mis_email = $model_configurations->applicationsEmail();
-				$mis_email = $mis_email[0]['notify_email'];
+				$mis_email = $mis_email['notify_email'];
 				// parse Body
 				$search = array('{Manager_Name}', '{Employee_List_Table}');
 				$replace = array("MIS Manger", $body);

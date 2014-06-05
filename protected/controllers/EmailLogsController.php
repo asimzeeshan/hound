@@ -92,8 +92,8 @@ class EmailLogsController extends Controller
 		$model_nxb_managers =new Managers;
 		$model_nxb_configurations =new Configurations;
 		$model_nxb_configurations = $model_nxb_configurations->applicationsEmail();
-		$noc_email = $model_nxb_configurations[0]['from_email'];
-		$mis_email = $model_nxb_configurations[0]['notify_email'];
+		$noc_email = $model_nxb_configurations['from_email'];
+		$mis_email = $model_nxb_configurations['notify_email'];
 
 		$employeeData = array();
 		$manager_email = '';

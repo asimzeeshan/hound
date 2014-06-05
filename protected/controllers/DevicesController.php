@@ -174,41 +174,40 @@ class DevicesController extends Controller
 			'model'=>$model,
 		));
 	}
-	
+	/*
+	*this funcion is used for display the  marked list of  employees whose have no emp_id 
+	*/
 	public function actionWithoutEmpIdList()
 	{	
 			$model_configurations = new Configurations;
 			$mis_email = $model_configurations->applicationsEmail();
-			$mis_email = $mis_email[0]['notify_email'];
-	
-		$body = "";
-	// this funcion is used for display the  marked list of  employees whose have no emp_id 
-		if(isset($_POST['checkbox']))
-		{
-			$checkbox = $_POST['checkbox'];
-			if(!empty($checkbox) && is_array($checkbox))
-				$body .= Devices::getListWithoutEmpId($checkbox);
-		
-			$current_date = date('Y-m-d');
-			$subject = "Employee Listing without Employee ID [".$current_date."].";
-			$to = $cc = $bcc = array();
-			$to = array($mis_email);
-			$record_data = array(
-						'address'	=> $to,
-						'ccaddress'	=> $cc,
-						'bccaddress'=> $bcc,
-						'subject'	=> $subject,
-						'body'		=> $body,
-						'user_id'	=> 1,
-					);
-			$this->sendMail($record_data);
+			$mis_email = $mis_email['notify_email'];
+			$body = "";
+			if(isset($_POST['checkbox']))
+			{
+				$checkbox = $_POST['checkbox'];
+				if(!empty($checkbox) && is_array($checkbox))
+					$body .= Devices::getListWithoutEmpId($checkbox);
+					$current_date = date('Y-m-d');
+					$subject = "Employee Listing without Employee ID [".$current_date."].";
+					$to = $cc = $bcc = array();
+					$to = array($mis_email);
+					$record_data = array(
+										'address'	=> $to,
+										'ccaddress'	=> $cc,
+										'bccaddress'=> $bcc,
+										'subject'	=> $subject,
+										'body'		=> $body,
+										'user_id'	=> 1,
+									);
+					$this->sendMail($record_data);
 			
-			if (count($to)>0){
-                    $to = implode(", ", $to);
-			}
+				if (count($to)>0){
+						$to = implode(", ", $to);
+				}
 					
-			Yii::app()->user->setFlash('withoutEmpIdList','<div align="center" style="color:green;"><strong><h1>Message has been sent to.'.$to.'</h1></strong></div>');
-		}
+				Yii::app()->user->setFlash('withoutEmpIdList','<div align="center" style="color:green;"><strong><h1>Message has been sent to.'.$to.'</h1></strong></div>');
+			}
 			$model=new Devices('search');
 			$model->unsetAttributes();  // clear any default values
 			if(isset($_GET['Devices']))

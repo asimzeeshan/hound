@@ -91,7 +91,7 @@ class RecordCommand extends CConsoleCommand {
 				  ";
 		$model_configurations = new Configurations;
 		$noc_email = $model_configurations->applicationsEmail();
-		$noc_email = $noc_email[0]['from_email'];
+		$noc_email = $noc_email['from_email'];
 		$footer = '<div dir="ltr"><span style="font-family:courier new,monospace"><span style="color:rgb(153,153,153)"><span style="font-size:11px">Kind regards,<br>
         <br><b>Noc Team</b><br>
         <b>Nextbridge Pvt ltd.</b><br>
