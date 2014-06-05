@@ -93,14 +93,13 @@
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model,'modified_by'); ?>
-        <?php echo $model->ModifiedBy->name(); ?>
+        <?php echo $form->hiddenField($model,'modified_by',array('value'=>Yii::app()->user->id)); ?>
     </div>
 
 	<?php } ?>
 
 	<div class="row buttons">
-		<?php //echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
+		<?php 
 		if($model->isNewRecord){
 			$this->widget('zii.widgets.jui.CJuiButton', array(
 			'name'=>'button1',
