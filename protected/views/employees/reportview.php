@@ -2,7 +2,7 @@
     // get the Html
     ob_start();
    	$employees = "<div style='color:black;background-color:#CCCCCC;' align='center' border=1>
-					<h1>Employees Records</h1>
+					<h1>Employee Records</h1>
 					</div><br/>
 		 		  <table border=0.5 width='95%' style='margin-left:125px;'>
 			  	  <tr><th align='center' width='45%'> ID</th>

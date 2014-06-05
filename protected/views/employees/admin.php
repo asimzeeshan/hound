@@ -10,6 +10,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Employees', 'url'=>array('index')),
 	array('label'=>'Create Employees', 'url'=>array('create')),
+	array('label'=>'View Employees List as PDF', 'url'=>array('report')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -34,7 +35,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 </p>
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button'));
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".CHtml::link('View Employees List as Pdf', array('/employees/report'))
  ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
@@ -74,13 +74,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'filter'=>$managerslist,
 		'value'=>'isset($data->manager2) ? $data->manager2->name : "n/a"',
 		),
-		//'manager1_id',
-		//'manager2_id',
-		//'created',
-		//'created_by',
-		//'modified',
-		//'modified_by',
-		
 		array(
 			'class'=>'CButtonColumn',
 		),
