@@ -89,7 +89,7 @@ class UsersController extends Controller
 			$random_password = $model->randomPassword();
 			$model = $model->restPasswordverification($id);
 			$unhashedpassword = $random_password;			
-			$model->password = md5($unhashedpassword);
+			$model->password = md5(trim($unhashedpassword));
 			if($model->save()){
 				$et = new EmailTemplates;
 				$data = $et->getData(9);
