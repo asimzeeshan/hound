@@ -32,7 +32,9 @@ $('.search-form form').submit(function(){
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
 or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>
-
+<?php if(Yii::app()->user->hasFlash('admin')): ?>
+<?php echo Yii::app()->user->getFlash('admin'); ?>
+<?php endif;?>
 <?php if(Yii::app()->user->hasFlash('failed')):?>
     <div class="flash-error">
         <?php echo Yii::app()->user->getFlash('failed'); ?>
@@ -59,7 +61,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id',
 		'first_name',
 		'last_name',
-		'username',
+		array(
+			'name'=>'username',
+			'htmlOptions'=>array('class'=>'username'),
+		),
 		'email',
 		array(
 			'name'=>'status',
@@ -67,15 +72,29 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		),
 		'roles',
 		'last_login',
-		/*
-		'created',
-		'created_by',
-		'modified',
-		'modified_by',
-		*/
+		array
+		(
+			'class'=>'CButtonColumn',
+			'header'=>'Actions',
+			'template'=>'{change}',
+			'buttons'=>array
+			(
+				'change' => array
+				(
+				  'label'=>'Reset Password',
+				  'imageUrl'=>Yii::app()->request->baseUrl.'/images/refresh_password.png',
+				  'url'=>'Yii::app()->createUrl("/users/resetPassword", array("id"=>$data->id))',
+				  'visible'=>'Yii::app()->user->isSuperAdmin()',
+		          'click'=>'function(){ return confirm("\t\t\t\tReset Password \n\nDo you really want to reset password for user \""+$(this).parent().siblings(".username").html()+"\"?");}',
+				
+				),
+			),
+	),
 		array(
 			'class'=>'CButtonColumn',
 		),
 	),
-)); ?>
+)); 
+
+ ?>
 <?php $this->endWidget();?>

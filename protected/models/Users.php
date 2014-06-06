@@ -223,5 +223,31 @@ class Users extends AZActiveRecord
 		 $users = Users::model()->findAll($criteria);
 		 return count($users);
 	}
+	/**
+	* Compare the $id parameter and return the users credentials for reset password.
+	*/
+	public function restPasswordverification($id)
+	{
+		$user_credentials = Users::model()->find(array(
+											'condition'=>'ID=:id',
+											'params'=>array(':id'=>$id),
+										));
+
+		return $user_credentials;
+	}
+	/**
+	* Generate the random passwrod for reset the password of users.
+	*/
+	public function randomPassword()
+    {
+		$alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+		$password = array(); //remember to declare $pass as an array
+		$alphabetLength = strlen($alphabet) - 1; //put the length -1 in cache
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $alphabetLength);
+			$password[] = $alphabet[$n];
+		}
+		return implode($password); //turn the array into a string
+	}
 	
 }

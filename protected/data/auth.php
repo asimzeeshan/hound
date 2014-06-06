@@ -38,6 +38,14 @@ return array (
     'description' => 'Can perform all actions',
     'bizRule' => '',
     'data' => '',
+    'assignments' => 
+    array (
+      10 => 
+      array (
+        'bizRule' => NULL,
+        'data' => NULL,
+      ),
+    ),
   ),
   'guest' => 
   array (

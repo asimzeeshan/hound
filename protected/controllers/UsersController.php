@@ -34,7 +34,7 @@ class UsersController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','changePassword'),
+				'actions'=>array('index','view','changePassword','resetPassword'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -78,6 +78,42 @@ class UsersController extends Controller
 		$this->render('changePassword',array('model'=>$model));
 	}
 	/**
+	* This functions is used for reset the password for user
+	*/
+	public function actionResetPassword()
+	{ 
+		$model = new Users;
+		if(isset($_GET['id']))
+		{
+			$id = $_GET['id'];
+			$random_password = $model->randomPassword();
+			$model = $model->restPasswordverification($id);
+			$unhashedpassword = $random_password;			
+			$model->password = md5($unhashedpassword);
+			if($model->save()){
+				$et = new EmailTemplates;
+				$data = $et->getData(9);
+				// parse Body
+				$search = array('{name}', '{username}', '{password}');
+				$replace = array($model->name(), $model->username, $unhashedpassword);
+				$body = str_ireplace($search, $replace, $data->body);
+				// ends parse Body
+				$email_data = array(
+					'body'=> $body,
+					'address'=> $model->email,
+					'ccaddress'=> '',
+					'bccaddress'=> '',
+					'subject' => $data->subject
+				);
+
+				// send the email
+				$this->sendMail($email_data);
+				Yii::app()->user->setFlash('admin','<div align="center" style="color:#78AB46;"><strong><h4>Message has been sent to '.$model->email.'</h4></strong></div>');
+				$this->redirect(array('admin','id'=>$model->id));
+			}
+		}
+	}
+	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
@@ -118,7 +154,6 @@ class UsersController extends Controller
 				$replace = array($model->name(), $model->username, $unencryted_pass);
 				$body = str_ireplace($search, $replace, $data->body);
 				// ends parse Body
-				
 				$email_data = array(
 					'body'=> $body,
 					'address'=> $model->email,
