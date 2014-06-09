@@ -12,5 +12,3 @@ Abuse Reportr is an attempt to automate the following within pfsense Installed s
 
 # Credits #
 * [Asim Zeeshan](http://asim.pk)
-* Danish Khan
-* Asim Sarwar
