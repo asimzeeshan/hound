@@ -12,17 +12,6 @@ class ImportdataCommand extends CConsoleCommand {
 	
 	public function run($args) {
 		// ************************************************************
-		//   Processing C1 PFSENSE
-		// ************************************************************
-		$this->log->Info("Cron Job Begins for C1-PFSENSE (codename: DMZ)");
-		$xml = simplexml_load_file('https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php');
-		$this->log->Info("File downloaded ... https://dmz.nextbridge.org/5ebe2294ecd0e0f08eab7690d2a6ee69.php");
-		foreach ($xml->dhcpd->lan->staticmap as $node) {
-			$this->_processNode($node, "c1-lan");
-		}
-		$this->log->Info("Cron Job Ends for C1-PFSENSE (codename: DMZ)");
-		
-		// ************************************************************
 		//   Processing D1 PFSENSE
 		// ************************************************************		
 		$this->log->Info("Cron Job Begins for D1-PFSENSE (codename: PFSENSE)");
