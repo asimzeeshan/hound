@@ -4,7 +4,7 @@ class m140609_073931_insert_newEmailTemplates_ForRestPassword_inEmailTemplated_t
 {
 	public function up()
 	{
-		$this->insert('email_Templates',array(
+		$this->insert('email_templates',array(
 		 'id'=>'9',
          'title'=>'Abuse Reporter',
          'subject' =>'Your Password has been rest',
