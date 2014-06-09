@@ -45,6 +45,16 @@ class WebUser extends CWebUser
 		}
 	  }
 	  
+	  public function isSystemAdmin($id){
+		   if($id == 1){
+			$user = $this->loadUser($id);
+			return $user->username;
+		}
+		else{
+			return false;
+		}
+	  }
+	  
 	   public function isGuest(){
 		   if(!Yii::app()->user->isGuest){
 			$user = $this->loadUser(Yii::app()->user->id);

@@ -76,23 +76,21 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		(
 			'class'=>'CButtonColumn',
 			'header'=>'Actions',
-			'template'=>'{change}',
+			'htmlOptions' => array('style' => 'width: 80px;'),
+			'template'=>'{resetpassword} {view} {update} {delete} ',
 			'buttons'=>array
 			(
-				'change' => array
+				'resetpassword' => array
 				(
 				  'label'=>'Reset Password',
 				  'imageUrl'=>Yii::app()->request->baseUrl.'/images/refresh_password.png',
 				  'url'=>'Yii::app()->createUrl("/users/resetPassword", array("id"=>$data->id))',
-				  'visible'=>'Yii::app()->user->isSuperAdmin()',
+				  'visible'=>'Yii::app()->user->isSuperAdmin() && !Yii::app()->user->isSystemAdmin($data->id)',
 		          'click'=>'function(){ return confirm("\t\t\t\tReset Password \n\nDo you really want to reset password for user \""+$(this).parent().siblings(".username").html()+"\"?");}',
-				
 				),
 			),
 	),
-		array(
-			'class'=>'CButtonColumn',
-		),
+		
 	),
 )); 
 
