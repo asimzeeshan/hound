@@ -5,7 +5,7 @@ class m140609_195822_remove_c1_lan_records extends CDbMigration
         public function up()
         {
                 $this->execute("DELETE FROM `devices` WHERE `opt`='c1-lan';");
-                echo "All records from C1-LAN are deleted";
+                echo "      >>> All records from C1-LAN are deleted.\n";
         }
 
         public function down()
