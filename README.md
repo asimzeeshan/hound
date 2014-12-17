@@ -19,4 +19,4 @@ HOUND was previously known as 'Abuse Reportr'
 # Credits #
 * [Asim Zeeshan](http://asim.pk)
 
-### Built using [phpStorm](https://www.jetbrains.com/phpstorm/) on KUbuntu Linux. Special thanks to phpStorm for supporting this project ###
+### Special thanks to [phpStorm](https://www.jetbrains.com/phpstorm/) for supporting this project ###
